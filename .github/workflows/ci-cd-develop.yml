@@ -39,7 +39,7 @@ jobs:
         with:
           config-name: release-drafter.yml
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_SECRETS }}
           prerelease-identifier: 'dev'
 
       - name: docker login
@@ -51,6 +51,9 @@ jobs:
       - name: Build And Push docker image
         run: |
           TAG=${{ github.event.release.tag_name || 'latest' }}
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${TAG} .
+          docker build -f Dockerfile-dev --platform linux/arm64/v8 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${TAG} .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${TAG}
+          
+          
+          
 
