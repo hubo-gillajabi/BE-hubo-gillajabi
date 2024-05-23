@@ -1,9 +1,8 @@
-name: opened pr notification
+name: Opened pr notification
 on:
   pull_request:
     branches: [ dev, hotfix ]
-    types:
-      - opened
+    types: [ reopened, opened ]
 
 jobs:
   create-notification:
@@ -20,7 +19,7 @@ jobs:
             {
               "embeds": [{
                 "title": "BE 레포에 PR이 업로드 되었습니다.",
-                "color": "${{ github.event.pull_request.base.ref == 'hotfix' && '16711680' || '255' }}",
+                 "color": "${{ github.event.pull_request.base.ref == 'hotfix' ? '16711680' : '255' }}",
                 "description": "현재 '${{ github.event.pull_request.title }}' PR이 올라왔습니다.\n\n설명: ${{ github.event.pull_request.body }}"
               }]
             }
