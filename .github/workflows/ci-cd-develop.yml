@@ -50,6 +50,7 @@ jobs:
 
       - name: Build And Push docker image
         run: |
-          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${{ github.event.release.tag_name }} .
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${{ github.event.release.tag_name }}
+          TAG=${{ github.event.release.tag_name || 'latest' }}
+          docker build --platform linux/arm64/v8 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${TAG} .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:${TAG}
 
