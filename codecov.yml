@@ -1,0 +1,11 @@
+codecov:
+  bot: codecov
+  require_ci_to_pass: yes
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: false
+
+github_checks:
+  annotations: true
