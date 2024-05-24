@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - develop
+  pull_request:
+    types: [ closed ]
 
 jobs:
   build:
@@ -39,7 +41,7 @@ jobs:
         with:
           config-name: release-drafter.yml
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_SECRETS }}
           prerelease-identifier: 'dev'
 
       - name: set docker tag
