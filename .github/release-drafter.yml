@@ -2,18 +2,13 @@ name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: '🚀 추가된 기능들'
-    label: 'feat'
+    label: 'develop'
   - title: '🐛 수정된 버그들'
-    label:
-      - 'fix'
-      - 'hotfix'
-      - 'bug'
+    label: 'bug'
   - title: '🛠 인프라 변경'
     label: 'infra'
   - title: '🔄 병합됨'
     label: 'merge'
-  - title: '🔧 개발 중'
-    label: 'develop'
 change-template: '- $TITLE #$NUMBER @$AUTHOR'
 template: |
   ## 변경 사항
