@@ -48,9 +48,11 @@ jobs:
         id: docker_tag
         run: |
           if [ "${{ github.event_name }}" == "push" ]; then
-            TAG=$(curl -sH "Authorization: token ${{ secrets.ACTION_TOKEN }}" \
-              https://api.github.com/repos/${{ github.repository }}/releases | jq -r 'map(select(.draft == true))[0].tag_name')
-            if [ "$TAG" == "null" ]; then
+            RESPONSE=$(curl -sH "Authorization: token ${{ secrets.ACTION_SECRETS }}" \
+              https://api.github.com/repos/${{ github.repository }}/releases)
+            echo "API Response: $RESPONSE"
+            TAG=$(echo "$RESPONSE" | jq -r 'map(select(.draft == true))[0].tag_name')
+            if [ -z "$TAG" ] || [ "$TAG" == "null" ]; then
               TAG="${{ github.sha }}"
             fi
           elif [ "${{ github.event_name }}" == "release" ]; then
