@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.domain.crawl.dto.type;
+package com.hubo.gillajabi.crawl.domain.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
