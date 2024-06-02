@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class DuruThemeResponse implements ValidatableResponse {
+public class DuruCourseResponse implements ValidatableResponse {
 
     private Response response;
 
@@ -43,17 +43,26 @@ public class DuruThemeResponse implements ValidatableResponse {
     @Getter
     @Setter
     public static class Items {
-        private List<Theme> item;
+        private List<Course> item;
     }
 
     @Getter
     @Setter
-    public static class Theme {
+    public static class Course {
         private String routeIdx;
-        private String themeNm;
-        private String linemsg;
-        private String themedescs;
+        private String crsIdx;
+        private String crsKorNm;
+        private String crsDstnc;
+        private String crsTotlRqrmHour;
+        private String crsLevel;
+        private String crsCycle;
+        private String crsContents;
+        private String crsSummary;
+        private String crsTourInfo;
+        private String travelerinfo;
+        private String sigun;
         private String brdDiv;
+        private String gpxpath;
         private String createdtime;
         private String modifiedtime;
     }
