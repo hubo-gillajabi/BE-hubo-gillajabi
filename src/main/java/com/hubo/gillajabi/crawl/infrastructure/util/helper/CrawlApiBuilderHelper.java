@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.crawl.infrastructure.Helper;
+package com.hubo.gillajabi.crawl.infrastructure.util.helper;
 
 import com.hubo.gillajabi.crawl.domain.constant.ApiProperties;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ValidatableResponse;
@@ -8,7 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Component
-public class ApiHelper {
+public class CrawlApiBuilderHelper {
 
     public URI buildUri(String endpointPath, ApiProperties apiProperties, int pageNo, int numOfRows) {
         try {
