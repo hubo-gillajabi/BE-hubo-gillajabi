@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.crawl.infrastructure.util.helper;
 
-public class CrawlCityParserHelper {
+public class CrawlResponseParserHelper {
 
 
     /**
