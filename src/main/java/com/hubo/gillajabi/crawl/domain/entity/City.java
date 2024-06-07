@@ -2,16 +2,11 @@ package com.hubo.gillajabi.crawl.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "province"})})
 public class City {
 
@@ -28,4 +23,22 @@ public class City {
 
     @Column
     private String description;
+
+    private City(final String name,
+                 final Province province,
+                 final String description) {
+        this.name = name;
+        this.province = province;
+        this.description = description;
+    }
+
+    public static City of(final String name, final Province province, final String description) {
+        return new City(name, province, description);
+    }
+
+    public static City of(final String name, final Province province) {
+        return new City(name, province, null);
+    }
+
+
 }
