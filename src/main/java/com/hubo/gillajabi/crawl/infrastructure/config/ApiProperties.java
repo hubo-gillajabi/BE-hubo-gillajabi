@@ -1,14 +1,10 @@
-package com.hubo.gillajabi.crawl.domain.constant;
+package com.hubo.gillajabi.crawl.infrastructure.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class ApiProperties {
     private String endpoint;
     private String encoding;
