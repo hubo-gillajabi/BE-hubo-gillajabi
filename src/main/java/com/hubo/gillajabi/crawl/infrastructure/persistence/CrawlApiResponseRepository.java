@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.crawl.domain.repository;
+package com.hubo.gillajabi.crawl.infrastructure.persistence;
 
 import com.hubo.gillajabi.crawl.domain.entity.CrawlApiResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
