@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.service;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.City;
-import com.hubo.gillajabi.crawl.domain.repository.CityRepository;
+import com.hubo.gillajabi.crawl.infrastructure.persistence.CityRepository;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.crawl.infrastructure.util.helper.CrawlResponseParserHelper;
@@ -23,27 +23,40 @@ public class CityService {
 
     private final CityRepository cityRepository;
 
-    public List<City> saveCity(List<DuruCourseResponse.Course> responseItems) {
+    public List<City> saveCity(final List<DuruCourseResponse.Course> responseItems) {
         List<City> cities = new ArrayList<>();
         for (DuruCourseResponse.Course item : responseItems) {
-            try {
-                String provinceName = CrawlResponseParserHelper.parseDuruResponseByProvince(item.getSigun());
-                Province province = Province.fromValue(provinceName);
-                String cityName = CrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
-
-                Optional<City> existingCity = cityRepository.findByNameAndProvince(cityName, province);
-
-                if (existingCity.isEmpty()) {
-                    City city = new City(cityName, province);
-                    cityRepository.save(city);
-                    cities.add(city);
-                } else {
-                    cities.add(existingCity.get());
-                }
-            } catch (CrawlException e) {
-                log.error("CityService.saveCity 실행중 문제 발생: {}", e.getMessage());
-            }
+            processCourseItem(cities, item);
         }
         return cities;
     }
+
+    private void processCourseItem(final List<City> cities, final DuruCourseResponse.Course item) {
+        try {
+            final City city = createCityFromCourseItem(item);
+            cities.add(city);
+        } catch (final CrawlException e) {
+            log.error("CityService.saveCity 실행중 문제 발생: {}", e.getMessage());
+        }
+    }
+
+    private City createCityFromCourseItem(final DuruCourseResponse.Course item) {
+        final String provinceName = CrawlResponseParserHelper.parseDuruResponseByProvince(item.getSigun());
+        final Province province = Province.fromValue(provinceName);
+        final String cityName = CrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
+
+        return createOrFindCity(cityName, province);
+    }
+
+    private City createOrFindCity(final String cityName, final Province province) {
+        return cityRepository.findByNameAndProvince(cityName, province)
+                .orElseGet(() -> createAndSaveCity(cityName, province));
+    }
+
+    private City createAndSaveCity(final String cityName, final Province province) {
+        final City city = City.of(cityName, province);
+        cityRepository.save(city);
+        return city;
+    }
 }
+
