@@ -1,7 +1,7 @@
-package com.hubo.gillajabi.crawl.application.stratgy;
-
+package com.hubo.gillajabi.crawl.domain.service;
+;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadProperties;
-import com.hubo.gillajabi.crawl.domain.constant.ApiProperties;
+import com.hubo.gillajabi.crawl.infrastructure.config.ApiProperties;
 import com.hubo.gillajabi.crawl.domain.constant.CityName;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BusanCrawlStrategy implements CrawlStrategy {
+public class CrawlBusanServiceImpl extends AbstarctCrawlService  {
 
     private final RoadProperties roadProperties;
 
