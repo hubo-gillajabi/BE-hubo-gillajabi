@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.crawl.infrastructure.util.helper;
 
-import com.hubo.gillajabi.crawl.domain.constant.ApiProperties;
+import com.hubo.gillajabi.crawl.infrastructure.config.ApiProperties;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ValidatableResponse;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,9 @@ import java.net.URISyntaxException;
 @Component
 public class CrawlApiBuilderHelper {
 
-    public URI buildUri(String endpointPath, ApiProperties apiProperties, int pageNo, int numOfRows) {
+    public URI buildUri(final String endpointPath, final ApiProperties apiProperties, final int pageNo, final int numOfRows) {
         try {
-            String url = apiProperties.getSiteUrl()
+            final String url = apiProperties.getSiteUrl()
                     .replace("{}", endpointPath)
                     .replace("{serviceKey}", apiProperties.getEncoding())
                     .replace("{numOfRows}", String.valueOf(numOfRows))
