@@ -9,7 +9,7 @@ public enum CycleType {
         return switch (course.getCrsCycle()) {
             case "순환형" -> CYCLE;
             case "비순환형" -> SINGLE;
-            default -> throw new IllegalArgumentException("순환형, 비순환형 판별 안됨" + course.getCrsCycle());
+            default -> throw new IllegalArgumentException("순환형, 비순환형 판별 안됨 " + course.getCrsCycle());
         };
     }
 }
