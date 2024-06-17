@@ -1,9 +1,11 @@
-package com.hubo.gillajabi.crawl.domain.service;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.service.AbstarctCrawlService;
+import com.hubo.gillajabi.crawl.domain.service.ApiResponseService;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.AbstractDuruResponse;
 import com.hubo.gillajabi.crawl.infrastructure.util.helper.CrawlApiBuilderHelper;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadProperties;
@@ -74,7 +76,7 @@ public class CrawlDuruServiceImpl extends AbstarctCrawlService {
                 allItems.addAll(items);
                 pageNo++;
             } catch (Exception e) {
-                throw new CrawlException(500, "공공데이터 DURU 호출 중 예기치 못한 오류 발생");
+                throw new CrawlException(500, "공공데이터 DURU 호출 중 예기치 못한 오류 발생 :" +  e.getMessage());
             }
         }
         return allItems;

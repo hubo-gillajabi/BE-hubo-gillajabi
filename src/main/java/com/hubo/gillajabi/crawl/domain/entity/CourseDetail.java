@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.CycleType;
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDTO;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,47 +47,43 @@ public class CourseDetail extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CycleType cycleType; // 순환 여부
 
-    public static CourseDetail of(final DuruCourseResponse.Course item, final String startPoint,
-                                  final String endPoint, final String startPointTransport, final String endPointTransport, final CycleType cycleType) {
+    public static CourseDetail createCourseDetail(final CourseDetailRequestDTO request) {
         return new CourseDetail(
                 null,
-                item.getCrsTourInfo(),
-                item.getCrsContents(),
-                startPoint,
-                endPoint,
-                startPointTransport,
-                endPointTransport,
-                Integer.valueOf(item.getCrsTotlRqrmHour()),
-                item.getGpxpath(),
-                cycleType
+                request.getTourInfo(),
+                request.getCourseDescription(),
+                request.getStartPoint(),
+                request.getEndPoint(),
+                request.getStartPointTransport(),
+                request.getEndPointTransport(),
+                request.getTotalTimeRequired(),
+                request.getGpxPath(),
+                request.getCycleType()
         );
     }
 
-
-    public void update(final DuruCourseResponse.Course item, final String startPoint, final String endPoint,
-                       final String startPointTransport, final String endPointTransport, final CycleType cycleType) {
-        this.tourInfo = item.getCrsTourInfo();
-        this.courseDescription = item.getCrsContents();
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.startPointTransport = startPointTransport;
-        this.endPointTransport = endPointTransport;
-        this.totalTimeRequired = Integer.valueOf(item.getCrsTotlRqrmHour());
-        this.cycleType = cycleType;
-        this.gpxPath = item.getGpxpath();
+    public void update(final CourseDetailRequestDTO request) {
+        this.tourInfo = request.getTourInfo();
+        this.courseDescription = request.getCourseDescription();
+        this.startPoint = request.getStartPoint();
+        this.endPoint = request.getEndPoint();
+        this.startPointTransport = request.getStartPointTransport();
+        this.endPointTransport = request.getEndPointTransport();
+        this.totalTimeRequired = request.getTotalTimeRequired();
+        this.gpxPath = request.getGpxPath();
+        this.cycleType = request.getCycleType();
     }
 
-    public boolean isCheckUpdate(final DuruCourseResponse.Course item, final String startPoint, final String endPoint,
-                                 final String startPointTransport, final String endPointTransport, final CycleType cycleType) {
-        return !Objects.equals(this.tourInfo, item.getCrsTourInfo()) ||
-                !Objects.equals(this.courseDescription, item.getCrsContents()) ||
-                !Objects.equals(this.startPoint, startPoint) ||
-                !Objects.equals(this.endPoint, endPoint) ||
-                !Objects.equals(this.startPointTransport, startPointTransport) ||
-                !Objects.equals(this.endPointTransport, endPointTransport) ||
-                !Objects.equals(this.totalTimeRequired, Integer.valueOf(item.getCrsTotlRqrmHour())) ||
-                !Objects.equals(this.cycleType, cycleType) ||
-                !Objects.equals(this.gpxPath, item.getGpxpath());
+    public boolean isCheckUpdate(final CourseDetailRequestDTO request) {
+        return !Objects.equals(this.tourInfo, request.getTourInfo())
+                || !Objects.equals(this.courseDescription, request.getCourseDescription())
+                || !Objects.equals(this.startPoint, request.getStartPoint())
+                || !Objects.equals(this.endPoint, request.getEndPoint())
+                || !Objects.equals(this.startPointTransport, request.getStartPointTransport())
+                || !Objects.equals(this.endPointTransport, request.getEndPointTransport())
+                || !Objects.equals(this.totalTimeRequired, request.getTotalTimeRequired())
+                || !Objects.equals(this.gpxPath, request.getGpxPath())
+                || this.cycleType != request.getCycleType();
     }
 
 }

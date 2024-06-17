@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.entity;
 
 
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,62 +56,61 @@ public class Course extends BaseEntity {
     private City city;
 
 
-    public static Course createCourse(final String originName, final Integer distance, final Integer totalTimeRequired, final CourseLevel level,
-                                      final String shortDescription, final String courseNumber, final City city, final CourseTheme courseTheme) {
-        return new Course(null, originName, distance, totalTimeRequired, level, shortDescription, courseNumber,
-                null, null, null, courseTheme, city);
+    public static Course createCourse(final CourseRequestDTO request) {
+        return new Course(null, request.getCourseName(), request.getDistance(), request.getTotalRequiredHours(),
+                request.getLevel(), request.getShortDescription(), request.getCourseNumber(),
+                null, null, null, request.getCourseTheme(), request.getCity());
     }
 
-    public boolean checkUpdate(final DuruCourseResponse.Course course, final City city, final CourseLevel level,
-                               final String shortDescription, final String courseNumber, final CourseTheme courseTheme) {
+    public boolean checkUpdate(final CourseRequestDTO request) {
         boolean isUpdated = false;
 
-        if (!this.originName.equals(course.getCrsKorNm())) {
+        if (!this.originName.equals(request.getCourseName())) {
             isUpdated = true;
         }
 
-        if (!this.distance.equals(Integer.valueOf(course.getCrsDstnc()))) {
+        if (!this.distance.equals(request.getDistance())) {
             isUpdated = true;
         }
 
-        if (!this.totalTimeRequired.equals(Integer.valueOf(course.getCrsTotlRqrmHour()))) {
+        if (!this.totalTimeRequired.equals(request.getTotalRequiredHours())) {
             isUpdated = true;
         }
 
-        if (this.level != level) {
+        if (this.level != request.getLevel()) {
             isUpdated = true;
         }
 
-        if (!this.shortDescription.equals(shortDescription)) {
+        if (!this.shortDescription.equals(request.getShortDescription())) {
             isUpdated = true;
         }
 
-        if (!this.courseNumber.equals(courseNumber)) {
+        if (!this.courseNumber.equals(request.getCourseNumber())) {
             isUpdated = true;
         }
 
-        if (!this.city.equals(city)) {
+        if (!this.city.equals(request.getCity())) {
             isUpdated = true;
         }
 
-        if (!this.courseTheme.equals(courseTheme)) {
+        if (!this.courseTheme.equals(request.getCourseTheme())) {
             isUpdated = true;
         }
 
         return isUpdated;
     }
 
-    public void update(final DuruCourseResponse.Course item, final City city, final CourseLevel level,
-                       final String shortDescription, final String courseNumber, final CourseTheme courseTheme) {
-        this.originName = item.getCrsKorNm();
-        this.distance = Integer.valueOf(item.getCrsDstnc());
-        this.totalTimeRequired = Integer.valueOf(item.getCrsTotlRqrmHour());
-        this.level = level;
-        this.shortDescription = shortDescription;
-        this.courseNumber = courseNumber;
-        this.city = city;
-        this.courseTheme = courseTheme;
+    public void update(final CourseRequestDTO request) {
+        this.originName = request.getCourseName();
+        this.distance = request.getDistance();
+        this.totalTimeRequired = request.getTotalRequiredHours();
+        this.level = request.getLevel();
+        this.shortDescription = request.getShortDescription();
+        this.courseNumber = request.getCourseNumber();
+        this.city = request.getCity();
+        this.courseTheme = request.getCourseTheme();
     }
+
 
     public void addCourseDetail(CourseDetail existingDetail) {
         this.courseDetail =existingDetail;

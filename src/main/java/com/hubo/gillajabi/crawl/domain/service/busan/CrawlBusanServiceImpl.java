@@ -1,5 +1,6 @@
-package com.hubo.gillajabi.crawl.domain.service;
+package com.hubo.gillajabi.crawl.domain.service.busan;
 ;
+import com.hubo.gillajabi.crawl.domain.service.AbstarctCrawlService;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadProperties;
 import com.hubo.gillajabi.crawl.infrastructure.config.ApiProperties;
 import com.hubo.gillajabi.crawl.domain.constant.CityName;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CrawlBusanServiceImpl extends AbstarctCrawlService  {
+public class CrawlBusanServiceImpl extends AbstarctCrawlService {
 
     private final RoadProperties roadProperties;
 

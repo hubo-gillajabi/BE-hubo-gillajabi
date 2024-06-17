@@ -1,6 +1,7 @@
 package com.hubo.gillajabi.crawl.application.service;
 
 
+import com.hubo.gillajabi.crawl.application.dto.response.CrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CityName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,21 @@ public class CrawlFacadeService {
     private final DuruThemeHandler duruThemeHandler;
     private final BusanThemeHandler busanThemeHandler;
 
-
-    public String getCourse(final CityName cityName) {
+    public CrawlResponse.CourseResult getCourse(final CityName cityName) {
         return switch (cityName) {
             case DURU -> duruCourseHandler.handle();
             case BUSAN -> busanCourseHandler.handle();
         };
     }
 
-    public String getTheme(final CityName cityName) {
+    public CrawlResponse.ThemeResult getTheme(final CityName cityName) {
         return switch (cityName) {
             case DURU -> duruThemeHandler.handle();
             case BUSAN -> busanThemeHandler.handle();
         };
     }
 }
+
+
 
 

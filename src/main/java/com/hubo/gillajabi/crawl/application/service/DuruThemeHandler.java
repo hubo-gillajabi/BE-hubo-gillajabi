@@ -1,8 +1,10 @@
 package com.hubo.gillajabi.crawl.application.service;
 
 
-import com.hubo.gillajabi.crawl.domain.service.CourseThemeSerivce;
-import com.hubo.gillajabi.crawl.domain.service.CrawlDuruServiceImpl;
+import com.hubo.gillajabi.crawl.application.dto.response.CrawlResponse;
+import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
+import com.hubo.gillajabi.crawl.domain.service.duru.CourseDuruThemeService;
+import com.hubo.gillajabi.crawl.domain.service.duru.CrawlDuruServiceImpl;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruThemeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,11 @@ import java.util.List;
 public class DuruThemeHandler {
 
     private final CrawlDuruServiceImpl duruCrawlService;
-    private final CourseThemeSerivce courseThemeService;
+    private final CourseDuruThemeService courseDuruThemeService;
 
-    public String handle(){
-            List<DuruThemeResponse.Theme> responseItems = duruCrawlService.crawlTheme();
-            courseThemeService.saveDuruTheme(responseItems);
-            return responseItems.size() + "개의 데이터가 저장되었습니다.";
-        }
+    public CrawlResponse.ThemeResult handle() {
+        List<DuruThemeResponse.Theme> responseItems = duruCrawlService.crawlTheme();
+        List<CourseTheme> themes = courseDuruThemeService.saveDuruTheme(responseItems);
+        return CrawlResponse.ThemeResult.from(themes);
+    }
 }

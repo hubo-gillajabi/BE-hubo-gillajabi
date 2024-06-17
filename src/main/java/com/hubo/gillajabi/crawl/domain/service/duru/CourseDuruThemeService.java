@@ -1,6 +1,7 @@
-package com.hubo.gillajabi.crawl.domain.service;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruThemeResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseThemeRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +14,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CourseThemeService {
+public class CourseDuruThemeService {
 
     private final CourseThemeRepository courseThemeRepository;
 
-    public void saveDuruTheme(List<DuruThemeResponse.Theme> items) {
+    public List<CourseTheme> saveDuruTheme(List<DuruThemeResponse.Theme> items) {
         List<CourseTheme> courseThemes = createOrUpdateCourseThemes(items);
         courseThemeRepository.saveAll(courseThemes);
+
+        return courseThemes;
     }
 
     private List<CourseTheme> createOrUpdateCourseThemes(List<DuruThemeResponse.Theme> items) {
@@ -43,10 +46,7 @@ public class CourseThemeService {
     }
 
     private CourseTheme createNewCourseTheme(DuruThemeResponse.Theme item) {
-        return CourseTheme.builder()
-                .name(item.getThemeNm())
-                .description(item.getThemedescs())
-                .shortDescription(item.getLinemsg())
-                .build();
+        CourseThemeRequestDTO requestDTO = CourseThemeRequestDTO.from(item);
+        return CourseTheme.createCourseTheme(requestDTO);
     }
 }
