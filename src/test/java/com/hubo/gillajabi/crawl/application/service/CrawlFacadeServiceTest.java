@@ -38,11 +38,7 @@ public class CrawlFacadeServiceTest {
     public void testGetDuruCourse() {
        // given
         CrawlResponse.CourseResult duruCourseResult = fixtureMonkey.giveMeBuilder(CrawlResponse.CourseResult.class)
-                .set("cityCount", 1)
-                .set("courseCount", 1)
-                .set("courseDetailCount", 1)
-                .set("gpxInfoCount", 1)
-                .sample();
+                        .sample();
 
         when(duruCourseHandler.handle()).thenReturn(duruCourseResult);
 
@@ -59,10 +55,6 @@ public class CrawlFacadeServiceTest {
     public void testGetBusanCourse() {
         // given
         CrawlResponse.CourseResult busanCourseResult = fixtureMonkey.giveMeBuilder(CrawlResponse.CourseResult.class)
-                .set("cityCount", 1)
-                .set("courseCount", 1)
-                .set("courseDetailCount", 1)
-                .set("gpxInfoCount", 1)
                 .sample();
 
         when(busanCourseHandler.handle()).thenReturn(busanCourseResult);
@@ -80,7 +72,6 @@ public class CrawlFacadeServiceTest {
     public void testGetDuruTheme() {
         // given
         CrawlResponse.ThemeResult duruThemeResult = fixtureMonkey.giveMeBuilder(CrawlResponse.ThemeResult.class)
-                .set("themeCount", 1)
                 .sample();
 
         when(duruThemeHandler.handle()).thenReturn(duruThemeResult);
@@ -98,7 +89,6 @@ public class CrawlFacadeServiceTest {
     public void testGetBusanTheme() {
         // given
         CrawlResponse.ThemeResult busanThemeResult = fixtureMonkey.giveMeBuilder(CrawlResponse.ThemeResult.class)
-                .set("themeCount", 1)
                 .sample();
 
         when(busanThemeHandler.handle()).thenReturn(busanThemeResult);
