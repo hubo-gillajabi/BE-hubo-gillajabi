@@ -18,6 +18,7 @@ jobs:
 
       - name: Initialize and update submodules
         run: |
+          git submodule sync
           git submodule update --init --recursive
 
       - name: Checkout secret code
