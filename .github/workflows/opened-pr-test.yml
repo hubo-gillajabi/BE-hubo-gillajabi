@@ -6,6 +6,7 @@ on:
     types: [ reopened, opened, synchronize ]
     paths:
       - 'src/main/java/**'
+      - 'src/test/java/**'
 
 jobs:
   test:
@@ -67,7 +68,7 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./build/reports/jacoco/test/jacocoTestReport.xml
+
 
 
 
