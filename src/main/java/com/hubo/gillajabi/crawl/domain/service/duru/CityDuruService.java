@@ -37,7 +37,7 @@ public class CityDuruService {
             final City city = createOrFindCity(cityRequestDTO);
             cities.add(city);
         } catch (final CrawlException e) {
-            log.error("CityService.saveCity 실행중 문제 발생: {}", e.getMessage());
+            log.error("CityService.saveCity 실행중 문제 발생: " + e.getMessage());
         }
     }
 

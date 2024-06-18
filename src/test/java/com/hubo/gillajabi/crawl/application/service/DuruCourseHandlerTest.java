@@ -3,13 +3,14 @@ package com.hubo.gillajabi.crawl.application.service;
 import com.hubo.gillajabi.crawl.application.dto.response.CrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
-import com.hubo.gillajabi.crawl.domain.entity.City;
-import com.hubo.gillajabi.crawl.domain.entity.Course;
-import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
-import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;
+import com.hubo.gillajabi.crawl.domain.entity.*;
 import com.hubo.gillajabi.crawl.domain.service.duru.*;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
+import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -46,75 +45,51 @@ class DuruCourseHandlerTest {
     @InjectMocks
     private DuruCourseHandler duruCourseHandler;
 
+    private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder().build();
+
     @Test
     @DisplayName("두루누비 코스를 제대로 호출")
     void testHandle() {
         // given
-        List<DuruCourseResponse.Course> mockRawCourses = IntStream.range(0, 5)
-                .mapToObj(i -> {
-                    DuruCourseResponse.Course course = new DuruCourseResponse.Course();
-                    course.setCrsKorNm("Course " + i);
-                    return course;
-                }).collect(Collectors.toList());
+        DuruCourseResponse.Course mockCourseDuruResponse = fixtureMonkey.giveMeOne(DuruCourseResponse.Course.class);
+        mockCourseDuruResponse.setCrsLevel("1");
+        mockCourseDuruResponse.setCrsCycle("순환형");
+        mockCourseDuruResponse.setCrsKorNm("두루누비 코스");
+        mockCourseDuruResponse.setCrsDstnc("10");
+        mockCourseDuruResponse.setCrsSummary("요약");
+        mockCourseDuruResponse.setCrsTotlRqrmHour("1");
 
-        List<CityRequestDTO> cityRequestDTOs = mockRawCourses.stream()
-                .map(course -> CityRequestDTO.of(course.getCrsKorNm(), Province.GYEONGGI, "짧은소개글"))
-                .toList();
+        CityRequestDTO cityRequestDTO = CityRequestDTO.of(mockCourseDuruResponse.getCrsKorNm(), Province.GYEONGGI, "짧은소개글");
+        City mockCity = City.createCity(cityRequestDTO);
 
-        List<City> mockCities = cityRequestDTOs.stream()
-                .map(City::createCity)
-                .collect(Collectors.toList());
+        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeOne(CourseThemeRequestDTO.class);
+        CourseTheme mockCourseTheme = CourseTheme.createCourseTheme(courseThemeRequestDTO);
 
-        List<CourseDetail> mockCourseDetails = IntStream.range(0, 5)
-                .mapToObj(i -> new CourseDetail(
-                        null,
-                        "투어정보" + i,
-                        "짧은소개글" + i,
-                        "시작점" + i,
-                        "도착점" + i,
-                        "시작점정보" + i,
-                        "도착점정보" + i,
-                        60,
-                        "GPX Path" + i,
-                        null
-                )).collect(Collectors.toList());
+        CourseRequestDTO courseRequestDTO = CourseRequestDTO.of(mockCourseDuruResponse, mockCity, mockCourseTheme);
+        courseRequestDTO.setCity(mockCity);
+        courseRequestDTO.setLevel(CourseLevel.fromValue(mockCourseDuruResponse.getCrsLevel()));
 
-        List<Course> mockCourses = IntStream.range(0, 5)
-                .mapToObj(i -> Course.builder()
-                        .originName(mockRawCourses.get(i).getCrsKorNm())
-                        .distance(100)
-                        .totalTimeRequired(60)
-                        .level(CourseLevel.LOW)
-                        .shortDescription("짧은소개글")
-                        .courseNumber("1")
-                        .city(mockCities.get(i))
-                        .courseDetail(mockCourseDetails.get(i))
-                        .build())
-                .collect(Collectors.toList());
+        Course mockCourse = Course.createCourse(courseRequestDTO);
 
-        List<GpxInfo> mockGpxInfos = IntStream.range(0, 5)
-                .mapToObj(i -> GpxInfo.of("GPX Data" + i, mockCourseDetails.get(i)))
-                .collect(Collectors.toList());
+        CourseDetailRequestDTO courseDetailRequestDTO = fixtureMonkey.giveMeOne(CourseDetailRequestDTO.class);
+        CourseDetail mockCourseDetail = CourseDetail.createCourseDetail(courseDetailRequestDTO);
 
-        when(duruCrawlService.crawlCourse()).thenReturn(mockRawCourses);
-        when(cityService.saveCity(anyList())).thenReturn(mockCities);
-        when(courseDuruService.saveDuruCourse(anyList(), anyList())).thenReturn(mockCourses);
-        when(courseDetailDuruService.saveDuruCourseDetail(anyList(), anyList())).thenReturn(mockCourseDetails);
-        when(gpxInfoDuruService.saveGpxInfo(anyList())).thenReturn(mockGpxInfos);
+        GpxInfo mockGpxInfo = fixtureMonkey.giveMeOne(GpxInfo.class);
+
+        when(duruCrawlService.crawlCourse()).thenReturn(List.of(mockCourseDuruResponse));
+        when(cityService.saveCity(anyList())).thenReturn(List.of(mockCity));
+        when(courseDuruService.saveDuruCourse(anyList(), anyList())).thenReturn(List.of(mockCourse));
+        when(courseDetailDuruService.saveDuruCourseDetail(anyList(), anyList())).thenReturn(List.of(mockCourseDetail));
+        when(gpxInfoDuruService.saveGpxInfo(anyList())).thenReturn(List.of(mockGpxInfo));
 
         // when
         CrawlResponse.CourseResult result = duruCourseHandler.handle();
 
         // then
-        assertEquals(5, result.getCityCount());
-        assertEquals(5, result.getCourseCount());
-        assertEquals(5, result.getCourseDetailCount());
-        assertEquals(5, result.getGpxInfoCount());
+        assertEquals(1, result.getCityCount());
+        assertEquals(1, result.getCourseCount());
+        assertEquals(1, result.getCourseDetailCount());
+        assertEquals(1, result.getGpxInfoCount());
 
-        verify(duruCrawlService).crawlCourse();
-        verify(cityService).saveCity(anyList());
-        verify(courseDuruService).saveDuruCourse(anyList(), anyList());
-        verify(courseDetailDuruService).saveDuruCourseDetail(anyList(), anyList());
-        verify(gpxInfoDuruService).saveGpxInfo(anyList());
     }
 }

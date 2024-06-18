@@ -10,6 +10,7 @@ import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDT
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruGpxResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.GpxInfoRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +40,12 @@ class GpxInfoDuruServiceTest {
     private GpxInfoDuruService gpxInfoDuruService;
 
     private final FixtureMonkey fixtureMonkey = FixtureMonkey.create();
+
+    @BeforeEach
+    public void setUp() {
+        CourseDetailRequestDTO courseDetailRequestDTO = fixtureMonkey.giveMeOne(CourseDetailRequestDTO.class);
+        courseDetailRequestDTO.setGpxPath("http://gpxpath.com.kmz");
+    }
 
     public void mockApiResponseService() throws JsonProcessingException {
         // 외부 의존성을 모킹한다
@@ -78,7 +85,6 @@ class GpxInfoDuruServiceTest {
         assertEquals(mockCourseDetails.size(), savedGpxInfos.size());
     }
 
-    //TODO : kmz로 끝나는 경우 기능 추가
     @Test
     @DisplayName("gpxPath가 kmz로 끝나는 경우 패스한다")
     public void gpxPath가_kmz로_끝나는_경우() {
