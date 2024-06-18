@@ -34,7 +34,7 @@ jobs:
       - name: Copy test mocked files from submodule
         run: |
           mkdir -p src/test/resources
-          cp BE-hubo-gillajabi-resources/resources/test/*.json src/test/resources/
+          cp BE-hubo-gillajabi-resources/resources/test/**/*, src/test/resources/
 
       - name: Gradle Caching
         uses: actions/cache@v3
