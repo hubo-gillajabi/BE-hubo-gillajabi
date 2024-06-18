@@ -47,40 +47,61 @@ class DuruCourseHandlerTest {
 
     private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder().build();
 
-    @Test
-    @DisplayName("두루누비 코스를 제대로 호출")
-    void testHandle() {
-        // given
-        DuruCourseResponse.Course mockCourseDuruResponse = fixtureMonkey.giveMeOne(DuruCourseResponse.Course.class);
-        mockCourseDuruResponse.setCrsLevel("1");
-        mockCourseDuruResponse.setCrsCycle("순환형");
-        mockCourseDuruResponse.setCrsKorNm("두루누비 코스");
-        mockCourseDuruResponse.setCrsDstnc("10");
-        mockCourseDuruResponse.setCrsSummary("요약");
-        mockCourseDuruResponse.setCrsTotlRqrmHour("1");
+    public DuruCourseResponse.Course createDuruCourseResponse(){
+        DuruCourseResponse.Course response = fixtureMonkey.giveMeBuilder(DuruCourseResponse.Course.class).sample();
+        response.setCrsKorNm("남해랑길 1코스");
+        response.setCrsLevel("1");
+        response.setGpxpath("http://example.com");
+        response.setCrsCycle("비순환형");
+        response.setCrsSummary("남해랑길 1코스 소개");
+        response.setCrsTotlRqrmHour("1");
+        response.setCrsDstnc("1");
+        return response;
+    }
+    private static CourseDetail createCourseDetail() {
+        CourseDetailRequestDTO courseDetailRequestDTO = fixtureMonkey.giveMeOne(CourseDetailRequestDTO.class);
+        return CourseDetail.createCourseDetail(courseDetailRequestDTO);
+    }
 
-        CityRequestDTO cityRequestDTO = CityRequestDTO.of(mockCourseDuruResponse.getCrsKorNm(), Province.GYEONGGI, "짧은소개글");
-        City mockCity = City.createCity(cityRequestDTO);
-
-        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeOne(CourseThemeRequestDTO.class);
-        CourseTheme mockCourseTheme = CourseTheme.createCourseTheme(courseThemeRequestDTO);
-
+    private static Course createCourse(DuruCourseResponse.Course mockCourseDuruResponse, City mockCity, CourseTheme mockCourseTheme) {
         CourseRequestDTO courseRequestDTO = CourseRequestDTO.of(mockCourseDuruResponse, mockCity, mockCourseTheme);
         courseRequestDTO.setCity(mockCity);
         courseRequestDTO.setLevel(CourseLevel.fromValue(mockCourseDuruResponse.getCrsLevel()));
 
-        Course mockCourse = Course.createCourse(courseRequestDTO);
+        return Course.createCourse(courseRequestDTO);
+    }
 
-        CourseDetailRequestDTO courseDetailRequestDTO = fixtureMonkey.giveMeOne(CourseDetailRequestDTO.class);
-        CourseDetail mockCourseDetail = CourseDetail.createCourseDetail(courseDetailRequestDTO);
+    private static CourseTheme createCourseTheme() {
+        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeOne(CourseThemeRequestDTO.class);
+        return CourseTheme.createCourseTheme(courseThemeRequestDTO);
+    }
 
-        GpxInfo mockGpxInfo = fixtureMonkey.giveMeOne(GpxInfo.class);
+    private static City createCity(DuruCourseResponse.Course mockCourseDuruResponse) {
+        CityRequestDTO cityRequestDTO = CityRequestDTO.of(mockCourseDuruResponse.getCrsKorNm(), Province.GYEONGGI, "짧은소개글");
+        return City.createCity(cityRequestDTO);
+    }
+
+    private void mockDuruHandle() {
+        DuruCourseResponse.Course mockCourseDuruResponse = createDuruCourseResponse();
+        City mockCity = createCity(mockCourseDuruResponse);
+        CourseTheme mockCourseTheme = createCourseTheme();
+        Course mockCourse = createCourse(mockCourseDuruResponse, mockCity, mockCourseTheme);
+        CourseDetail mockCourseDetail = createCourseDetail();
+        GpxInfo mockGpxInfo = GpxInfo.of("http://gpxpath.com", mockCourseDetail);
 
         when(duruCrawlService.crawlCourse()).thenReturn(List.of(mockCourseDuruResponse));
         when(cityService.saveCity(anyList())).thenReturn(List.of(mockCity));
         when(courseDuruService.saveDuruCourse(anyList(), anyList())).thenReturn(List.of(mockCourse));
         when(courseDetailDuruService.saveDuruCourseDetail(anyList(), anyList())).thenReturn(List.of(mockCourseDetail));
         when(gpxInfoDuruService.saveGpxInfo(anyList())).thenReturn(List.of(mockGpxInfo));
+    }
+
+
+    @Test
+    @DisplayName("두루누비 코스를 제대로 호출")
+    void testHandle() {
+        // given
+        mockDuruHandle();
 
         // when
         CrawlResponse.CourseResult result = duruCourseHandler.handle();
@@ -92,4 +113,6 @@ class DuruCourseHandlerTest {
         assertEquals(1, result.getGpxInfoCount());
 
     }
+
+
 }
