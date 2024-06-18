@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/crawl")
 @RequiredArgsConstructor
-@Tag(name = "crawling 컨트롤러", description = "관리자 공공데이터 포털 호출 api")
+@Tag(name = "crawl 컨트롤러", description = "관리자 공공데이터 포털 호출 api")
 public class CrawlController {
 
     private final CrawlFacadeService crawlFacadeService;
