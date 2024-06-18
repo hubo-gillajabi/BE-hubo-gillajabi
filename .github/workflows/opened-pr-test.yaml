@@ -33,16 +33,19 @@ jobs:
         run: |
           mkdir -p src/main/resources
           cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
+          echo "Copied $(ls -1 src/main/resources/application*.yml | wc -l) application.yml files"
 
       - name: Copy resources db files from submodule
         run: |
           mkdir -p src/main/resources/db
-          cp -r BE-hubo-gillajabi-resources/resources/db/* src/main/resources/db/    
+          cp -r BE-hubo-gillajabi-resources/resources/db/* src/main/resources/db/
+          echo "Copied $(ls -1 src/main/resources/db/* | wc -l) db files"
 
       - name: Copy test mocked files from submodule
         run: |
           mkdir -p src/test/resources
-            cp -r BE-hubo-gillajabi-resources/test/mockedResponses/* src/test/resources/
+          cp -r BE-hubo-gillajabi-resources/test/mockedResponses/* src/test/resources/
+          echo "Copied $(ls -1 src/test/resources/* | wc -l) test mocked files"
 
       - name: Gradle Caching
         uses: actions/cache@v3
