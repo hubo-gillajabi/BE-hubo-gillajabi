@@ -7,7 +7,7 @@ on:
     paths:
       - 'src/main/java/**'
       - 'src/test/java/**'
-      - './github/workflows/opened-pr-test.yaml'
+      - '.github/workflows/opened-pr-test.yml'
 
 jobs:
   test:
