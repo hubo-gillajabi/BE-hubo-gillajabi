@@ -20,7 +20,7 @@ public class CrawlController {
     private final CrawlFacadeService crawlFacadeService;
 
     @Operation(summary = "전국 길 크롤링 ", description = "만약 해당 정보가 존재한다면 생략합니다.")
-    @GetMapping
+    @GetMapping("/courses")
     public ResponseEntity<CrawlResponse.CourseResult> startCrawlingCurse(@Valid @RequestParam CityName cityName) {
 
         CrawlResponse.CourseResult response = crawlFacadeService.getCourse(cityName);
@@ -29,7 +29,7 @@ public class CrawlController {
     }
 
     @Operation(summary = "전국 길 테마 크롤링", description = "전국 길 테마 크롤링 (ex: 남파랑길)")
-    @GetMapping("/theme")
+    @GetMapping("/themes")
     public ResponseEntity<CrawlResponse.ThemeResult> startCrawlingTheme(@Valid @RequestParam CityName cityName) {
 
         CrawlResponse.ThemeResult response = crawlFacadeService.getTheme(cityName);
