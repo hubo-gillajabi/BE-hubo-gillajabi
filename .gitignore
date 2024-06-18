@@ -39,6 +39,7 @@ out/
 
 ### yml ###
 **/src/main/resources/*.yml
+**/src/test/resources/**/*.json
 
 ### sql ##
 **/src/main/resources/db/migration/*.sql
