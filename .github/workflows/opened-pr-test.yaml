@@ -31,6 +31,11 @@ jobs:
           mkdir -p src/main/resources
           cp BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
 
+      - name: Copy test mocked files from submodule
+        run: |
+          mkdir -p src/test/resources
+          cp BE-hubo-gillajabi-resources/resources/test/*.json src/test/resources/
+
       - name: Gradle Caching
         uses: actions/cache@v3
         with:
@@ -40,6 +45,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: copy application.yml files from submodule
+        run: |
+          mkdir -p src/main/resources
+          cp BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
