@@ -28,7 +28,7 @@ jobs:
       - name: copy application.yml files from submodule
         run: |
           mkdir -p src/main/resources
-          cp BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
+          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
