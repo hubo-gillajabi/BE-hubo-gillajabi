@@ -1,7 +1,6 @@
 package com.hubo.gillajabi.crawl.application.dto.response;
 
 import com.hubo.gillajabi.crawl.domain.entity.*;
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruThemeResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
