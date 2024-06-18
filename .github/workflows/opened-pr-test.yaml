@@ -6,6 +6,8 @@ on:
     types: [ reopened, opened, synchronize ]
     paths:
       - 'src/main/java/**'
+      - 'src/test/java/**'
+      - './github/workflows/opened-pr-test.yaml'
 
 jobs:
   test:
