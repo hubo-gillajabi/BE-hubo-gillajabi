@@ -2,7 +2,7 @@ name: Test workflows
 
 on:
   pull_request:
-    branches: [ "develop", "main", "hotfix" ]
+    branches: [ "develop", "main", "hotfix" , "HUBOBE-*" ]
     types: [ reopened, opened, synchronize ]
     paths:
       - 'src/main/java/**'
