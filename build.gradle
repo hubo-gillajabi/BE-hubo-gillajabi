@@ -79,7 +79,7 @@ processTestResources.dependsOn('copyTestResources')
 jacocoTestReport {
 
     reports {
-        html.required = false
+        html.required = true
         xml.required = true
         csv.required = false
     }
