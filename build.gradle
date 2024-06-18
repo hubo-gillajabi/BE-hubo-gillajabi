@@ -16,7 +16,7 @@ repositories {
     mavenCentral()
 }
 
-jacoco{
+jacoco {
     toolVersion = '0.8.12'
 }
 
@@ -25,6 +25,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation 'junit:junit:4.13.1'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -35,21 +38,48 @@ dependencies {
     testImplementation 'com.h2database:h2'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
+    implementation group: 'org.springframework.retry', name: 'spring-retry', version: '2.0.6'
+
+
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.17.2'
+
+//    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:14.0.0'
+//
+//    // testing facilities
+//    testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:14.0.0'
+
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.17")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.4'
 }
 
 tasks.register('copyResources', Copy) {
     from './BE-hubo-gillajabi-resources/resources'
-    include 'application.yml', 'application-*.yml'
+    include 'application.yml', 'application-*.yml', "db/*", "db/*/*"
     into 'src/main/resources'
 }
 
+tasks.register('copyTestResources', Copy) {
+    from './BE-hubo-gillajabi-resources/test'
+    include 'mockedResponses/*'
+    into 'src/test/resources'
+}
+
 processResources.dependsOn('copyResources')
+processTestResources.dependsOn('copyTestResources')
 
 
 jacocoTestReport {
 
     reports {
-        html.required = false
+        html.required = true
         xml.required = true
         csv.required = false
     }
