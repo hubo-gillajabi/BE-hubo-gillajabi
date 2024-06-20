@@ -58,11 +58,16 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.4'
+
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-graphql
+    implementation 'org.springframework.boot:spring-boot-starter-graphql:3.2.5'
+
 }
 
 tasks.register('copyResources', Copy) {
     from './BE-hubo-gillajabi-resources/resources'
-    include 'application.yml', 'application-*.yml', "db/*", "db/*/*"
+    include 'application.yml', 'application-*.yml', "db/*", "db/*/*", "graphql/*"
     into 'src/main/resources'
 }
 

@@ -43,3 +43,6 @@ out/
 
 ### sql ##
 **/src/main/resources/db/migration/*.sql
+
+## graphql scheme ##
+**/src/main/resources/graphql/*.graphqls
