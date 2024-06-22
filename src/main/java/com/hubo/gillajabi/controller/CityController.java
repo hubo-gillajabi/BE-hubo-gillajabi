@@ -4,13 +4,13 @@ import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
 //TODO: graphql 테스트 용 이므로 추후에 제거할것
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class CityController {
 
@@ -26,3 +26,5 @@ public class CityController {
         return cityRepository.findById(id);
     }
 }
+
+
