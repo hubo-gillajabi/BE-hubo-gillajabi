@@ -46,3 +46,7 @@ out/
 
 ## graphql scheme ##
 **/src/main/resources/graphql/*.graphqls
+
+
+## log ##
+**.csv
