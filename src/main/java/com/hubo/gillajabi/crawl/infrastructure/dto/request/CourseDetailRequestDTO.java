@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.infrastructure.dto.request;
 
 import com.hubo.gillajabi.crawl.domain.constant.CycleType;
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
+import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import lombok.*;
 
 @Getter
@@ -22,7 +22,7 @@ public class CourseDetailRequestDTO {
 
     private CycleType cycleType;
 
-    public static CourseDetailRequestDTO of(final DuruCourseResponse.Course item, final String startPoint, final String endPoint,
+    public static CourseDetailRequestDTO of(final ApiCourseResponse.Course item, final String startPoint, final String endPoint,
                                             final String startPointTransport, final String endPointTransport) {
         return new CourseDetailRequestDTO(
                 item.getCrsKorNm(),

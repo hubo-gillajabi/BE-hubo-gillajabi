@@ -1,11 +1,11 @@
 package com.hubo.gillajabi.crawl.domain.constant;
 
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruCourseResponse;
+import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 
 public enum CycleType {
     CYCLE, SINGLE;
 
-    public static CycleType fromValue(DuruCourseResponse.Course course) {
+    public static CycleType fromValue(ApiCourseResponse.Course course) {
         return switch (course.getCrsCycle()) {
             case "순환형" -> CYCLE;
             case "비순환형" -> SINGLE;
