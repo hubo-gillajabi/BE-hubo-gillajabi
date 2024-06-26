@@ -7,7 +7,9 @@ public enum CrawlExceptionCode {
     UNSIGNED_CALL_ERROR(33, "서명되지 않은 호출"),
     SERVICETIMEOUT_ERROR(5, "서비스 연결 실패 에러"),
     NODATA_ERROR(3, "데이터 없음 에러"),
-    DB_ERROR(2, "데이터베이스 에러");
+    DB_ERROR(2, "데이터베이스 에러"),
+    //파싱 실패 에러
+    PARSING_ERROR(4, "파싱 실패 에러");
 
     private final int code;
     private final String message;
