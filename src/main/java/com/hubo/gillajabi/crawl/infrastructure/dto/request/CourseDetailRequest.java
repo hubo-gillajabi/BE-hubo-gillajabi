@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CourseDetailRequestDTO {
+public class CourseDetailRequest {
     private String courseName;
     private String tourInfo;
     private String courseDescription;
@@ -22,9 +22,9 @@ public class CourseDetailRequestDTO {
 
     private CycleType cycleType;
 
-    public static CourseDetailRequestDTO of(final ApiCourseResponse.Course item, final String startPoint, final String endPoint,
-                                            final String startPointTransport, final String endPointTransport) {
-        return new CourseDetailRequestDTO(
+    public static CourseDetailRequest of(final ApiCourseResponse.Course item, final String startPoint, final String endPoint,
+                                         final String startPointTransport, final String endPointTransport) {
+        return new CourseDetailRequest(
                 item.getCrsKorNm(),
                 item.getCrsTourInfo(),
                 item.getCrsContents(),
