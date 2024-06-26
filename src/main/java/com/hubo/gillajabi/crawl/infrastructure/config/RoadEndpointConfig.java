@@ -1,9 +1,8 @@
 package com.hubo.gillajabi.crawl.infrastructure.config;
 
 import com.hubo.gillajabi.global.common.dto.ApiProperties;
-import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,13 +12,12 @@ import java.util.Map;
 
 @Configuration
 @ConfigurationProperties(prefix = "road")
-@Slf4j
 @Getter
 public class RoadEndpointConfig {
 
-    private final Map<CityName, ApiProperties> roadEndpoints = new EnumMap<>(CityName.class);
+    private final Map<CityCrawlName, ApiProperties> roadEndpoints = new EnumMap<>(CityCrawlName.class);
 
-    public ApiProperties getEndpoint(CityName cityName) {
-        return roadEndpoints.get(cityName);
+    public ApiProperties getEndpoint(CityCrawlName cityCrawlName) {
+        return roadEndpoints.get(cityCrawlName);
     }
 }
