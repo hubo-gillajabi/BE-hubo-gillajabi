@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.crawl.application.service;
+package com.hubo.gillajabi.crawl.domain.service.busan;
 
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import lombok.RequiredArgsConstructor;

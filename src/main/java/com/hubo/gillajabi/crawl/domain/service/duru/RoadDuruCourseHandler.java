@@ -1,11 +1,10 @@
-package com.hubo.gillajabi.crawl.application.service;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;
-import com.hubo.gillajabi.crawl.domain.service.duru.*;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

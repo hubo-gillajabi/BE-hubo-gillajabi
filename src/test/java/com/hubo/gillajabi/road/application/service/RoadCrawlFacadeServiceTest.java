@@ -5,7 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.hubo.gillajabi.crawl.application.service.*;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
-import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
+import com.hubo.gillajabi.crawl.domain.service.busan.RoadBusanThemeHandler;
+import com.hubo.gillajabi.crawl.domain.service.busan.RoadCrawlBusanCourseHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruCourseHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruThemeHandler;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +48,7 @@ public class RoadCrawlFacadeServiceTest {
         when(roadDuruCourseHandler.handle()).thenReturn(duruCourseResult);
 
         // when
-        assertEquals(duruCourseResult, roadCrawlFacadeService.getCourse(CityName.DURU));
+        assertEquals(duruCourseResult, roadCrawlFacadeService.getCourse(CityCrawlName.DURU));
 
         // then
         verify(roadDuruCourseHandler).handle();
@@ -61,7 +65,7 @@ public class RoadCrawlFacadeServiceTest {
         when(roadCrawlBusanCourseHandler.handle()).thenReturn(busanCourseResult);
 
         // when
-        assertEquals(busanCourseResult, roadCrawlFacadeService.getCourse(CityName.BUSAN));
+        assertEquals(busanCourseResult, roadCrawlFacadeService.getCourse(CityCrawlName.BUSAN));
 
         // then
         verify(roadCrawlBusanCourseHandler).handle();
@@ -78,7 +82,7 @@ public class RoadCrawlFacadeServiceTest {
         when(roadDuruThemeHandler.handle()).thenReturn(duruThemeResult);
 
         // when
-        assertEquals(duruThemeResult, roadCrawlFacadeService.getTheme(CityName.DURU));
+        assertEquals(duruThemeResult, roadCrawlFacadeService.getTheme(CityCrawlName.DURU));
 
         // then
         verify(roadDuruThemeHandler).handle();
@@ -95,7 +99,7 @@ public class RoadCrawlFacadeServiceTest {
         when(roadBusanThemeHandler.handle()).thenReturn(busanThemeResult);
 
         // when
-        assertEquals(busanThemeResult, roadCrawlFacadeService.getTheme(CityName.BUSAN));
+        assertEquals(busanThemeResult, roadCrawlFacadeService.getTheme(CityCrawlName.BUSAN));
 
         // then
         verify(roadBusanThemeHandler).handle();

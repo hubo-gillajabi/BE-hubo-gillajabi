@@ -1,17 +1,15 @@
 package com.hubo.gillajabi.road.application.service;
 
-import com.hubo.gillajabi.crawl.application.service.RoadDuruCourseHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruCourseHandler;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.*;
 import com.hubo.gillajabi.crawl.domain.service.duru.*;
-import com.hubo.gillajabi.road.domain.entity.*;
-import com.hubo.gillajabi.road.domain.service.road.duru.*;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
@@ -62,26 +60,26 @@ class RoadDuruCourseHandlerTest {
         return response;
     }
     private static CourseDetail createCourseDetail() {
-        CourseDetailRequestDTO courseDetailRequestDTO = fixtureMonkey.giveMeOne(CourseDetailRequestDTO.class);
-        return CourseDetail.createCourseDetail(courseDetailRequestDTO);
+        CourseDetailRequest courseDetailRequest = fixtureMonkey.giveMeOne(CourseDetailRequest.class);
+        return CourseDetail.createCourseDetail(courseDetailRequest);
     }
 
     private static Course createCourse(ApiCourseResponse.Course mockCourseDuruResponse, City mockCity, CourseTheme mockCourseTheme) {
-        CourseRequestDTO courseRequestDTO = CourseRequestDTO.of(mockCourseDuruResponse, mockCity, mockCourseTheme);
-        courseRequestDTO.setCity(mockCity);
-        courseRequestDTO.setLevel(CourseLevel.fromValue(mockCourseDuruResponse.getCrsLevel()));
+        CourseRequest courseRequest = CourseRequest.of(mockCourseDuruResponse, mockCity, mockCourseTheme);
+        courseRequest.setCity(mockCity);
+        courseRequest.setLevel(CourseLevel.fromValue(mockCourseDuruResponse.getCrsLevel()));
 
-        return Course.createCourse(courseRequestDTO);
+        return Course.createCourse(courseRequest);
     }
 
     private static CourseTheme createCourseTheme() {
-        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeOne(CourseThemeRequestDTO.class);
-        return CourseTheme.createCourseTheme(courseThemeRequestDTO);
+        CourseThemeRequest courseThemeRequest = fixtureMonkey.giveMeOne(CourseThemeRequest.class);
+        return CourseTheme.createCourseTheme(courseThemeRequest);
     }
 
     private static City createCity(ApiCourseResponse.Course mockCourseDuruResponse) {
-        CityRequestDTO cityRequestDTO = CityRequestDTO.of(mockCourseDuruResponse.getCrsKorNm(), Province.GYEONGGI, "짧은소개글");
-        return City.createCity(cityRequestDTO);
+        CityRequest cityRequest = CityRequest.of(mockCourseDuruResponse.getCrsKorNm(), Province.GYEONGGI, "짧은소개글");
+        return City.createCity(cityRequest);
     }
 
     private void mockDuruHandle() {
