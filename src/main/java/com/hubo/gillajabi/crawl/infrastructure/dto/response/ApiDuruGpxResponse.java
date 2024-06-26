@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true) // 알려지지 않은 속성 무시
-public class DuruGpxResponse {
+public class ApiDuruGpxResponse {
     @JacksonXmlProperty(localName = "metadata")
     private Metadata metadata;
 
