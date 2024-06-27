@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.road.domain.service.duru;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,8 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadGpxInfoDuruService;
-import com.hubo.gillajabi.crawl.domain.service.ResponseCrawlService;
+import com.hubo.gillajabi.crawl.domain.service.PrimaryCrawlingService;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiDuruGpxResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.GpxInfoRepository;
@@ -36,7 +35,7 @@ class RoadGpxInfoDuruServiceTest {
     private GpxInfoRepository gpxInfoRepository;
 
     @Mock
-    private ResponseCrawlService responseCrawlService;
+    private PrimaryCrawlingService responseCrawlService;
 
     @InjectMocks
     private RoadGpxInfoDuruService roadGpxInfoDuruService;

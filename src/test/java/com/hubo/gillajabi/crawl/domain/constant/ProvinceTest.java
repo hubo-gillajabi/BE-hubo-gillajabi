@@ -1,6 +1,5 @@
-package com.hubo.gillajabi.road.domain.constant;
+package com.hubo.gillajabi.crawl.domain.constant;
 
-import com.hubo.gillajabi.crawl.domain.constant.Province;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 class RoadCourseDuruHandlerTest {
 
     @Mock
-    private RoadDuruCrawlDuruServiceImpl duruCrawlService;
+    private RoadCrawlDuruServiceImpl duruCrawlService;
 
     @Mock
     private RoadCityDuruService cityService;
