@@ -25,7 +25,7 @@ public class WeatherTermDTO {
     private int highTemperature7;
     private MediumTermSkyCondition skyCondition7;
 
-    public static WeatherTermDTO of(ApiWeatherMediumTermResponse.Temperature temperature, ApiWeatherMediumTermResponse.Detail detail){
+    public static WeatherTermDTO of(ApiWeatherMediumTermResponse.Detail detail, ApiWeatherMediumTermResponse.Temperature temperature) {
         WeatherTermDTO dto = new WeatherTermDTO();
         dto.setLowTemperature3(temperature.getTaMin3());
         dto.setHighTemperature3(temperature.getTaMax3());
