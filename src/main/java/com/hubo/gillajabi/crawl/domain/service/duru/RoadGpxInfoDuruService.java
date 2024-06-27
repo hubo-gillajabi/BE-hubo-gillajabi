@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;
-import com.hubo.gillajabi.crawl.domain.service.ResponseCrawlService;
+import com.hubo.gillajabi.crawl.domain.service.PrimaryCrawlingService;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiDuruGpxResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.GpxInfoRepository;
@@ -26,7 +26,7 @@ import java.util.List;
 public class RoadGpxInfoDuruService {
 
     private final GpxInfoRepository gpxInfoRepository;
-    private final ResponseCrawlService responseCrawlService;
+    private final PrimaryCrawlingService primaryCrawlingService;
     private static final XmlMapper xmlMapper = new XmlMapper();
     private static final ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -63,7 +63,7 @@ public class RoadGpxInfoDuruService {
 
     private ApiDuruGpxResponse fetchGpxResponse(String gpxUrl) throws IOException {
         URI uri = URI.create(gpxUrl);
-        String response = responseCrawlService.fetchApiResponse(uri);
+        String response = primaryCrawlingService.fetchApiResponse(uri);
         return xmlMapper.readValue(response, ApiDuruGpxResponse.class);
     }
 

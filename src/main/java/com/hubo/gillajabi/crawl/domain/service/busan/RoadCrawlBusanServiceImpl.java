@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.service.busan;
 ;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadEndpointConfig;
 import com.hubo.gillajabi.global.common.dto.ApiProperties;
-import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class RoadCrawlBusanServiceImpl {
 
     @PostConstruct
     private void init() {
-        this.busanApiProperties = roadEndpointConfig.getEndpoint(CityName.BUSAN);
+        this.busanApiProperties = roadEndpointConfig.getEndpoint(CityCrawlName.BUSAN);
         if (this.busanApiProperties == null) {
             throw new IllegalStateException("BUSAN Crawl Strategy 가 초기화 되지 않았습니다.");
         }

@@ -1,13 +1,12 @@
-package com.hubo.gillajabi.road.domain.service.duru;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadCourseDuruService;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseThemeRepository;
@@ -43,11 +42,11 @@ class RoadCourseDuruServiceTest {
 
 
     public City createCity() {
-        CityRequestDTO cityRequestDTO = fixtureMonkey.giveMeBuilder(CityRequestDTO.class).sample();
-        cityRequestDTO.setProvince(Province.GYEONGNAM);
-        cityRequestDTO.setName("김해시");
+        CityRequest cityRequest = fixtureMonkey.giveMeBuilder(CityRequest.class).sample();
+        cityRequest.setProvince(Province.GYEONGNAM);
+        cityRequest.setName("김해시");
 
-        return City.createCity(cityRequestDTO);
+        return City.createCity(cityRequest);
     }
 
     public ApiCourseResponse.Course createDuruCourseResponseCourse() {
@@ -77,12 +76,12 @@ class RoadCourseDuruServiceTest {
         ApiCourseResponse.Course response = createDuruCourseResponseCourse();
         responseItems.add(response);
 
-        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeBuilder(CourseThemeRequestDTO.class).sample();
-        CourseTheme courseTheme = CourseTheme.createCourseTheme(courseThemeRequestDTO);
+        CourseThemeRequest courseThemeRequest = fixtureMonkey.giveMeBuilder(CourseThemeRequest.class).sample();
+        CourseTheme courseTheme = CourseTheme.createCourseTheme(courseThemeRequest);
 
         when(courseRepository.findByOriginName(any())).thenReturn(Optional.empty());
         when(courseThemeRepository.findByName(any())).thenReturn(Optional.of(courseTheme));
-        when(courseRepository.save(any())).thenReturn(Course.createCourse(CourseRequestDTO.of(response, city, courseTheme)));
+        when(courseRepository.save(any())).thenReturn(Course.createCourse(CourseRequest.of(response, city, courseTheme)));
 
         // when
         List<Course> courses = roadCourseDuruService.saveDuruCourse(responseItems, cities);

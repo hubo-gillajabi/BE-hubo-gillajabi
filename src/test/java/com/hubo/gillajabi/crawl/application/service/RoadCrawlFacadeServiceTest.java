@@ -1,15 +1,14 @@
-package com.hubo.gillajabi.road.application.service;
+package com.hubo.gillajabi.crawl.application.service;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.hubo.gillajabi.crawl.application.service.*;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadBusanThemeHandler;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadCrawlBusanCourseHandler;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruCourseHandler;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruThemeHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadCourseDuruHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadThemeDuruHandler;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +21,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class RoadCrawlFacadeServiceTest {
 
     @Mock
-    private RoadDuruCourseHandler roadDuruCourseHandler;
+    private RoadCourseDuruHandler roadCourseDuruHandler;
 
     @Mock
     private RoadCrawlBusanCourseHandler roadCrawlBusanCourseHandler;
 
     @Mock
-    private RoadDuruThemeHandler roadDuruThemeHandler;
+    private RoadThemeDuruHandler roadThemeDuruHandler;
 
     @Mock
     private RoadBusanThemeHandler roadBusanThemeHandler;
@@ -45,14 +44,14 @@ public class RoadCrawlFacadeServiceTest {
         RoadCrawlResponse.CourseResult duruCourseResult = fixtureMonkey.giveMeBuilder(RoadCrawlResponse.CourseResult.class)
                         .sample();
 
-        when(roadDuruCourseHandler.handle()).thenReturn(duruCourseResult);
+        when(roadCourseDuruHandler.handle()).thenReturn(duruCourseResult);
 
         // when
         assertEquals(duruCourseResult, roadCrawlFacadeService.getCourse(CityCrawlName.DURU));
 
         // then
-        verify(roadDuruCourseHandler).handle();
-        verifyNoMoreInteractions(roadDuruThemeHandler, roadCrawlBusanCourseHandler, roadBusanThemeHandler);
+        verify(roadCourseDuruHandler).handle();
+        verifyNoMoreInteractions(roadThemeDuruHandler, roadCrawlBusanCourseHandler, roadBusanThemeHandler);
     }
 
     @Test
@@ -69,7 +68,7 @@ public class RoadCrawlFacadeServiceTest {
 
         // then
         verify(roadCrawlBusanCourseHandler).handle();
-        verifyNoMoreInteractions(roadDuruCourseHandler, roadDuruThemeHandler, roadBusanThemeHandler);
+        verifyNoMoreInteractions(roadCourseDuruHandler, roadThemeDuruHandler, roadBusanThemeHandler);
     }
 
     @Test
@@ -79,14 +78,14 @@ public class RoadCrawlFacadeServiceTest {
         RoadCrawlResponse.ThemeResult duruThemeResult = fixtureMonkey.giveMeBuilder(RoadCrawlResponse.ThemeResult.class)
                 .sample();
 
-        when(roadDuruThemeHandler.handle()).thenReturn(duruThemeResult);
+        when(roadThemeDuruHandler.handle()).thenReturn(duruThemeResult);
 
         // when
         assertEquals(duruThemeResult, roadCrawlFacadeService.getTheme(CityCrawlName.DURU));
 
         // then
-        verify(roadDuruThemeHandler).handle();
-        verifyNoMoreInteractions(roadDuruCourseHandler, roadCrawlBusanCourseHandler, roadBusanThemeHandler);
+        verify(roadThemeDuruHandler).handle();
+        verifyNoMoreInteractions(roadCourseDuruHandler, roadCrawlBusanCourseHandler, roadBusanThemeHandler);
     }
 
     @Test
@@ -103,6 +102,6 @@ public class RoadCrawlFacadeServiceTest {
 
         // then
         verify(roadBusanThemeHandler).handle();
-        verifyNoMoreInteractions(roadDuruCourseHandler, roadDuruThemeHandler, roadCrawlBusanCourseHandler);
+        verifyNoMoreInteractions(roadCourseDuruHandler, roadThemeDuruHandler, roadCrawlBusanCourseHandler);
     }
 }

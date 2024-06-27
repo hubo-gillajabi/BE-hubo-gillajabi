@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.road.domain.service.duru;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
@@ -6,10 +6,9 @@ import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadCourseDetailDuruService;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseDetailRepository;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
@@ -56,24 +55,24 @@ class RoadCourseDetailDuruServiceTest {
     }
 
 
-    public CityRequestDTO giveMeCityRequestDTO(){
-        CityRequestDTO cityRequestDTO = fixtureMonkey.giveMeBuilder(CityRequestDTO.class).sample();
-        cityRequestDTO.setProvince(Province.BUSAN);
-        return cityRequestDTO;
+    public CityRequest giveMeCityRequestDTO(){
+        CityRequest cityRequest = fixtureMonkey.giveMeBuilder(CityRequest.class).sample();
+        cityRequest.setProvince(Province.BUSAN);
+        return cityRequest;
     }
 
-    public CourseThemeRequestDTO giveMeCourseThemeRequestDTO(){
-        CourseThemeRequestDTO courseThemeRequestDTO = fixtureMonkey.giveMeBuilder(CourseThemeRequestDTO.class).sample();
-        courseThemeRequestDTO.setName("남파랑길");
-        return courseThemeRequestDTO;
+    public CourseThemeRequest giveMeCourseThemeRequestDTO(){
+        CourseThemeRequest courseThemeRequest = fixtureMonkey.giveMeBuilder(CourseThemeRequest.class).sample();
+        courseThemeRequest.setName("남파랑길");
+        return courseThemeRequest;
     }
 
-    public CourseRequestDTO giveMeCourseRequestDTO() {
+    public CourseRequest giveMeCourseRequestDTO() {
         ApiCourseResponse.Course response = giveMeDuruCourseResponse();
         City city = City.createCity(giveMeCityRequestDTO());
         CourseTheme courseTheme = CourseTheme.createCourseTheme(giveMeCourseThemeRequestDTO());
 
-        return CourseRequestDTO.of(response, city, courseTheme);
+        return CourseRequest.of(response, city, courseTheme);
     }
 
     @DisplayName("DuruCourseResponse.Course를 받아서 새로운 CourseDetail객체를 생성하고 저장")

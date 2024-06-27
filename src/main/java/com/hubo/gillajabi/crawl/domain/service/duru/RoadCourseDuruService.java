@@ -4,7 +4,7 @@ import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseThemeRepository;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
@@ -34,10 +34,10 @@ public class RoadCourseDuruService {
     private Course processCourseItem(ApiCourseResponse.Course item, List<City> cities) {
         City city = findCity(item, cities);
         CourseTheme courseTheme = findCourseTheme(item);
-        CourseRequestDTO courseRequestDTO = CourseRequestDTO.of(item, city, courseTheme);
+        CourseRequest courseRequest = CourseRequest.of(item, city, courseTheme);
 
         Optional<Course> existingCourse = courseRepository.findByOriginName(item.getCrsKorNm());
-        return createOrUpdateCourse(courseRequestDTO, existingCourse);
+        return createOrUpdateCourse(courseRequest, existingCourse);
     }
 
     private City findCity(final ApiCourseResponse.Course item, final List<City> cities) {
@@ -57,13 +57,13 @@ public class RoadCourseDuruService {
                 .orElseThrow(() -> new IllegalArgumentException("CourseTheme 정보가 없습니다."));
     }
 
-    private Course createOrUpdateCourse(final CourseRequestDTO request, final Optional<Course> existingCourse) {
+    private Course createOrUpdateCourse(final CourseRequest request, final Optional<Course> existingCourse) {
         return existingCourse
                 .map(course -> updateExistingCourse(request, course))
                 .orElseGet(() -> createAndSaveNewCourse(request));
     }
 
-    private Course updateExistingCourse(final CourseRequestDTO request, final Course existingCourse) {
+    private Course updateExistingCourse(final CourseRequest request, final Course existingCourse) {
         if (existingCourse.checkUpdate(request)) {
             existingCourse.update(request);
             courseRepository.save(existingCourse);
@@ -71,7 +71,7 @@ public class RoadCourseDuruService {
         return existingCourse;
     }
 
-    private Course createAndSaveNewCourse(final CourseRequestDTO request) {
+    private Course createAndSaveNewCourse(final CourseRequest request) {
         Course newCourse = Course.createCourse(request);
         courseRepository.save(newCourse);
         return newCourse;

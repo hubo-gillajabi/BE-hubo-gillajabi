@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequest;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseDetailRepository;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
@@ -31,22 +31,22 @@ public class RoadCourseDetailDuruService {
         List<CourseDetail> courseDetails = new ArrayList<>();
         responseItems.forEach(item -> {
             final Course course = findCourseByName(courses, item.getCrsKorNm());
-            final CourseDetailRequestDTO courseDetailRequestDTO = buildCourseDetailRequest(item);
+            final CourseDetailRequest courseDetailRequest = buildCourseDetailRequest(item);
 
-            final CourseDetail courseDetail = createOrUpdateDetail(courseDetailRequestDTO, course);
+            final CourseDetail courseDetail = createOrUpdateDetail(courseDetailRequest, course);
             updateCourseDetailByCourse(course, courseDetail);
             courseDetails.add(courseDetail);
         });
         return courseDetails;
     }
 
-    private CourseDetailRequestDTO buildCourseDetailRequest(final ApiCourseResponse.Course item) {
+    private CourseDetailRequest buildCourseDetailRequest(final ApiCourseResponse.Course item) {
         final String startPoint = extractPoint(item.getTravelerinfo(), startPattern, 1);
         final String endPoint = extractPoint(item.getTravelerinfo(), endPattern, 1);
         final String startPointTransport = extractPoint(item.getTravelerinfo(), startPattern, 2);
         final String endPointTransport = extractPoint(item.getTravelerinfo(), endPattern, 2);
 
-        return CourseDetailRequestDTO.of(item, startPoint, endPoint, startPointTransport, endPointTransport);
+        return CourseDetailRequest.of(item, startPoint, endPoint, startPointTransport, endPointTransport);
     }
 
     private String extractPoint(final String info, final Pattern pattern, final int group) {
@@ -54,12 +54,12 @@ public class RoadCourseDetailDuruService {
         return matcher.find() ? matcher.group(group) : null;
     }
 
-    private CourseDetail createOrUpdateDetail(final CourseDetailRequestDTO request, final Course course) {
+    private CourseDetail createOrUpdateDetail(final CourseDetailRequest request, final Course course) {
         final CourseDetail existingDetail = course.getCourseDetail();
         return existingDetail != null ? updateExistingDetail(existingDetail, request) : createNewCourseDetail(request, course);
     }
 
-    private CourseDetail updateExistingDetail(final CourseDetail detail, final CourseDetailRequestDTO request) {
+    private CourseDetail updateExistingDetail(final CourseDetail detail, final CourseDetailRequest request) {
         if (detail.isCheckUpdate(request)) {
             detail.update(request);
             return courseDetailRepository.save(detail);
@@ -67,7 +67,7 @@ public class RoadCourseDetailDuruService {
         return detail;
     }
 
-    private CourseDetail createNewCourseDetail(final CourseDetailRequestDTO request, final Course course) {
+    private CourseDetail createNewCourseDetail(final CourseDetailRequest request, final Course course) {
         final CourseDetail newDetail = CourseDetail.createCourseDetail(request);
         course.addCourseDetail(newDetail);
         return courseDetailRepository.save(newDetail);

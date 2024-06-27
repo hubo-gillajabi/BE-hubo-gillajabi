@@ -13,9 +13,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RoadDuruCourseHandler {
+public class RoadCourseDuruHandler {
 
-    private final RoadCrawlDuruServiceImpl duruCrawlService;
+    private final RoadDuruCrawlDuruServiceImpl duruCrawlService;
     private final RoadCityDuruService cityService;
     private final RoadCourseDuruService roadCourseDuruService;
     private final RoadCourseDetailDuruService roadCourseDetailDuruService;

@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiThemeResponse;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseThemeRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,12 +41,13 @@ public class RoadCourseDuruThemeService {
     }
 
     private CourseTheme updateExistingCourseTheme(CourseTheme existingTheme, ApiThemeResponse.Theme item) {
-        existingTheme.update(item.getThemedescs(), item.getLinemsg());
+        CourseThemeRequest requestDTO = CourseThemeRequest.from(item);
+        existingTheme.update(requestDTO);
         return existingTheme;
     }
 
     private CourseTheme createNewCourseTheme(ApiThemeResponse.Theme item) {
-        CourseThemeRequestDTO requestDTO = CourseThemeRequestDTO.from(item);
+        CourseThemeRequest requestDTO = CourseThemeRequest.from(item);
         return CourseTheme.createCourseTheme(requestDTO);
     }
 }

@@ -1,11 +1,9 @@
-package com.hubo.gillajabi.road.application.service;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruCourseHandler;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.*;
-import com.hubo.gillajabi.crawl.domain.service.duru.*;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
@@ -26,10 +24,10 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoadDuruCourseHandlerTest {
+class RoadCourseDuruHandlerTest {
 
     @Mock
-    private RoadCrawlDuruServiceImpl duruCrawlService;
+    private RoadDuruCrawlDuruServiceImpl duruCrawlService;
 
     @Mock
     private RoadCityDuruService cityService;
@@ -44,7 +42,7 @@ class RoadDuruCourseHandlerTest {
     private RoadGpxInfoDuruService roadGpxInfoDuruService;
 
     @InjectMocks
-    private RoadDuruCourseHandler roadDuruCourseHandler;
+    private RoadCourseDuruHandler roadCourseDuruHandler;
 
     private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder().build();
 
@@ -105,7 +103,7 @@ class RoadDuruCourseHandlerTest {
         mockDuruHandle();
 
         // when
-        RoadCrawlResponse.CourseResult result = roadDuruCourseHandler.handle();
+        RoadCrawlResponse.CourseResult result = roadCourseDuruHandler.handle();
 
         // then
         assertEquals(1, result.getCityCount());

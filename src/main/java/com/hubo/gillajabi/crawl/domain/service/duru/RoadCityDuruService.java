@@ -3,7 +3,7 @@ package com.hubo.gillajabi.crawl.domain.service.duru;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.City;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CityRepository;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.crawl.infrastructure.util.helper.RoadCrawlResponseParserHelper;
@@ -33,29 +33,29 @@ public class RoadCityDuruService {
 
     private void processCourseItem(final List<City> cities, final ApiCourseResponse.Course item) {
         try {
-            final CityRequestDTO cityRequestDTO = createCityRequestDTOFromCourseItem(item);
-            final City city = createOrFindCity(cityRequestDTO);
+            final CityRequest cityRequest = createCityRequestDTOFromCourseItem(item);
+            final City city = createOrFindCity(cityRequest);
             cities.add(city);
         } catch (final CrawlException e) {
             log.error("CityService.saveCity 실행중 문제 발생: " + e.getMessage());
         }
     }
 
-    private CityRequestDTO createCityRequestDTOFromCourseItem(final ApiCourseResponse.Course item) {
+    private CityRequest createCityRequestDTOFromCourseItem(final ApiCourseResponse.Course item) {
         final String provinceName = RoadCrawlResponseParserHelper.parseDuruResponseByProvince(item.getSigun());
         final Province province = Province.fromValue(provinceName);
         final String cityName = RoadCrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
 
-        return CityRequestDTO.of(cityName, province);
+        return CityRequest.of(cityName, province);
     }
 
-    private City createOrFindCity(final CityRequestDTO cityRequestDTO) {
-        return cityRepository.findByNameAndProvince(cityRequestDTO.getName(), cityRequestDTO.getProvince())
-                .orElseGet(() -> createAndSaveCity(cityRequestDTO));
+    private City createOrFindCity(final CityRequest cityRequest) {
+        return cityRepository.findByNameAndProvince(cityRequest.getName(), cityRequest.getProvince())
+                .orElseGet(() -> createAndSaveCity(cityRequest));
     }
 
-    private City createAndSaveCity(final CityRequestDTO cityRequestDTO) {
-        final City city = City.createCity(cityRequestDTO);
+    private City createAndSaveCity(final CityRequest cityRequest) {
+        final City city = City.createCity(cityRequest);
         cityRepository.save(city);
         return city;
     }
