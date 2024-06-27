@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.road.infraStructure.config;
 
-import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import com.hubo.gillajabi.global.common.dto.ApiProperties;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadEndpointConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -21,14 +21,14 @@ class RoadEndpointConfigTest {
     @Test
     @DisplayName("road-yml에 정의된 road를 올바르게 읽어온다.")
     void testRoadProperties() {
-        ApiProperties duruProperties = roadEndpointConfig.getEndpoint(CityName.DURU);
+        ApiProperties duruProperties = roadEndpointConfig.getEndpoint(CityCrawlName.DURU);
         assertThat(duruProperties).isNotNull();
         assertThat(duruProperties.getEndpoint()).isEqualTo("http://example.com");
         assertThat(duruProperties.getEncoding()).isEqualTo("serviceKey");
         assertThat(duruProperties.getDecoding()).isEqualTo("serviceKey");
         assertThat(duruProperties.getSiteUrl()).isEqualTo("http://example.com");
 
-        ApiProperties busanProperties = roadEndpointConfig.getEndpoint(CityName.BUSAN);
+        ApiProperties busanProperties = roadEndpointConfig.getEndpoint(CityCrawlName.BUSAN);
         assertThat(busanProperties).isNotNull();
         assertThat(busanProperties.getEndpoint()).isEqualTo("http://example.com");
         assertThat(busanProperties.getEncoding()).isEqualTo("serviceKey");

@@ -3,7 +3,7 @@ package com.hubo.gillajabi.crawl.application.presenation;
 
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.application.service.RoadCrawlFacadeService;
-import com.hubo.gillajabi.crawl.domain.constant.CityName;
+import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -21,18 +21,18 @@ public class RoadCrawlController {
 
     @Operation(summary = "전국 길 크롤링 ", description = "만약 해당 정보가 존재한다면 생략합니다.")
     @PostMapping("/courses")
-    public ResponseEntity<RoadCrawlResponse.CourseResult> startCrawlingCurse(@Valid @RequestParam CityName cityName) {
+    public ResponseEntity<RoadCrawlResponse.CourseResult> startCrawlingCurse(@Valid @RequestParam CityCrawlName cityCrawlName) {
 
-        RoadCrawlResponse.CourseResult response = roadCrawlFacadeService.getCourse(cityName);
+        RoadCrawlResponse.CourseResult response = roadCrawlFacadeService.getCourse(cityCrawlName);
 
         return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "전국 길 테마 크롤링", description = "전국 길 테마 크롤링 (ex: 남파랑길)")
     @PostMapping("/themes")
-    public ResponseEntity<RoadCrawlResponse.ThemeResult> startCrawlingTheme(@Valid @RequestParam CityName cityName) {
+    public ResponseEntity<RoadCrawlResponse.ThemeResult> startCrawlingTheme(@Valid @RequestParam CityCrawlName cityCrawlName) {
 
-        RoadCrawlResponse.ThemeResult response = roadCrawlFacadeService.getTheme(cityName);
+        RoadCrawlResponse.ThemeResult response = roadCrawlFacadeService.getTheme(cityCrawlName);
 
         return ResponseEntity.ok().body(response);
     }

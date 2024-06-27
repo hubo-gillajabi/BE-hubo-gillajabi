@@ -6,7 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;
 import com.hubo.gillajabi.crawl.domain.service.ResponseCrawlService;
-import com.hubo.gillajabi.crawl.infrastructure.dto.response.DuruGpxResponse;
+import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiDuruGpxResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.GpxInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,7 @@ public class RoadGpxInfoDuruService {
             return null;
         }
 
-        DuruGpxResponse gpxResponse = fetchGpxResponse(courseDetail.getGpxPath());
+        ApiDuruGpxResponse gpxResponse = fetchGpxResponse(courseDetail.getGpxPath());
         String jsonGpx = convertToJson(gpxResponse);
         return saveGpxInfo(jsonGpx, courseDetail);
     }
@@ -61,13 +61,13 @@ public class RoadGpxInfoDuruService {
         return path.endsWith(".kmz");
     }
 
-    private DuruGpxResponse fetchGpxResponse(String gpxUrl) throws IOException {
+    private ApiDuruGpxResponse fetchGpxResponse(String gpxUrl) throws IOException {
         URI uri = URI.create(gpxUrl);
         String response = responseCrawlService.fetchApiResponse(uri);
-        return xmlMapper.readValue(response, DuruGpxResponse.class);
+        return xmlMapper.readValue(response, ApiDuruGpxResponse.class);
     }
 
-    private String convertToJson(DuruGpxResponse gpxResponse) throws JsonProcessingException {
+    private String convertToJson(ApiDuruGpxResponse gpxResponse) throws JsonProcessingException {
         return jsonMapper.writeValueAsString(gpxResponse);
     }
 

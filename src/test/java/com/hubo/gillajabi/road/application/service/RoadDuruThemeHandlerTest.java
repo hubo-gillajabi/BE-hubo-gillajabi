@@ -1,11 +1,11 @@
 package com.hubo.gillajabi.road.application.service;
 
-import com.hubo.gillajabi.crawl.application.service.RoadDuruThemeHandler;
+import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruThemeHandler;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.crawl.domain.service.duru.RoadCourseDuruThemeService;
 import com.hubo.gillajabi.crawl.domain.service.duru.RoadCrawlDuruServiceImpl;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiThemeResponse;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ class RoadDuruThemeHandlerTest {
         // CourseTheme 생성
         List<CourseTheme> mockThemes = mockResponseItems.stream()
                 .map(theme -> CourseTheme.createCourseTheme(
-                        new CourseThemeRequestDTO(theme.getThemeNm(), theme.getLinemsg(), theme.getThemedescs())))
+                        new CourseThemeRequest(theme.getThemeNm(), theme.getLinemsg(), theme.getThemedescs())))
                 .collect(Collectors.toList());
 
         when(duruCrawlService.crawlTheme()).thenReturn(mockResponseItems);
