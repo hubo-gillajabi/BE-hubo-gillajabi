@@ -30,7 +30,7 @@ public enum MediumTermSkyCondition {
 
     public static MediumTermSkyCondition fromString(String value){
         return switch (value) {
-            case "맑음" -> CLEAR;
+            case "맑음", "" -> CLEAR;
             case "구름많음" -> MOSTLY_CLOUDY;
             case "구름많고 비" -> MOSTLY_CLOUDY_WITH_RAIN;
             case "구름많고 눈" -> MOSTLY_CLOUDY_WITH_SNOW;
