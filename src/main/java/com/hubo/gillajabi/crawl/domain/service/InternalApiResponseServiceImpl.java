@@ -15,18 +15,19 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class ResponseCrawlServiceImpl implements ResponseCrawlService {
+class InternalApiResponseServiceImpl implements InternalApiResponseService {
 
     private final CrawlApiResponseRepository crawlApiResponseRepository;
     private final RestTemplate restTemplate;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public Optional<CrawlApiResponse> findByRequestUrl(String string) {
         return crawlApiResponseRepository.findByRequestUrl(string);
     }
 
     @Override
+    @Transactional(noRollbackFor = RuntimeException.class)
     public String fetchApiResponse(final URI uri) {
         String url = uri.toString();
         Optional<String> cachedResponse = getCachedResponse(url);
