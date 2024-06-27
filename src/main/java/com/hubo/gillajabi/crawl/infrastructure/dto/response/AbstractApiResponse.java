@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * API 응답의 공통 구조를 정의한 추상 클래스
+ * "공공 데이터 포털"에서 가져오는 api의 응답 구조를 정의한 추상 클래스
+ * @param <T>
+ */
 @Getter
 @Setter
 public class AbstractApiResponse<T> implements ValidatableResponse{
