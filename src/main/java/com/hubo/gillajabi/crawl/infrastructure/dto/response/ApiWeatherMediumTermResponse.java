@@ -1,6 +1,5 @@
 package com.hubo.gillajabi.crawl.infrastructure.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +7,7 @@ public class ApiWeatherMediumTermResponse {
 
     @Getter
     @Setter
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class MediumTerm {
+    public static class Temperature {
         private String regId;
         private int taMin3;
         private int taMin3Low;
@@ -41,6 +39,34 @@ public class ApiWeatherMediumTermResponse {
         private int taMax7;
         private int taMax7Low;
         private int taMax7High;
+    }
+
+    @Getter
+    @Setter
+    public static class Detail {
+        private String regId;
+        // 강수 확률
+        private int rnSt3Am;
+        private int rnSt3Pm;
+        private int rnSt4Am;
+        private int rnSt4Pm;
+        private int rnSt5Am;
+        private int rnSt5Pm;
+        private int rnSt6Am;
+        private int rnSt6Pm;
+        private int rnSt7Am;
+        private int rnSt7Pm;
+        // 하늘 상태
+        private String wf3Am;
+        private String wf3Pm;
+        private String wf4Am;
+        private String wf4Pm;
+        private String wf5Am;
+        private String wf5Pm;
+        private String wf6Am;
+        private String wf6Pm;
+        private String wf7Am;
+        private String wf7Pm;
     }
 
 }
