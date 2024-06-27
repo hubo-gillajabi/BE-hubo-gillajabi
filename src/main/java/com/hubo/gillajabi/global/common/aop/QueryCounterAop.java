@@ -37,6 +37,13 @@ public class QueryCounterAop {
         return currentLoggingForm.get();
     }
 
+    @Around("execution(* org.springframework.data.redis.core.RedisTemplate.*(..))")
+    public Object captureRedis(final ProceedingJoinPoint joinPoint) throws Throwable {
+        final Object result = joinPoint.proceed();
+        getCurrentLoggingForm().redisQueryCountUp();
+        return result;
+    }
+
     @Around("within(@org.springframework.web.bind.annotation.RestController *)")
     public Object logExecutionTime(final ProceedingJoinPoint joinPoint) throws Throwable {
         final long startTime = System.currentTimeMillis();

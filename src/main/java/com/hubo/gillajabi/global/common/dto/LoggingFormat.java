@@ -16,6 +16,8 @@ public class LoggingFormat {
 
     private Long queryTime = 0L;
 
+    private Long redisQueryCounts = 0L;
+
     private HttpStatus statusCode;
 
     private Long executionTime;
@@ -34,6 +36,10 @@ public class LoggingFormat {
 
     public void addQueryTime(final Long queryTime) {
         this.queryTime += queryTime;
+    }
+
+    public void redisQueryCountUp() {
+        redisQueryCounts++;
     }
 
     public void setStatusCode(final int statusCode) {
