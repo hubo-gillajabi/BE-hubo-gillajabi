@@ -25,4 +25,8 @@ public class WeatherRedisConstants {
         }
         return WEATHER_API_RESPONSE + city.getName() + ":" + dateStr + ":" + baseTime;
     }
+
+    public static String makeWeatherKey(final City city, final LocalDate date) {
+        return makeWeatherKey(city, date, null);
+    }
 }
