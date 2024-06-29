@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.CycleType;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseDetailRequest;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,7 +47,7 @@ public class CourseDetail extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CycleType cycleType; // 순환 여부
 
-    public static CourseDetail createCourseDetail(final CourseDetailRequestDTO request) {
+    public static CourseDetail createCourseDetail(final CourseDetailRequest request) {
         return new CourseDetail(
                 null,
                 request.getTourInfo(),
@@ -62,7 +62,7 @@ public class CourseDetail extends BaseEntity {
         );
     }
 
-    public void update(final CourseDetailRequestDTO request) {
+    public void update(final CourseDetailRequest request) {
         this.tourInfo = request.getTourInfo();
         this.courseDescription = request.getCourseDescription();
         this.startPoint = request.getStartPoint();
@@ -74,7 +74,7 @@ public class CourseDetail extends BaseEntity {
         this.cycleType = request.getCycleType();
     }
 
-    public boolean isCheckUpdate(final CourseDetailRequestDTO request) {
+    public boolean isCheckUpdate(final CourseDetailRequest request) {
         return !Objects.equals(this.tourInfo, request.getTourInfo())
                 || !Objects.equals(this.courseDescription, request.getCourseDescription())
                 || !Objects.equals(this.startPoint, request.getStartPoint())

@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +26,17 @@ public class City {
     @Column
     private String description;
 
-    public static City createCity(final CityRequestDTO cityRequestDTO) {
-        return new City(null, cityRequestDTO.getName(), cityRequestDTO.getProvince(), cityRequestDTO.getDescription());
+    @Column
+    private Integer nx;
+
+    @Column
+    private Integer ny;
+
+    @Column(length = 8)
+    private String cityCode;
+
+    public static City createCity(final CityRequest cityRequest) {
+        return new City(null, cityRequest.getName(), cityRequest.getProvince(), cityRequest.getDescription(),null
+                ,null,null);
     }
 }

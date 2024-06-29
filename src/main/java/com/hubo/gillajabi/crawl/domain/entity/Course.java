@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.entity;
 
 
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,13 +56,13 @@ public class Course extends BaseEntity {
     private City city;
 
 
-    public static Course createCourse(final CourseRequestDTO request) {
+    public static Course createCourse(final CourseRequest request) {
         return new Course(null, request.getCourseName(), request.getDistance(), request.getTotalRequiredHours(),
                 request.getLevel(), request.getShortDescription(), request.getCourseNumber(),
                 null, null, null, request.getCourseTheme(), request.getCity());
     }
 
-    public boolean checkUpdate(final CourseRequestDTO request) {
+    public boolean checkUpdate(final CourseRequest request) {
         boolean isUpdated = false;
 
         if (!this.originName.equals(request.getCourseName())) {
@@ -100,7 +100,7 @@ public class Course extends BaseEntity {
         return isUpdated;
     }
 
-    public void update(final CourseRequestDTO request) {
+    public void update(final CourseRequest request) {
         this.originName = request.getCourseName();
         this.distance = request.getDistance();
         this.totalTimeRequired = request.getTotalRequiredHours();

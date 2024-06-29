@@ -1,9 +1,11 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
-import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequestDTO;
+import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -24,16 +26,16 @@ public class CourseTheme extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    public static CourseTheme createCourseTheme(CourseThemeRequestDTO requestDTO) {
+    public static CourseTheme createCourseTheme(CourseThemeRequest requestDTO) {
         return new CourseTheme(null, requestDTO.getName(), requestDTO.getShortDescription(), requestDTO.getDescription());
     }
 
-    public void update(String themedescs, String linemsg) {
-        if (!themedescs.equals(this.description)) {
-            this.name = themedescs;
+    public void update(CourseThemeRequest requestDTO) {
+        if(!Objects.equals(this.getShortDescription(), requestDTO.getShortDescription())) {
+            this.shortDescription = requestDTO.getShortDescription();
         }
-        if (!linemsg.equals(this.shortDescription)) {
-            this.shortDescription = linemsg;
+        if(!Objects.equals(this.description, requestDTO.getDescription())) {
+            this.description = requestDTO.getDescription();
         }
     }
 }
