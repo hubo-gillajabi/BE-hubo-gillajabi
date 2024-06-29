@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.road.infraStructure.config;
+package com.hubo.gillajabi.crawl.infraStructure.config;
 
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import com.hubo.gillajabi.global.common.dto.ApiProperties;

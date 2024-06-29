@@ -1,10 +1,7 @@
-package com.hubo.gillajabi.road.application.service;
+package com.hubo.gillajabi.crawl.domain.service.duru;
 
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadDuruThemeHandler;
 import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadCourseDuruThemeService;
-import com.hubo.gillajabi.crawl.domain.service.duru.RoadCrawlDuruServiceImpl;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiThemeResponse;
 import com.navercorp.fixturemonkey.FixtureMonkey;
@@ -22,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RoadDuruThemeHandlerTest {
+class RoadThemeDuruHandlerTest {
 
     @Mock
     private RoadCrawlDuruServiceImpl duruCrawlService;
@@ -31,7 +28,7 @@ class RoadDuruThemeHandlerTest {
     private RoadCourseDuruThemeService roadCourseDuruThemeService;
 
     @InjectMocks
-    private RoadDuruThemeHandler roadDuruThemeHandler;
+    private RoadThemeDuruHandler roadThemeDuruHandler;
 
     @Test
     @DisplayName("두루누비 테마를 제대로 호출")
@@ -52,7 +49,7 @@ class RoadDuruThemeHandlerTest {
         when(roadCourseDuruThemeService.saveDuruTheme(anyList())).thenReturn(mockThemes);
 
         // when
-        RoadCrawlResponse.ThemeResult result = roadDuruThemeHandler.handle();
+        RoadCrawlResponse.ThemeResult result = roadThemeDuruHandler.handle();
 
         // then
         assertEquals(mockThemes.size(), result.getThemeCount());

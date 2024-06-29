@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
-import com.hubo.gillajabi.crawl.domain.service.GenericCrawlerService;
+import com.hubo.gillajabi.crawl.domain.service.PrimaryCrawlingService;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.AbstractApiResponse;
 import com.hubo.gillajabi.crawl.infrastructure.util.helper.CrawlApiBuilderHelper;
 import com.hubo.gillajabi.crawl.infrastructure.config.RoadEndpointConfig;
@@ -19,15 +19,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RoadCrawlDuruServiceImpl extends RoadAbstractCrawlDuruService {
+public class RoadCrawlDuruServiceImpl extends RoadDuruAbstractCrawlDuruService {
 
     private final RoadEndpointConfig roadEndpointConfig;
     private final CrawlApiBuilderHelper crawlApiBuilderHelper;
-    private final GenericCrawlerService genericCrawlerService;
+    private final PrimaryCrawlingService primaryCrawlingService;
     private static ApiProperties duruApiProperties;
 
     @PostConstruct
-    private void init() {
+    protected void init() {
         duruApiProperties = roadEndpointConfig.getEndpoint(CityCrawlName.DURU);
         validateDuruApiProperties();
     }
@@ -40,22 +40,22 @@ public class RoadCrawlDuruServiceImpl extends RoadAbstractCrawlDuruService {
 
     @Override
     public List<ApiCourseResponse.Course> crawlCourse() {
-        return genericCrawlerService.crawlItems(this::crawlCoursePage);
+        return primaryCrawlingService.crawlItems(this::crawlCoursePage);
     }
 
     @Override
     public List<ApiThemeResponse.Theme> crawlTheme() {
-        return genericCrawlerService.crawlItems(this::crawlThemePage);
+        return primaryCrawlingService.crawlItems(this::crawlThemePage);
     }
 
     private AbstractApiResponse<ApiCourseResponse.Course> crawlCoursePage(int pageNo) throws Exception {
         URI uri = crawlApiBuilderHelper.buildUri("courseList", duruApiProperties, pageNo);
-        return genericCrawlerService.crawlPage(ApiCourseResponse.class, uri);
+        return primaryCrawlingService.crawlPage(ApiCourseResponse.class, uri);
     }
 
     private AbstractApiResponse<ApiThemeResponse.Theme> crawlThemePage(int pageNo) throws Exception {
         URI uri = crawlApiBuilderHelper.buildUri("routeList", duruApiProperties, pageNo);
-        return genericCrawlerService.crawlPage(ApiThemeResponse.class, uri);
+        return primaryCrawlingService.crawlPage(ApiThemeResponse.class, uri);
     }
 
 

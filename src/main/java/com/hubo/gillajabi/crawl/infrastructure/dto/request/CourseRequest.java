@@ -38,6 +38,10 @@ public class CourseRequest {
     }
 
     private static String parseCourseNumber(final String courseName) {
+        if (courseName == null || courseName.split(" ").length < 2) {
+            throw new IllegalArgumentException("잘못된 코스 이름 : " + courseName);
+        }
         return courseName.split(" ")[1].replace("코스", "");
     }
+
 }
