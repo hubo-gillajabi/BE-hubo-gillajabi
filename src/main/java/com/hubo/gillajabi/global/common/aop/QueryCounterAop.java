@@ -47,16 +47,18 @@ public class QueryCounterAop {
     @Around("within(@org.springframework.web.bind.annotation.RestController *)")
     public Object logExecutionTime(final ProceedingJoinPoint joinPoint) throws Throwable {
         final long startTime = System.currentTimeMillis();
+        Object result = null;
         try {
-            return joinPoint.proceed();
+            result = joinPoint.proceed();
         } finally {
             final long endTime = System.currentTimeMillis();
             final long executionTime = endTime - startTime;
-            logAfterApiFinish(executionTime);
+            logAfterApiFinish(executionTime, result);
         }
+        return result;
     }
 
-    private void logAfterApiFinish(final long executionTime) {
+    private void logAfterApiFinish(final long executionTime, Object result) {
         final LoggingFormat loggingFormat = getCurrentLoggingForm();
 
         final ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -68,6 +70,7 @@ public class QueryCounterAop {
             loggingFormat.setApiMethod(request.getMethod());
             loggingFormat.setApiUrl(request.getRequestURI());
             loggingFormat.setExecutionTime(executionTime);
+            loggingFormat.setResponse(result);
 
 
             if (response != null) {
