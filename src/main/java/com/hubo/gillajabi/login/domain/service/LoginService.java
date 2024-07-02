@@ -1,10 +1,9 @@
 package com.hubo.gillajabi.login.domain.service;
 
-import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.domain.entity.MemberAuthentication;
 import com.hubo.gillajabi.login.domain.entity.RefreshToken;
-import com.hubo.gillajabi.login.infrastructure.config.TokenProvider;
+import com.hubo.gillajabi.login.infrastructure.security.TokenProvider;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthExceptionCode;
 import com.hubo.gillajabi.login.infrastructure.persistence.MemberAuthenticationRepository;

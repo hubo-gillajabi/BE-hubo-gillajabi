@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.login.infrastructure.config;
+package com.hubo.gillajabi.login.infrastructure.security;
 
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.domain.constant.CustomUserDetails;

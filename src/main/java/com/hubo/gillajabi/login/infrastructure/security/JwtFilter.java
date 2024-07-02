@@ -1,7 +1,7 @@
-package com.hubo.gillajabi.login.infrastructure.util;
+package com.hubo.gillajabi.login.infrastructure.security;
 
 import com.hubo.gillajabi.login.domain.constant.CustomUserDetails;
-import com.hubo.gillajabi.login.infrastructure.config.TokenProvider;
+import com.hubo.gillajabi.login.infrastructure.security.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

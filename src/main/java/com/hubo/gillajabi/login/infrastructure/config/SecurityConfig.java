@@ -1,13 +1,10 @@
 package com.hubo.gillajabi.login.infrastructure.config;
 
-import com.hubo.gillajabi.login.infrastructure.util.JwtFilter;
+import com.hubo.gillajabi.login.infrastructure.security.TokenProvider;
+import com.hubo.gillajabi.login.infrastructure.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
