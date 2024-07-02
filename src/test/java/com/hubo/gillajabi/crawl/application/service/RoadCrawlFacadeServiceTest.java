@@ -3,7 +3,7 @@ package com.hubo.gillajabi.crawl.application.service;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
+import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadBusanThemeHandler;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadCrawlBusanCourseHandler;

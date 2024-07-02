@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.application.service;
 
 
-import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
+import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadBusanThemeHandler;
 import com.hubo.gillajabi.crawl.domain.service.busan.RoadCrawlBusanCourseHandler;

@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.application.presenation;
 
 
-import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
+import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.application.service.RoadCrawlFacadeService;
 import com.hubo.gillajabi.crawl.domain.constant.CityCrawlName;
 import io.swagger.v3.oas.annotations.Operation;
