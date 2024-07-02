@@ -2,7 +2,7 @@ package com.hubo.gillajabi.member.infrastructure.util;
 
 import java.security.SecureRandom;
 
-public class GuestNickNameBuilderHelper {
+public class GuestNickNameBuilder {
 
     private static final String GUEST_DEFAULT = "guest_";
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -1,20 +1,20 @@
 package com.hubo.gillajabi.member.domain.util;
 
-import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilderHelper;
+import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GuestNickNameBuilderHelperTest {
+public class GuestNickNameBuilderTest {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     @Test
     @DisplayName("게스트 닉네임 생성 테스트, guest_랜덤 문자")
     public void testBuildGuestNickName() {
-        String nickname = GuestNickNameBuilderHelper.buildNickName();
+        String nickname = GuestNickNameBuilder.buildNickName();
 
         // 게스트 닉네임은 guest_로 시작해야 한다
         assertTrue(nickname.startsWith("guest_"), "Nickname should start with 'guest_'");

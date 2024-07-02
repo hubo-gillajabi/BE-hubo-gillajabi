@@ -2,7 +2,7 @@ package com.hubo.gillajabi.member.domain.service;
 
 import com.hubo.gillajabi.member.domain.entity.Member;
 import com.hubo.gillajabi.member.infrastructure.persistence.MemberRepository;
-import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilderHelper;
+import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,8 +31,8 @@ class MemberServiceTest {
         // given
         Member testMember = Member.createByNickName("Guest123");
 
-        try (MockedStatic<GuestNickNameBuilderHelper> mockedStatic = mockStatic(GuestNickNameBuilderHelper.class)) {
-            mockedStatic.when(GuestNickNameBuilderHelper::buildNickName).thenReturn("Guest123");
+        try (MockedStatic<GuestNickNameBuilder> mockedStatic = mockStatic(GuestNickNameBuilder.class)) {
+            mockedStatic.when(GuestNickNameBuilder::buildNickName).thenReturn("Guest123");
             when(memberRepository.save(any(Member.class))).thenReturn(testMember);
 
             // when
