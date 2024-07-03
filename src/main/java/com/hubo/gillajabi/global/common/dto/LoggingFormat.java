@@ -22,6 +22,8 @@ public class LoggingFormat {
 
     private Long executionTime;
 
+    private Object response;
+
     public void setApiUrl(final String apiUrl) {
         this.apiUrl = apiUrl;
     }
@@ -48,5 +50,9 @@ public class LoggingFormat {
 
     public void setExecutionTime(long executionTime) {
         this.executionTime = executionTime;
+    }
+
+    public void setResponse(Object response) {
+        this.response = response;
     }
 }

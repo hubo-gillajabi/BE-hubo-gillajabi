@@ -173,7 +173,7 @@ public class WeatherCrawlServiceImpl implements WeatherCrawlService {
         final LocalDate makeKeyDate = date.plusDays(3);
         final WeatherTermDTO weatherTermDTO = WeatherTermDTO.of(mediumTermWeatherDetailData, mediumTermWeatherTemperatureData);
         try {
-            String key = WeatherRedisConstants.makeWeatherKey(city, makeKeyDate, null);
+            String key = WeatherRedisConstants.makeWeatherKey(city, makeKeyDate);
             String value = objectMapper.writeValueAsString(weatherTermDTO);
             stringRedisTemplate.opsForValue().set(key, value);
 

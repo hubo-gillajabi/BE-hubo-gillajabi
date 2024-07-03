@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
-import com.hubo.gillajabi.crawl.application.response.RoadCrawlResponse;
+import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiThemeResponse;

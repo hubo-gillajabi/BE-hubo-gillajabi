@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.crawl.application.response;
+package com.hubo.gillajabi.crawl.application.dto.response;
 
 import com.hubo.gillajabi.crawl.domain.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
