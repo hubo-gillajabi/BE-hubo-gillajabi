@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.member.domain.util;
+package com.hubo.gillajabi.member.infrastructure.util;
 
 import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilder;
 import org.junit.jupiter.api.DisplayName;
