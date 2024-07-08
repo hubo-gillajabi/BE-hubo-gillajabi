@@ -2,11 +2,11 @@ package com.hubo.gillajabi.image.infrastructure.util;
 
 import java.util.UUID;
 
-public class ImageKeyBuilder {
+public class ImageUrlBuilder {
 
     private static final UUID uuid = UUID.randomUUID();
 
-    public static String build() {
-        return uuid.toString();
+    public static String build(String cloudfrontUrl) {
+        return cloudfrontUrl + "/" +  uuid;
     }
 }
