@@ -80,18 +80,3 @@ public class ImageUploadService {
         imageUploadUrlRepository.delete(imageUploadUrl);
     }
 }
-
-//TODO: 이미지 삭제
-// 유효시간이 지나면 이미지 비우기
-// url 첨부 해서 딱
-
-
-// CloudFront URL 도 더하느
-
-//    private final AmazonS3 amazonS3Client;
-//
-//    @Value("${spring.aws.s3.bucket}")
-//    private String bucket;
-//
-//    @Value("${cloud.aws.s3.root-dir}")
-//    private String dir;
