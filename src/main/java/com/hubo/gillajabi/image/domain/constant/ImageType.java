@@ -1,6 +1,9 @@
 package com.hubo.gillajabi.image.domain.constant;
 
 
+import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
+import com.hubo.gillajabi.image.infrastructure.exception.ImageExceptionCode;
+
 public enum ImageType {
     JPG("image/jpeg"),
     JPEG("image/jpeg"),
@@ -27,7 +30,7 @@ public enum ImageType {
 
     public static void validate(String mimeType) {
         if (mimeType == null || !isValidType(mimeType)) {
-            throw new IllegalArgumentException("허용되지 않는 이미지 형식입니다.");
+            throw new ImageException(ImageExceptionCode.INVALID_IMAGE_FORMAT);
         }
     }
 }
