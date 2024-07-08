@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.login.domain.service;
+package com.hubo.gillajabi.login.application.service;
 
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.domain.entity.MemberAuthentication;
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class LoginService {
+
 
     private final MemberAuthenticationRepository memberAuthenticationRepository;
     private final TokenProvider tokenProvider;

@@ -31,8 +31,7 @@ public class TokenProviderTest {
     @BeforeEach
     void setUp() {
     // mock secret key
-        secret = "kZr7QX4kvWh1+5gkcTO3RNqMCXEWZ1+1GkvDL7wTYXq2H7FKzYMstg06ELxuPvaj\n" +
-                "iDrdfncFEH0pZXQphu6y4Q==";
+        secret = "kZr7QX4kvWh1+5gkcTO3RNqMCXEWZ1+1GkvDL7wTYXq2H7FKzYMstg06ELxuPvajiDrdfncFEH0pZXQphu6y4Q==";
         secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         tokenProvider = new TokenProvider(secret, accessTokenValidTime, refreshTokenValidTime);
     }

@@ -2,7 +2,7 @@ package com.hubo.gillajabi.login.application.presenation;
 
 import com.hubo.gillajabi.login.application.dto.response.AccessTokenResponse;
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
-import com.hubo.gillajabi.login.domain.service.LoginService;
+import com.hubo.gillajabi.login.application.service.LoginService;
 import com.hubo.gillajabi.login.infrastructure.util.CookieBuilder;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import com.hubo.gillajabi.member.domain.service.MemberService;
