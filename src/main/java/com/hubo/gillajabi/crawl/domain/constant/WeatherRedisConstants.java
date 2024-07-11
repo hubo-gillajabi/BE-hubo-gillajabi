@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.constant;
 
-import com.hubo.gillajabi.crawl.domain.entity.City;
+import com.hubo.gillajabi.city.domain.City;
 import jakarta.annotation.Nullable;
 
 import java.time.LocalDate;
