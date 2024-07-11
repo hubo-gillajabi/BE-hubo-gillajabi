@@ -3,6 +3,7 @@ package com.hubo.gillajabi.admin.application.presenation;
 import com.hubo.gillajabi.admin.application.dto.request.MainQuestCreateRequest;
 import com.hubo.gillajabi.admin.application.dto.request.MainQuestUpdateRequest;
 import com.hubo.gillajabi.admin.application.dto.request.SubQuestCreateRequest;
+import com.hubo.gillajabi.admin.application.dto.request.SubQuestUpdateRequest;
 import com.hubo.gillajabi.admin.application.dto.response.MainQuestResponse;
 import com.hubo.gillajabi.admin.application.dto.response.SubQuestResponse;
 import com.hubo.gillajabi.admin.domain.service.AdminQuestService;
@@ -28,7 +29,7 @@ public class AdminQuestController {
     @Operation(summary = "메인 퀘스트 생성", description = "메인 퀘스트를 생성합니다.")
     @PostMapping("/main-quest")
     @ImageUploader
-    //@AdminOnly
+    @AdminOnly
     public ResponseEntity createMainQuest(@RequestBody @Valid MainQuestCreateRequest mainQuestCreateRequest) {
         MainQuestResponse mainQuestResponse = adminQuestService.createMainQuest(mainQuestCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(mainQuestResponse);
@@ -37,7 +38,7 @@ public class AdminQuestController {
     @Operation(summary = "서브 퀘스트 생성", description = "서브 퀘스트를 생성합니다.")
     @PostMapping("/sub-quest")
     @ImageUploader
- //   @AdminOnly
+    @AdminOnly
     public ResponseEntity createSubQuest(@RequestBody @Valid SubQuestCreateRequest subQuestCreateRequest) {
         SubQuestResponse subQuestResponse = adminQuestService.createSubQuest(subQuestCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(subQuestResponse);
@@ -61,8 +62,21 @@ public class AdminQuestController {
 
     @Operation(summary = "메인 퀘스트 수정", description = "메인 퀘스트를 수정합니다, 하이 서브 퀘스트도 변경될수 있습니다. 허용된 값 : ENABLE,DISABLE")
     @PatchMapping("/{questId}")
+    @ImageUploader
+    @AdminOnly
     public ResponseEntity updateMainQuest(@PathVariable Long questId, @RequestBody @Valid MainQuestUpdateRequest mainQuestUpdateRequest) {
-        MainQuestResponse mainQuestResponse = adminQuestService.updateMainQuest(questId, mainQuestUpdateRequest);
+        final MainQuestResponse mainQuestResponse = adminQuestService.updateMainQuest(questId, mainQuestUpdateRequest);
         return ResponseEntity.ok().body(mainQuestResponse);
     }
+
+    @Operation(summary = "서브 퀘스트 수정", description = "서브 퀘스트를 수정합니다. 허용된 값 : ENABLE,DISABLE")
+    @PatchMapping("/{questId}/{subQuestId}")
+    @ImageUploader
+    @AdminOnly
+    public ResponseEntity updateSubQuest(@PathVariable Long questId, @PathVariable Long subQuestId, @RequestBody @Valid SubQuestUpdateRequest subQuestUpdateRequest) {
+        final SubQuestResponse subQuestResponse = adminQuestService.updateSubQuest(questId, subQuestId, subQuestUpdateRequest);
+        return ResponseEntity.ok().body(subQuestResponse);
+    }
+
+    // TODO 전체 조회
 }
