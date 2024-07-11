@@ -6,6 +6,7 @@ import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -58,5 +59,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest()
                 .body(new ExceptionResponse(404, errorMessage));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        String errorMessage = "잘못된 요청입니다";
+        //TODO : 에러느 필요한 부분만
+        String detail = e.getCause() != null ? e.getCause().getMessage() : null;
+        log.warn("{} : {}", errorMessage, detail);
+
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(404, errorMessage + detail));
     }
 }

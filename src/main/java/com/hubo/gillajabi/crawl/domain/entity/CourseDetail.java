@@ -15,6 +15,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table
 public class CourseDetail extends BaseEntity {
 
     @Id

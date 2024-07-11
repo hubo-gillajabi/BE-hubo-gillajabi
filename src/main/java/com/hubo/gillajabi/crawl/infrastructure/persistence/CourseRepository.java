@@ -8,4 +8,11 @@ import java.util.Optional;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     Optional<Course> findByOriginName(String originName);
+
+    default Course getEntityById(Long courseId) {
+        if (courseId != null) {
+            return findById(courseId).orElseThrow(() -> new IllegalArgumentException("Course를 찾을 수 없습니다."));
+        }
+        return null;
+    }
 }

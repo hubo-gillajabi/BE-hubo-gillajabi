@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
+import com.hubo.gillajabi.city.domain.City;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table
 public class CourseSection extends BaseEntity {
 
     @Id

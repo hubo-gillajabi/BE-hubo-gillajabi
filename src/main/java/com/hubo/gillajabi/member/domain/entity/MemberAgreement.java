@@ -23,6 +23,5 @@ public class MemberAgreement {
     private Boolean isAgree;
 
     @Column
-    private LocalDateTime agreeAt;
-
+    private LocalDateTime agreedAt;
 }

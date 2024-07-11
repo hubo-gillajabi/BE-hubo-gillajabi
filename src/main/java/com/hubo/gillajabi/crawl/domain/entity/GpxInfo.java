@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table
 public class GpxInfo extends BaseEntity {
 
     @Id
