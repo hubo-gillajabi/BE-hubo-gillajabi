@@ -26,11 +26,15 @@ public class ImageUploadAspect {
             if (args[0] instanceof ImageUrlProvider) {
                 ImageUrlProvider dto = (ImageUrlProvider) args[0];
                 String imageUrl = dto.getImageUrl();
-                imageValidationService.validateAndDeleteImageUrl(imageUrl);
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+                    imageValidationService.validateAndDeleteImageUrl(imageUrl);
+                }
             } else if (args[0] instanceof ImageUrlsProvider) {
                 ImageUrlsProvider dto = (ImageUrlsProvider) args[0];
                 List<String> imageUrls = dto.getImageUrls();
-                imageValidationService.validateAndDeleteImageUrls(imageUrls);
+                if (imageUrls != null && !imageUrls.isEmpty()) {
+                    imageValidationService.validateAndDeleteImageUrls(imageUrls);
+                }
             }
         }
 
