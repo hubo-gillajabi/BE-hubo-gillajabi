@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.controller;
 
-import com.hubo.gillajabi.crawl.domain.entity.City;
-import com.hubo.gillajabi.crawl.infrastructure.persistence.CityRepository;
+import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.infrastructure.persistence.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.RestController;
