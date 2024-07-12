@@ -35,6 +35,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:3.2.5'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5'
+
+
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
@@ -85,7 +89,7 @@ dependencies {
 
 tasks.register('copyResources', Copy) {
     from './BE-hubo-gillajabi-resources/resources'
-    include 'application.yml', 'application-*.yml', "db/*", "db/*/*", "graphql/*"
+    include 'application.yml', 'application-*.yml', "db/*", "db/*/*", "graphql/*", "graphql/*/*", "templates/*", "templates/*/*", "templates/*/*/*"
     into 'src/main/resources'
 }
 
