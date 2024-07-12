@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.city.infrastructure.persistence;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

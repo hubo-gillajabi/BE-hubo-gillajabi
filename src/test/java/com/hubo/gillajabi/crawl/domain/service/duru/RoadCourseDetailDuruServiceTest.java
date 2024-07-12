@@ -2,7 +2,7 @@ package com.hubo.gillajabi.crawl.domain.service.duru;
 
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;

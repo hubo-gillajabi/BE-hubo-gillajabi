@@ -3,7 +3,7 @@ package com.hubo.gillajabi.crawl.domain.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubo.gillajabi.crawl.domain.constant.ForecastType;
 import com.hubo.gillajabi.crawl.domain.constant.WeatherRedisConstants;
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.WeatherCurrentDto;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.WeatherTermDTO;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.AbstractApiResponse;

@@ -1,8 +1,7 @@
 package com.hubo.gillajabi.quest.domain.entity;
 
-import com.hubo.gillajabi.admin.application.dto.request.MainQuestUpdateRequest;
 import com.hubo.gillajabi.admin.infrastructure.dto.request.MainQuestRequest;
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.global.BaseEntity;
@@ -34,13 +33,16 @@ public class MainQuest extends BaseEntity {
     @Column(nullable = false, length = 400)
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_theme_id")
     private CourseTheme courseTheme;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column
