@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.admin.application.dto;
+package com.hubo.gillajabi.quest.application.dto.response;
 
 import com.hubo.gillajabi.quest.domain.entity.MainQuest;
 import lombok.AccessLevel;
@@ -7,11 +7,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class MainQuestDTO {
+public class MainQuestPreviewDTO {
     private Long id;
     private String title;
 
-    public static MainQuestDTO fromEntity(MainQuest mainQuest) {
-        return new MainQuestDTO(mainQuest.getId(), mainQuest.getTitle());
+    public static MainQuestPreviewDTO fromEntity(MainQuest mainQuest) {
+        return new MainQuestPreviewDTO(mainQuest.getId(), mainQuest.getTitle());
     }
 }
