@@ -47,6 +47,11 @@ dependencies {
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.754'
 
+//    // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
+//    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+//    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
+//    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+//    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     // https://mvnrepository.com/artifact/junit/junit
     testImplementation 'junit:junit:4.13.1'
@@ -116,3 +121,20 @@ test {
     useJUnitPlatform()
     finalizedBy 'jacocoTestReport'
 }
+
+//sourceSets {
+//    main {
+//        java {
+//            srcDirs += [layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile]
+//        }
+//    }
+//}
+//
+//tasks.withType(JavaCompile).configureEach {
+//    options.annotationProcessorPath = configurations.annotationProcessor
+//    destinationDirectory.set(layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile)
+//}
+//
+//clean {
+//    delete layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main")
+//}
