@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,6 @@
 //package com.hubo.gillajabi.crawl.infraStructure.util.helper;
 //
-//import com.hubo.gillajabi.crawl.domain.entity.City;
+//import com.hubo.gillajabi.city.domain.entity.City;
 //import com.hubo.gillajabi.crawl.infrastructure.util.helper.CrawlApiBuilderHelper;
 //import com.hubo.gillajabi.global.common.dto.ApiProperties;
 //import com.hubo.gillajabi.crawl.infrastructure.dto.response.ValidatableResponse;

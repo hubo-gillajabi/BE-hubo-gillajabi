@@ -1,9 +1,9 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
-import com.hubo.gillajabi.crawl.domain.entity.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
-import com.hubo.gillajabi.crawl.infrastructure.persistence.CityRepository;
+import com.hubo.gillajabi.city.infrastructure.persistence.CityRepository;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

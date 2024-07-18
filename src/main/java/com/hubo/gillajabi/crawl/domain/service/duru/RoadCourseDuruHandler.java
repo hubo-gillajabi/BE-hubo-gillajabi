@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
 import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
-import com.hubo.gillajabi.crawl.domain.entity.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseDetail;
 import com.hubo.gillajabi.crawl.domain.entity.GpxInfo;

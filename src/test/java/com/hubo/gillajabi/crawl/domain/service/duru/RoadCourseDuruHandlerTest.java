@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.service.duru;
 
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.application.dto.response.RoadCrawlResponse;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.domain.constant.Province;

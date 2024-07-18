@@ -7,4 +7,12 @@ import java.util.Optional;
 
 public interface CourseThemeRepository extends JpaRepository<CourseTheme, Long> {
     Optional<CourseTheme> findByName(String name);
+
+    default CourseTheme getEntityById(Long courseThemeId) {
+        if(courseThemeId != null) {
+            return findById(courseThemeId).orElseThrow(() -> new IllegalArgumentException("코스 테마를 찾을 수 없습니다."));
+        }
+        return null;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.crawl.domain.entity;
+package com.hubo.gillajabi.city.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;

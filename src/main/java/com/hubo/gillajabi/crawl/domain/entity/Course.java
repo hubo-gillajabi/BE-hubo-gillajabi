@@ -1,6 +1,7 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
 
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
 import com.hubo.gillajabi.global.BaseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table
 public class Course extends BaseEntity {
 
     @Id

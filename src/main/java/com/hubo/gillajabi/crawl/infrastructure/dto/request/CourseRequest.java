@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.crawl.infrastructure.dto.request;
 
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
-import com.hubo.gillajabi.crawl.domain.entity.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.crawl.infrastructure.dto.response.ApiCourseResponse;
 import lombok.*;
@@ -23,7 +23,8 @@ public class CourseRequest {
 
     public static CourseRequest of(ApiCourseResponse.Course item, City city, CourseTheme courseTheme) {
         CourseLevel level = CourseLevel.fromValue(item.getCrsLevel());
-        String shortDescription = Jsoup.parse(item.getCrsSummary()).text();
+        String crsSummary = item.getCrsSummary();
+        String shortDescription = (crsSummary != null) ? Jsoup.parse(crsSummary).text() : "";
         String courseNumber = parseCourseNumber(item.getCrsKorNm());
         return new CourseRequest(
                 item.getCrsKorNm(),

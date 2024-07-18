@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Table
 public class CrawlApiResponse extends BaseEntity {
 
     @Id

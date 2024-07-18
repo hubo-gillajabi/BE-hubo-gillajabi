@@ -12,7 +12,7 @@ public class MemberAgreement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinTable(name = "member_id")
     private Member member;
 
@@ -23,6 +23,5 @@ public class MemberAgreement {
     private Boolean isAgree;
 
     @Column
-    private LocalDateTime agreeAt;
-
+    private LocalDateTime agreedAt;
 }
