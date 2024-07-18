@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.crawl.application.dto.response;
 
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
