@@ -7,10 +7,7 @@ import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.global.BaseEntity;
 import com.hubo.gillajabi.global.type.StatusType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Set;
@@ -21,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table
 @DynamicUpdate
+@Builder
 public class MainQuest extends BaseEntity {
 
     @Id

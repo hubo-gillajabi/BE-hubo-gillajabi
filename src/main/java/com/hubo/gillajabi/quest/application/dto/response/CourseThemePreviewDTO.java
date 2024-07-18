@@ -12,7 +12,7 @@ public class CourseThemePreviewDTO {
     private Long id;
     private String name;
 
-    public static CourseThemePreviewDTO of(Long courseThemeId, String courseThemeName) {
+    public static CourseThemePreviewDTO of(final Long courseThemeId, final String courseThemeName) {
         CourseThemePreviewDTO courseThemePreviewDTO = new CourseThemePreviewDTO();
         courseThemePreviewDTO.setId(courseThemeId);
         courseThemePreviewDTO.setName(courseThemeName);
@@ -21,7 +21,7 @@ public class CourseThemePreviewDTO {
 
 
     public static CourseThemePreviewDTO toEntity(CourseTheme courseTheme) {
-        if(courseTheme == null) {
+        if (courseTheme == null) {
             return null;
         }
         return CourseThemePreviewDTO.of(courseTheme.getId(), courseTheme.getName());

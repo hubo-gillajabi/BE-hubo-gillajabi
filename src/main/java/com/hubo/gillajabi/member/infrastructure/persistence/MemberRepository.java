@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long>{
 
-    Optional<Member> findByNickName(String nickName);
+    Optional<Member> findByNickName(final String nickName);
 
 
-    default Member getEntityByUserName(String userName){
+    default Member getEntityByUserName(final String userName){
         if(userName != null){
             return findByNickName(userName).orElseThrow(() -> new IllegalArgumentException("Member를 찾을 수 없습니다."));
         }

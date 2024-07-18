@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SubQuestRepository extends JpaRepository<SubQuest, Long> {
 
-    default SubQuest getEntityById(Long subQuestId){
+    default SubQuest getEntityById(final Long subQuestId){
         if(subQuestId != null){
             return findById(subQuestId).orElseThrow(() -> new IllegalArgumentException("해당 서브 퀘스트가 존재하지 않습니다."));
         }
@@ -25,7 +25,7 @@ public interface SubQuestRepository extends JpaRepository<SubQuest, Long> {
             "WHERE s.mainQuest.id = :mainQuestId " +
             "ORDER BY CASE WHEN sqs.id IS NOT NULL THEN 1 ELSE 0 END ASC, s.id ASC")
     List<SubQuestWithStatusProjection> findByMainQuestIdWithStatus(
-            @Param("mainQuestId") Long mainQuestId,
-            @Param("memberId") Long memberId
+            @Param("mainQuestId")final Long mainQuestId,
+            @Param("memberId") final Long memberId
     );
 }

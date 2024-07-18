@@ -17,8 +17,8 @@ public class SubQuestResolver {
 
     @UserOnly
     @QueryMapping
-    public SubQuestPageResponse subQuestsByMainQuestId(@Argument("mainQuestId") Long mainQuestId){
-        String username = SecurityUtil.getCurrentUsername();
+    public SubQuestPageResponse subQuestsByMainQuestId(@Argument("mainQuestId") final Long mainQuestId){
+        final String username = SecurityUtil.getCurrentUsername();
 
         return subQuestService.findSubQuestsByMainQuestId(mainQuestId, username);
     }

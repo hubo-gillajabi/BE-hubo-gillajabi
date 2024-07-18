@@ -41,11 +41,11 @@ public class SubQuest extends BaseEntity {
     private Set<SubQuestStatus> subQuestStatuses;
 
 
-    public static SubQuest createSubQuest(SubQuestRequest subQuestRequest) {
+    public static SubQuest createSubQuest(final SubQuestRequest subQuestRequest) {
         return new SubQuest(null, subQuestRequest.getTitle(), subQuestRequest.getDescription(), subQuestRequest.getImageUrl(), subQuestRequest.getMainQuest(),null);
     }
 
-    public void update(SubQuestRequest subQuestRequest) {
+    public void update(final SubQuestRequest subQuestRequest) {
         this.title = subQuestRequest.getTitle();
         this.description = subQuestRequest.getDescription();
         this.imageUrl = subQuestRequest.getImageUrl();

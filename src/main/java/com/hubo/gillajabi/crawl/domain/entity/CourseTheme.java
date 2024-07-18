@@ -12,6 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table
+@Builder
 public class CourseTheme extends BaseEntity {
 
     @Id

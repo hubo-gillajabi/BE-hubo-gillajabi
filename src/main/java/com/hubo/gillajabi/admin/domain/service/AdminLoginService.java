@@ -23,8 +23,8 @@ public class AdminLoginService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public TokenResponse login(LoginRequest loginRequest) {
-        Admin admin = adminRepository.findById(loginRequest.id())
-                        .orElseThrow(() -> new AdminLoginException(AdminLoginExceptionCode.ADMIN_NOT_FOUND));
+        final Admin admin = adminRepository.findById(loginRequest.id())
+                .orElseThrow(() -> new AdminLoginException(AdminLoginExceptionCode.ADMIN_NOT_FOUND));
 
         if (!bCryptPasswordEncoder.matches(loginRequest.password(), admin.getPassword())) {
             throw new AdminLoginException(AdminLoginExceptionCode.INVALID_PASSWORD);

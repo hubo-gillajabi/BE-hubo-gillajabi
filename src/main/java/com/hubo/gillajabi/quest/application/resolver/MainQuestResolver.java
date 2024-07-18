@@ -32,9 +32,9 @@ public class MainQuestResolver {
 
     @UserOnly
     @QueryMapping
-    public MainQuestPageResponse mainQuestsByTheme(@Argument("page") @DefaultValue("0") Integer page,
-                                                   @Argument("size") @DefaultValue("20") Integer size) {
-        String username = SecurityUtil.getCurrentUsername();
+    public MainQuestPageResponse mainQuestsByTheme(@Argument("page") @DefaultValue("0") final Integer page,
+                                                   @Argument("size") @DefaultValue("20")final Integer size) {
+        final String username = SecurityUtil.getCurrentUsername();
         Pageable pageable = PageRequest.of(page, size);
 
         return mainQuestService.findMainQuestsByTheme(pageable, username);
@@ -42,9 +42,9 @@ public class MainQuestResolver {
 
     @UserOnly
     @QueryMapping
-    public MainQuestPageResponse mainQuestsByCourse(@Argument("page") @DefaultValue("0") Integer page,
-                                                    @Argument("size") @DefaultValue("20") Integer size){
-        String username = SecurityUtil.getCurrentUsername();
+    public MainQuestPageResponse mainQuestsByCourse(@Argument("page") @DefaultValue("0") final Integer page,
+                                                    @Argument("size") @DefaultValue("20") final Integer size){
+        final String username = SecurityUtil.getCurrentUsername();
         Pageable pageable = PageRequest.of(page, size);
 
         return mainQuestService.findMainQuestsByCourse(pageable, username);

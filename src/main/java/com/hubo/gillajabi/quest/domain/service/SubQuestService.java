@@ -27,8 +27,8 @@ public class SubQuestService {
     private final MemberRepository memberRepository;
 
 
-    public SubQuestPageResponse findSubQuestsByMainQuestId(Long mainQuestId, String username) {
-        Member member = memberRepository.getEntityByUserName(username);
+    public SubQuestPageResponse findSubQuestsByMainQuestId(final Long mainQuestId, final String username) {
+        final Member member = memberRepository.getEntityByUserName(username);
         List<SubQuestWithStatusProjection> subQuestsPage = subQuestRepository.findByMainQuestIdWithStatus(mainQuestId, member.getId());
         return SubQuestPageResponse.of(mainQuestId, subQuestsPage);
     }

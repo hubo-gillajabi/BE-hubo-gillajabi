@@ -11,7 +11,7 @@ public class CoursePreviewDTO {
     private Long id;
     private String name;
 
-    public static CoursePreviewDTO of(Long courseId, String courseOriginName) {
+    public static CoursePreviewDTO of(final Long courseId, final String courseOriginName) {
         CoursePreviewDTO coursePreviewDTO = new CoursePreviewDTO();
         coursePreviewDTO.setId(courseId);
         coursePreviewDTO.setName(courseOriginName);

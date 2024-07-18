@@ -12,15 +12,15 @@ public class SubQuestPreviewDTO {
     private Long achievedCount;
     private Long unAchievedCount;
 
-    public SubQuestPreviewDTO(Long totalCount, Long achievedCount) {
+    public SubQuestPreviewDTO(final Long totalCount, final Long achievedCount) {
         this.totalCount = totalCount;
         this.achievedCount = achievedCount;
         this.unAchievedCount = totalCount - achievedCount;
     }
 
     public static SubQuestPreviewDTO createSubQuestPreview(MainQuestWithSubQuestProjection projection) {
-        Long totalCount = projection.getSubQuestCount();
-        Long achievedCount = projection.getAchievedSubQuestCount();
+        final Long totalCount = projection.getSubQuestCount();
+        final Long achievedCount = projection.getAchievedSubQuestCount();
 
         return new SubQuestPreviewDTO(totalCount, achievedCount);
     }

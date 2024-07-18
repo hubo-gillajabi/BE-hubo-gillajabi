@@ -15,8 +15,8 @@ public class SubQuestPageResponse {
     Long mainQuestId;
     List<SubQuestDTO> subQuests;
 
-    public static SubQuestPageResponse of(Long mainQuestId, List<SubQuestWithStatusProjection> subQuestsProjections) {
-        SubQuestPageResponse response = new SubQuestPageResponse();
+    public static SubQuestPageResponse of(final Long mainQuestId, List<SubQuestWithStatusProjection> subQuestsProjections) {
+        final SubQuestPageResponse response = new SubQuestPageResponse();
         response.setMainQuestId(mainQuestId);
         response.setSubQuests(subQuestsProjections.stream()
                 .map(SubQuestDTO::from)

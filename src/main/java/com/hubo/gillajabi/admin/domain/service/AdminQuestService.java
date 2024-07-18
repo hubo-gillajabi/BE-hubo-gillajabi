@@ -72,7 +72,7 @@ public class AdminQuestService {
         final MainQuest mainQuest = mainQuestRepository.getEntityById(questId);
         final SubQuest subQuest = subQuestRepository.getEntityById(subQuestId);
 
-        if (!mainQuest.hasSubQuest(subQuest)) {
+        if (mainQuest.hasSubQuest(subQuest)) {
             throw new IllegalArgumentException("메인 퀘스트에 해당 서브 퀘스트가 없습니다.");
         }
 
@@ -103,7 +103,7 @@ public class AdminQuestService {
         final MainQuest mainQuest = mainQuestRepository.getEntityById(questId);
         final SubQuest subQuest = subQuestRepository.getEntityById(subQuestId);
 
-        if (!mainQuest.hasSubQuest(subQuest)) {
+        if (mainQuest.hasSubQuest(subQuest)) {
             throw new IllegalArgumentException("메인 퀘스트에 해당 서브 퀘스트가 없습니다.");
         }
 

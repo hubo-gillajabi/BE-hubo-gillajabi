@@ -21,8 +21,8 @@ public class MainQuestService {
     private final MainQuestRepository mainQuestRepository;
     private final MemberRepository memberRepository;
 
-    public MainQuestPageResponse findMainQuestsByCity(Pageable pageable, String username) {
-        Member member = memberRepository.getEntityByUserName(username);
+    public MainQuestPageResponse findMainQuestsByCity(final Pageable pageable, final String username) {
+        final Member member = memberRepository.getEntityByUserName(username);
 
         Page<Long> mainQuestIdsPage = mainQuestRepository.findMainQuestIdsWithCityByMember(member.getId(), pageable);
 
@@ -32,11 +32,10 @@ public class MainQuestService {
         return MainQuestPageResponse.of(mainQuests, mainQuestIdsPage);
     }
 
-    public MainQuestPageResponse findMainQuestsByTheme(Pageable pageable, String username) {
-        Member member = memberRepository.getEntityByUserName(username);
+    public MainQuestPageResponse findMainQuestsByTheme(final Pageable pageable, final String username) {
+        final Member member = memberRepository.getEntityByUserName(username);
 
         Page<Long> mainQuestIdsPage = mainQuestRepository.findMainQuestIdsWithCourseThemeByMember(member.getId(), pageable);
-
 
         List<MainQuestWithSubQuestProjection> mainQuests = mainQuestRepository.findMainQuestsByIdsWithCourseThemeAndMember(
                 mainQuestIdsPage.getContent(), member.getId());
@@ -44,8 +43,8 @@ public class MainQuestService {
         return MainQuestPageResponse.of(mainQuests, mainQuestIdsPage);
     }
 
-    public MainQuestPageResponse findMainQuestsByCourse(Pageable pageable, String username) {
-        Member member = memberRepository.getEntityByUserName(username);
+    public MainQuestPageResponse findMainQuestsByCourse(final Pageable pageable, final String username) {
+        final Member member = memberRepository.getEntityByUserName(username);
 
         Page<Long> mainQuestIdsPage = mainQuestRepository.findMainQuestIdsWithCourseByMember(member.getId(), pageable);
 

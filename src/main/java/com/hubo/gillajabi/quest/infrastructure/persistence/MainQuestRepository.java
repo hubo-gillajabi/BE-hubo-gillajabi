@@ -13,19 +13,12 @@ import java.util.List;
 public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
 
 
-    default MainQuest getEntityById(Long mainQuestId) {
+    default MainQuest getEntityById(final Long mainQuestId) {
         if (mainQuestId != null) {
             return findById(mainQuestId).orElseThrow(() -> new IllegalArgumentException("메인 퀘스트를 찾을 수 없습니다."));
         }
         return null;
     }
-
-    //TODO 개선
-//    @Query("SELECT mq.id FROM MainQuest mq " +
-//            "LEFT JOIN MainQuestStatus mqStatus ON mqStatus.mainQuest = mq AND mqStatus.member.id = :memberId " +
-//            "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
-//            "mqStatus.id DESC NULLS LAST, mq.id ASC")
-//    Page<Long> findMainQuestIdsByMember(@Param("memberId") Long memberId, Pageable pageable);
 
     @Query("SELECT mq.id FROM MainQuest mq " +
             "JOIN mq.city c " +
@@ -33,7 +26,7 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "WHERE mq.course IS NULL AND mq.courseTheme IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    Page<Long> findMainQuestIdsWithCityByMember(@Param("memberId") Long memberId, Pageable pageable);
+    Page<Long> findMainQuestIdsWithCityByMember(@Param("memberId") final Long memberId, final Pageable pageable);
 
 
     @Query("SELECT mq.id FROM MainQuest mq " +
@@ -42,7 +35,7 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "WHERE mq.city IS NULL AND mq.course IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    Page<Long> findMainQuestIdsWithCourseThemeByMember(@Param("memberId") Long memberId, Pageable pageable);
+    Page<Long> findMainQuestIdsWithCourseThemeByMember(@Param("memberId") final Long memberId, final Pageable pageable);
 
 
     @Query("SELECT mq.id FROM MainQuest mq " +
@@ -51,7 +44,7 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "WHERE mq.city IS NULL AND mq.courseTheme IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    Page<Long> findMainQuestIdsWithCourseByMember(@Param("memberId") Long memberId, Pageable pageable);
+    Page<Long> findMainQuestIdsWithCourseByMember(@Param("memberId") final Long memberId, final Pageable pageable);
 
     @Query("SELECT mq as mainQuest, c as city, " +
             "CASE WHEN mqStatus.id IS NOT NULL THEN true ELSE false END as isAchieved, " +
@@ -65,7 +58,7 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "AND mq.course IS NULL AND mq.courseTheme IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCityAndMember(@Param("ids") List<Long> ids, @Param("memberId") Long memberId);
+    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCityAndMember(@Param("ids") List<Long> ids, @Param("memberId") final Long memberId);
 
     @Query("SELECT mq as mainQuest, ct as courseTheme, " +
             "CASE WHEN mqStatus.id IS NOT NULL THEN true ELSE false END as isAchieved, " +
@@ -79,7 +72,7 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "AND mq.city IS NULL AND mq.course IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCourseThemeAndMember(@Param("ids") List<Long> ids, @Param("memberId") Long memberId);
+    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCourseThemeAndMember(@Param("ids") List<Long> ids, @Param("memberId") final Long memberId);
 
 
     @Query("SELECT mq as mainQuest, c as course, " +
@@ -94,5 +87,5 @@ public interface MainQuestRepository extends JpaRepository<MainQuest, Long> {
             "AND mq.city IS NULL AND mq.courseTheme IS NULL " +
             "ORDER BY CASE WHEN mqStatus.id IS NOT NULL THEN 0 ELSE 1 END, " +
             "mqStatus.id DESC NULLS LAST, mq.id ASC")
-    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCourseAndMember(@Param("ids") List<Long> ids, @Param("memberId") Long memberId);
+    List<MainQuestWithSubQuestProjection> findMainQuestsByIdsWithCourseAndMember(@Param("ids") List<Long> ids, @Param("memberId") final Long memberId);
 }
