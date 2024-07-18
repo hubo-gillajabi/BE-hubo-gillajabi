@@ -12,7 +12,7 @@ public class MemberAgreement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinTable(name = "member_id")
     private Member member;
 
