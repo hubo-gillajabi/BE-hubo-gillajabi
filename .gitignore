@@ -46,7 +46,13 @@ out/
 
 ## graphql scheme ##
 **/src/main/resources/graphql/*.graphqls
+**/src/main/resources/graphql/*/*.graphqls
+**/src/main/resources/graphql/*/*/*.graphqls
 
+
+**/src/main/resources/templates/*/*
+
+.jqwik-database
 
 ## log ##
 **.csv
