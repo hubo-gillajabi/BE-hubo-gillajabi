@@ -5,7 +5,6 @@ import com.hubo.gillajabi.member.domain.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -25,10 +24,4 @@ public class MainQuestStatus extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
-
-    @Column(nullable = false)
-    private boolean isAchieved;
-
-    @Column
-    private LocalDateTime achievedTime;
 }
