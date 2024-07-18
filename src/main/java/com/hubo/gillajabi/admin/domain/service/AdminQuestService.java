@@ -8,7 +8,7 @@ import com.hubo.gillajabi.admin.application.dto.response.MainQuestResponse;
 import com.hubo.gillajabi.admin.application.dto.response.SubQuestResponse;
 import com.hubo.gillajabi.admin.infrastructure.dto.request.MainQuestRequest;
 import com.hubo.gillajabi.admin.infrastructure.dto.request.SubQuestRequest;
-import com.hubo.gillajabi.city.domain.City;
+import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.city.infrastructure.persistence.CityRepository;
