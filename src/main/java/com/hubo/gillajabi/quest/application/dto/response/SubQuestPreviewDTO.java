@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.quest.application.dto.response;
 
-import com.hubo.gillajabi.quest.infrastructure.dto.projection.MainQuestByCityProjection;
+import com.hubo.gillajabi.quest.infrastructure.dto.projection.MainQuestWithSubQuestProjection;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ public class SubQuestPreviewDTO {
         this.unAchievedCount = totalCount - achievedCount;
     }
 
-    public static SubQuestPreviewDTO createSubQuestPreview(MainQuestByCityProjection projection) {
+    public static SubQuestPreviewDTO createSubQuestPreview(MainQuestWithSubQuestProjection projection) {
         Long totalCount = projection.getSubQuestCount();
         Long achievedCount = projection.getAchievedSubQuestCount();
 

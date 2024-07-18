@@ -9,4 +9,12 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 
     Optional<Member> findByNickName(String nickName);
 
+
+    default Member getEntityByUserName(String userName){
+        if(userName != null){
+            return findByNickName(userName).orElseThrow(() -> new IllegalArgumentException("Member를 찾을 수 없습니다."));
+        }
+        return null;
+    }
+
 }

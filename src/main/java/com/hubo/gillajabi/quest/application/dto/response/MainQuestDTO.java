@@ -2,7 +2,7 @@ package com.hubo.gillajabi.quest.application.dto.response;
 
 import com.hubo.gillajabi.city.application.dto.response.CityPreviewDTO;
 import com.hubo.gillajabi.quest.domain.entity.MainQuest;
-import com.hubo.gillajabi.quest.infrastructure.dto.projection.MainQuestByCityProjection;
+import com.hubo.gillajabi.quest.infrastructure.dto.projection.MainQuestWithSubQuestProjection;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,15 +26,15 @@ public class MainQuestDTO {
     private boolean isAchieved;
     private LocalDateTime achievedTime;
 
-    private static MainQuestDTO from(MainQuestByCityProjection projection) {
+    private static MainQuestDTO from(MainQuestWithSubQuestProjection projection) {
         MainQuest mainQuest = projection.getMainQuest();
         return new MainQuestDTO(
                 mainQuest.getId(),
                 mainQuest.getTitle(),
                 mainQuest.getDescription(),
                 CityPreviewDTO.toEntity(mainQuest.getCity()),
-                CourseThemePreviewDTO.empty(),
-                CoursePreviewDTO.empty(),
+                CourseThemePreviewDTO.toEntity(projection.getCourseTheme()),
+                CoursePreviewDTO.toEntity(projection.getCourse()),
                 mainQuest.getImageUrl(),
                 SubQuestPreviewDTO.createSubQuestPreview(projection),
                 projection.getIsAchieved(),
@@ -42,7 +42,7 @@ public class MainQuestDTO {
         );
     }
 
-    public static List<MainQuestDTO> listFrom(List<MainQuestByCityProjection> projections) {
+    public static List<MainQuestDTO> listFrom(List<MainQuestWithSubQuestProjection> projections) {
         return projections.stream()
                 .map(MainQuestDTO::from)
                 .toList();

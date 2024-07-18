@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,8 +37,12 @@ public class SubQuest extends BaseEntity {
     @JoinColumn(name = "main_quest_id")
     private MainQuest mainQuest;
 
+    @OneToMany(mappedBy = "subQuest", fetch = FetchType.LAZY)
+    private Set<SubQuestStatus> subQuestStatuses;
+
+
     public static SubQuest createSubQuest(SubQuestRequest subQuestRequest) {
-        return new SubQuest(null, subQuestRequest.getTitle(), subQuestRequest.getDescription(), subQuestRequest.getImageUrl(), subQuestRequest.getMainQuest());
+        return new SubQuest(null, subQuestRequest.getTitle(), subQuestRequest.getDescription(), subQuestRequest.getImageUrl(), subQuestRequest.getMainQuest(),null);
     }
 
     public void update(SubQuestRequest subQuestRequest) {

@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.admin.application.dto.response;
 
-import com.hubo.gillajabi.admin.application.dto.MainQuestDTO;
+import com.hubo.gillajabi.quest.application.dto.response.MainQuestPreviewDTO;
 import com.hubo.gillajabi.global.type.StatusType;
 import com.hubo.gillajabi.quest.domain.entity.SubQuest;
 import lombok.AccessLevel;
@@ -19,19 +19,19 @@ public class SubQuestResponse {
 
     private String imageUrl;
 
-    private MainQuestDTO mainQuest;
+    private MainQuestPreviewDTO mainQuest;
 
     private StatusType statusType;
 
     public static SubQuestResponse fromEntity(SubQuest subQuest) {
-        MainQuestDTO mainQuestDTO = MainQuestDTO.fromEntity(subQuest.getMainQuest());
+        MainQuestPreviewDTO mainQuestPreviewDTO = MainQuestPreviewDTO.fromEntity(subQuest.getMainQuest());
 
         return new SubQuestResponse(
                 subQuest.getId(),
                 subQuest.getTitle(),
                 subQuest.getDescription(),
                 subQuest.getImageUrl(),
-                mainQuestDTO,
+                mainQuestPreviewDTO,
                 subQuest.getStatus()
         );
     }
