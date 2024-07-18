@@ -23,7 +23,8 @@ public class CourseRequest {
 
     public static CourseRequest of(ApiCourseResponse.Course item, City city, CourseTheme courseTheme) {
         CourseLevel level = CourseLevel.fromValue(item.getCrsLevel());
-        String shortDescription = Jsoup.parse(item.getCrsSummary()).text();
+        String crsSummary = item.getCrsSummary();
+        String shortDescription = (crsSummary != null) ? Jsoup.parse(crsSummary).text() : "";
         String courseNumber = parseCourseNumber(item.getCrsKorNm());
         return new CourseRequest(
                 item.getCrsKorNm(),
