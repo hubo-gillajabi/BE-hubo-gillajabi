@@ -38,4 +38,10 @@ public enum Province {
         }
         throw new IllegalArgumentException("해당 지역명이 enum에 없습니다. " + value);
     }
-}
+
+    public boolean isBigCity() {
+        return switch (this) {
+            case SEOUL, BUSAN, DAEGU, INCHEON, GWANGJU, DAEJEON, ULSAN, SEJONG -> true;
+            default -> false;
+        };
+    }}
