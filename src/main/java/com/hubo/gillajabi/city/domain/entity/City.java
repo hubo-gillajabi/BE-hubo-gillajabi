@@ -1,9 +1,12 @@
 package com.hubo.gillajabi.city.domain.entity;
 
 import com.hubo.gillajabi.crawl.domain.constant.Province;
+import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CityRequest;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,8 +38,11 @@ public class City {
     @Column(length = 8)
     private String cityCode;
 
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    private Set<Course> courses;
+
     public static City createCity(final CityRequest cityRequest) {
         return new City(null, cityRequest.getName(), cityRequest.getProvince(), cityRequest.getDescription(),null
-                ,null,null);
+                ,null,null,null);
     }
 }

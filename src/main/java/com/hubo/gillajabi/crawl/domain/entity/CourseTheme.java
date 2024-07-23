@@ -5,6 +5,7 @@ import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,8 +29,11 @@ public class CourseTheme extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @OneToMany(mappedBy = "courseTheme", fetch = FetchType.LAZY)
+    private List<CourseTag> courseTags;
+
     public static CourseTheme createCourseTheme(CourseThemeRequest requestDTO) {
-        return new CourseTheme(null, requestDTO.getName(), requestDTO.getShortDescription(), requestDTO.getDescription());
+        return new CourseTheme(null, requestDTO.getName(), requestDTO.getShortDescription(), requestDTO.getDescription(),null);
     }
 
     public void update(CourseThemeRequest requestDTO) {

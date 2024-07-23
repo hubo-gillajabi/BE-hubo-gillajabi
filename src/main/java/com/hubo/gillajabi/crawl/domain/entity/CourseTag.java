@@ -21,10 +21,11 @@ public class CourseTag {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "course_theme_id")
+    private CourseTheme courseTheme;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
     private CourseSection courseSection;
+
 }

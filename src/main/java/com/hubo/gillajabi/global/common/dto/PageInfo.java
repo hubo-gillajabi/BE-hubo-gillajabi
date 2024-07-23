@@ -8,11 +8,11 @@ import org.springframework.data.domain.Page;
 @Setter
 public class PageInfo {
     private int totalPages;
-    private int totalElements;
+    private long totalElements;
     private int size;
     private int number;
 
-    public PageInfo(int totalPages, int totalElements, int size, int number) {
+    public PageInfo(int totalPages, long totalElements, int size, int number) {
         this.totalPages = totalPages;
         this.totalElements = totalElements;
         this.size = size;
@@ -22,7 +22,7 @@ public class PageInfo {
     public static PageInfo from(Page<?> page) {
         return new PageInfo(
                 page.getTotalPages(),
-                (int) page.getTotalElements(),
+                page.getTotalElements(),
                 page.getSize(),
                 page.getNumber()
         );
