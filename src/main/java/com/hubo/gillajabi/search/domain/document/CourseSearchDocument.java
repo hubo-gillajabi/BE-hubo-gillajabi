@@ -4,14 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@Setting(settingPath = "elasticsearch-settings.json")
 @Document(indexName = "course_search")
 public class CourseSearchDocument {
 
@@ -34,6 +33,7 @@ public class CourseSearchDocument {
     private WeatherInfo weather;
 
     @Builder
+    @Getter
     public static class WeatherInfo {
         @Field(type = FieldType.Float)
         private Float lowestTemperature;  // 최저 기온
@@ -45,15 +45,30 @@ public class CourseSearchDocument {
         private String condition;
     }
 
-    @Field(type = FieldType.Keyword)
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "my_nori_analyzer"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword),
+                    @InnerField(suffix = "prefix", type = FieldType.Text, analyzer = "my_nori_analyzer",
+                            indexPrefixes = @IndexPrefixes(minChars = 1, maxChars = 10))
+            }
+    )
     private List<String> tags;
 
     @Builder
+    @Getter
     public static class City {
         @Field(type = FieldType.Keyword)
-        private String id;
+        private Long id;
 
-        @Field(type = FieldType.Text, analyzer = "standard")
+        @MultiField(
+                mainField = @Field(type = FieldType.Text, analyzer = "my_nori_analyzer"),
+                otherFields = {
+                        @InnerField(suffix = "keyword", type = FieldType.Keyword),
+                        @InnerField(suffix = "prefix", type = FieldType.Text, analyzer = "my_nori_analyzer",
+                                indexPrefixes = @IndexPrefixes(minChars = 1, maxChars = 10))
+                }
+        )
         private String name;
 
         @Field(type = FieldType.Keyword)
@@ -61,11 +76,19 @@ public class CourseSearchDocument {
     }
 
     @Builder
+    @Getter
     public static class Theme {
         @Field(type = FieldType.Keyword)
-        private String id;
+        private Long id;
 
-        @Field(type = FieldType.Text, analyzer = "standard")
+        @MultiField(
+                mainField = @Field(type = FieldType.Text, analyzer = "my_nori_analyzer"),
+                otherFields = {
+                        @InnerField(suffix = "keyword", type = FieldType.Keyword),
+                        @InnerField(suffix = "prefix", type = FieldType.Text, analyzer = "my_nori_analyzer",
+                                indexPrefixes = @IndexPrefixes(minChars = 1, maxChars = 10))
+                }
+        )
         private String name;
 
         @Field(type = FieldType.Text)
