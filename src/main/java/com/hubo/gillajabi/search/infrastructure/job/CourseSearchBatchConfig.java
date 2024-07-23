@@ -161,7 +161,16 @@ public class CourseSearchBatchConfig {
         return course -> {
             CourseTheme theme = course.getCourseTheme();
             City city = course.getCity();
-            String combinationKey = theme.getName() + "_" + city.getName();
+
+            String cityName = null;
+            if(city.getProvince().isBigCity()){
+                cityName = city.getProvince().getValue();
+            }
+            else{
+                cityName = city.getName();
+            }
+
+            String combinationKey = "theme_" + theme.getName() + "_" + cityName;
 
             if (processedCombinations.contains(combinationKey)) {
                 return null; // 이미 처리된 조합은 패스
@@ -227,7 +236,7 @@ public class CourseSearchBatchConfig {
         }
 
         return CourseSearchDocument.City.builder()
-                .id(city.getId().toString())
+                .id(city.getId())
                 .name(cityName)
                 .province(city.getProvince().getValue())
                 .build();
@@ -235,7 +244,7 @@ public class CourseSearchBatchConfig {
 
     private CourseSearchDocument.Theme mapTheme(CourseTheme courseTheme) {
         return CourseSearchDocument.Theme.builder()
-                .id(courseTheme.getId().toString())
+                .id(courseTheme.getId())
                 .name(courseTheme.getName())
                 .shortDescription(courseTheme.getShortDescription())
                 .build();
