@@ -67,13 +67,13 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_LOGIN_TOKEN }}
 
-      - name: build and push docker image
+      - name: build and push
         run: |
           docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
     
   deploy:
-    needs: build-and-push
+    needs: build and push
     runs-on: ubuntu-latest
     steps:
       - name: checkout source code
