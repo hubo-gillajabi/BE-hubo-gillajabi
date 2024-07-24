@@ -69,6 +69,25 @@ jobs:
 
       - name: build and push docker image
         run: |
-          docker build  -f Dockerfile-dev --platform linux/arm64/v8 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
+          docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
+    
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source code
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BE_HOST }}
+          username: ${{ secrets.BE_USER }}
+          port: ${{ secrets.BE_PORT }}
+          key: ${{ secrets.BE_PW }}
+          script: |
+            cd hubo
+            sudo docker-compose down
+            sudo docker-compose pull
+            sudo docker-compose up -d
+      
 
+  
