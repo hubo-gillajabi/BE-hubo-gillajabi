@@ -82,7 +82,7 @@ jobs:
           host: ${{ secrets.BE_HOST }}
           username: ${{ secrets.BE_USER }}
           port: ${{ secrets.BE_PORT }}
-          key: ${{ secrets.BE_PW }}
+          password: ${{ secrets.BE_PW }}
           script: |
             cd hubo
             sudo docker-compose down
