@@ -73,7 +73,7 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
     
   deploy:
-    needs: build and push
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: checkout source code
