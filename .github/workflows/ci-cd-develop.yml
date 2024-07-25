@@ -69,7 +69,7 @@ jobs:
 
       - name: build and push
         run: |
-          docker build -f Dockerfile-dev --platform linux/arm64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
+          docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
     
   deploy:
