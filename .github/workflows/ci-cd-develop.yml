@@ -25,16 +25,18 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
-      - name: copy application.yml files from submodule
-        run: |
-          mkdir -p src/main/resources
-          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
+#      - name: copy application.yml files from submodule
+#        run: |
+#          mkdir -p src/main/resources
+#          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: bootJar with gradle
-        run: ./gradlew bootJar
+      - name: copy resources and bootJar with gradle
+        run: |
+          ./gradlew copyResources copyTestResources
+          ./gradlew bootJar
 
       - name: update release
         uses: release-drafter/release-drafter@v6
