@@ -99,7 +99,7 @@ dependencies {
 
 tasks.register('copyResources', Copy) {
     from './BE-hubo-gillajabi-resources/resources'
-    include 'application.yml', 'application-*.yml', "db/*", "db/*/*", "graphql/*", "graphql/*/*", "templates/*", "templates/*/*", "templates/*/*/*"
+    include 'application.yml', 'application-*.yml', "db/*", "db/*/*", "graphql/*", "graphql/*/*", "templates/*", "templates/*/*", "templates/*/*/*", "*"
     into 'src/main/resources'
 }
 
