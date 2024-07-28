@@ -44,6 +44,11 @@ public class RoadCityDuruService {
     private CityRequest createCityRequestDTOFromCourseItem(final ApiCourseResponse.Course item) {
         final String provinceName = RoadCrawlResponseParserHelper.parseDuruResponseByProvince(item.getSigun());
         final Province province = Province.fromValue(provinceName);
+
+        if(province.isBigCity()){
+            return CityRequest.from(province);
+        }
+
         final String cityName = RoadCrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
 
         return CityRequest.of(cityName, province);
