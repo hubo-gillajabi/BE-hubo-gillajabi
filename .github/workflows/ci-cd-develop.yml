@@ -74,25 +74,25 @@ jobs:
           docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
     
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      TAG: ${{ env.TAG }}
-    steps:
-      - name: checkout source code
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.BE_HOST }}
-          username: ${{ secrets.BE_USER }}
-          port: ${{ secrets.BE_PORT }}
-          password: ${{ secrets.BE_PW }}
-          script: |
-            cd hubo
-            sudo docker login
-            sudo sed -i 's|image: haroya01/hubo:.*|image: haroya01/hubo:'"$TAG"'|' docker-compose.yml
-            sudo docker-compose pull backend
-            sudo docker-compose up -d backend
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    env:
+#      TAG: ${{ env.TAG }}
+#    steps:
+#      - name: checkout source code
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.BE_HOST }}
+#          username: ${{ secrets.BE_USER }}
+#          port: ${{ secrets.BE_PORT }}
+#          password: ${{ secrets.BE_PW }}
+#          script: |
+#            cd hubo
+#            sudo docker login
+#            sudo sed -i 's|image: haroya01/hubo:.*|image: haroya01/hubo:'"$TAG"'|' docker-compose.yml
+#            sudo docker-compose pull backend
+#            sudo docker-compose up -d backend
       
 
   
