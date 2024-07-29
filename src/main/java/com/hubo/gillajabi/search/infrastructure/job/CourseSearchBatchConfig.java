@@ -227,17 +227,9 @@ public class CourseSearchBatchConfig {
     }
 
     private CourseSearchDocument.City mapCity(City city) {
-        String cityName = null;
-        if(city.getProvince().isBigCity()){
-            cityName = city.getProvince().getValue();
-        }
-        else{
-            cityName = city.getName();
-        }
-
         return CourseSearchDocument.City.builder()
                 .id(city.getId())
-                .name(cityName)
+                .name(city.getName())
                 .province(city.getProvince().getValue())
                 .build();
     }
@@ -275,7 +267,7 @@ public class CourseSearchBatchConfig {
 
             return CourseSearchDocument.WeatherInfo.builder()
                     .lowestTemperature(temperatureDto.getLowTemperature())
-                    .highestTemperature(skyConditionDto.getHighTemperature())
+                    .highestTemperature(temperatureDto.getHighTemperature())
                     .condition(skyConditionDto.getSkyCondition().name())
                     .build();
         }

@@ -43,7 +43,10 @@ public class RoadCourseDuruService {
     private City findCity(final ApiCourseResponse.Course item, final List<City> cities) {
         final String provinceName = RoadCrawlResponseParserHelper.parseDuruResponseByProvince(item.getSigun());
         final Province province = Province.fromValue(provinceName);
-        final String cityName = RoadCrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
+
+        final String cityName = province.isBigCity()
+                ? provinceName
+                : RoadCrawlResponseParserHelper.parseDuruResponseByCity(item.getSigun());
 
         return cities.stream()
                 .filter(c -> c.getName().equals(cityName) && c.getProvince().equals(province))

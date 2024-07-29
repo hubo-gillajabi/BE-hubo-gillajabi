@@ -22,5 +22,9 @@ public class CityRequest {
     public static CityRequest of(final String name, final Province province) {
         return new CityRequest(name, province, null);
     }
+
+    public static CityRequest from(Province province) {
+        return new CityRequest(province.getValue(), province, null);
+    }
 }
 
