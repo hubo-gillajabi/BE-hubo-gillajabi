@@ -15,17 +15,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${cors.allowed-origins}")
     private String[] allowedOrigins;
 
-    private static final String[] ALLOWED_PATHS = {
-            "/swagger-ui/**",
-            "/api/**",
-            "/graphql",
-            "/graphiql/**",
-            "/v3/api-docs/**"
-    };
-
     @Override
     public void addCorsMappings(final CorsRegistry registry) {
-        registry.addMapping(Arrays.toString(ALLOWED_PATHS))
+        registry.addMapping("/**")
                 .allowedOrigins(allowedOrigins)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowCredentials(true)
