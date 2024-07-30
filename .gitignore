@@ -40,6 +40,8 @@ out/
 ### yml ###
 **/src/main/resources/*.yml
 **/src/test/resources/**/*.json
+**/src/main/resources/*.json
+
 
 ### sql ##
 **/src/main/resources/db/migration/*.sql
@@ -54,5 +56,6 @@ out/
 
 .jqwik-database
 
+##
 ## log ##
 **.csv

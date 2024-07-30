@@ -1,5 +1,7 @@
 package com.hubo.gillajabi.search.application.dto;
 
+import com.hubo.gillajabi.crawl.domain.constant.PrecipitationForm;
+import com.hubo.gillajabi.crawl.domain.constant.SkyCondition;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +13,8 @@ public class SearchWeatherInfoDTO {
 
     private Float highestTemperature;
 
-    private String condition;
+    private PrecipitationForm precipitationForm;
+
+    private SkyCondition skyCondition;
+
 }

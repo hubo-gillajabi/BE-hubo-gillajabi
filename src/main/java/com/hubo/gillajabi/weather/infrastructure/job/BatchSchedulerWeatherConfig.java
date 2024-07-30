@@ -1,4 +1,5 @@
-package com.hubo.gillajabi.search.infrastructure.job;
+package com.hubo.gillajabi.weather.infrastructure.job;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -14,17 +15,17 @@ import java.util.Date;
 @Configuration
 @EnableScheduling
 @RequiredArgsConstructor
-public class BatchSchedulerConfig {
+public class BatchSchedulerWeatherConfig {
 
-    private final Job courseSearchJob;
+    private final Job processWeatherJob;
 
     private final JobLauncher jobLauncher;
 
-    @Scheduled(cron = "0 0 1 * * ?")  // 매일 새벽 1시에 실행
-    public void runJob() throws Exception {
+    @Scheduled(cron = "0 20 6 * * ?")  // 매일 오전 6시 20분 실행
+    public void runJob() throws Exception{
         JobParameters parameters = new JobParametersBuilder()
                 .addDate("date", new Date())
                 .toJobParameters();
-        jobLauncher.run(courseSearchJob, parameters);
+        jobLauncher.run(processWeatherJob, parameters);
     }
 }

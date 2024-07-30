@@ -258,17 +258,14 @@ public class CourseSearchBatchConfig {
         String temperatureKey = WeatherRedisConstants.makeWeatherKey(city, LocalDate.now());
         Object temperatureObject = redisTemplate.opsForValue().get(temperatureKey);
 
-        String skyConditionKey = WeatherRedisConstants.makeWeatherKey(city, LocalDate.now(), "0600");
-        Object skyConditionObject = redisTemplate.opsForValue().get(skyConditionKey);
-
-        if (temperatureObject != null && skyConditionObject != null) {
+        if (temperatureObject != null ) {
             WeatherCurrentDto temperatureDto = objectMapper.convertValue(temperatureObject, WeatherCurrentDto.class);
-            WeatherCurrentDto skyConditionDto = objectMapper.convertValue(skyConditionObject, WeatherCurrentDto.class);
 
             return CourseSearchDocument.WeatherInfo.builder()
                     .lowestTemperature(temperatureDto.getLowTemperature())
                     .highestTemperature(temperatureDto.getHighTemperature())
-                    .condition(skyConditionDto.getSkyCondition().name())
+                    .skyCondition(temperatureDto.getSkyCondition())
+                    .precipitationForm(temperatureDto.getPrecipitationForm())
                     .build();
         }
         return null;
