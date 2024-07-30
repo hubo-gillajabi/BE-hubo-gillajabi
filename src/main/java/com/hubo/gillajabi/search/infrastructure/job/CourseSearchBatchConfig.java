@@ -268,7 +268,8 @@ public class CourseSearchBatchConfig {
             return CourseSearchDocument.WeatherInfo.builder()
                     .lowestTemperature(temperatureDto.getLowTemperature())
                     .highestTemperature(temperatureDto.getHighTemperature())
-                    .condition(skyConditionDto.getSkyCondition().name())
+                    .skyCondition(skyConditionDto.getSkyCondition())
+                    .precipitationForm(skyConditionDto.getPrecipitationForm())
                     .build();
         }
         return null;
