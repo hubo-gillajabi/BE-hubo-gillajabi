@@ -42,7 +42,7 @@ public class SwaggerConfig {
     public GroupedOpenApi api() {
         return GroupedOpenApi.builder()
                 .group("api")
-                .pathsToMatch("/api/**")
+                .pathsToMatch("/api/**", "/swagger-ui/**", "/graphql", "/graphiql/**", "/v3/api-docs/**")
                 .build();
     }
 }
