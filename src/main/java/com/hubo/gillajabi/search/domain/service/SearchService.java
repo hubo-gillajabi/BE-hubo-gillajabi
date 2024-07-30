@@ -13,9 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +24,20 @@ public class SearchService {
 
     private final CourseSearchRepository courseSearchRepository;
 
-    public SearchResponse searchByKeyword(String keyword) {
-        List<CourseSearchDocument> searchResults = courseSearchRepository.searchAllFields(keyword, PageRequest.of(0, 20));
+    public SearchResponse searchByCity(String keyword) {
+        List<CourseSearchDocument> searchResults = courseSearchRepository.searchByCity(keyword, PageRequest.of(0, 20));
+        return mapToSearchResponse(searchResults, false);
+    }
 
-        List<SearchResultDTO> results = searchResults.stream()
-                .map(this::mapToSearchResultDTO)
+    public SearchResponse searchByTheme(String keyword) {
+        List<CourseSearchDocument> searchResults = courseSearchRepository.searchByTheme(keyword, PageRequest.of(0, 20));
+        return mapToSearchResponse(searchResults, true);
+    }
+
+    private SearchResponse mapToSearchResponse(List<CourseSearchDocument> documents, boolean isThemeSearch) {
+        List<SearchResultDTO> results = documents.stream()
+                .filter(doc -> isThemeSearch ? doc.getId().startsWith("theme_") : doc.getId().startsWith("city_"))
+                .map(doc -> mapToSearchResultDTO(doc, isThemeSearch))
                 .collect(Collectors.toList());
 
         SearchResponse response = new SearchResponse();
@@ -36,20 +45,18 @@ public class SearchService {
         return response;
     }
 
-    private SearchResultDTO mapToSearchResultDTO(CourseSearchDocument doc) {
+    private SearchResultDTO mapToSearchResultDTO(CourseSearchDocument doc, boolean isThemeSearch) {
         SearchResultDTO result = new SearchResultDTO();
         result.setId(doc.getId());
         result.setCity(mapToCity(doc.getCity()));
-        result.setImages(doc.getImages());
+        result.setImages(doc.getImages() != null ? doc.getImages() : new ArrayList<>());
         result.setWeather(mapToWeather(doc.getWeather()));
 
-        if (doc.getThemes() != null && !doc.getThemes().isEmpty()) {
-            // 도시 기반 검색 결과
-            result.setThemes(doc.getThemes().stream().map(this::mapToTheme).collect(Collectors.toList()));
-        } else if (doc.getTheme() != null) {
-            // 테마 기반 검색 결과
+        if (isThemeSearch) {
             result.setTheme(mapToTheme(doc.getTheme()));
-            result.setTags(doc.getTags());
+            result.setTags(doc.getTags() != null ? doc.getTags() : new ArrayList<>());
+        } else {
+            result.setThemes(doc.getThemes() != null ? doc.getThemes().stream().map(this::mapToTheme).collect(Collectors.toList()) : new ArrayList<>());
         }
 
         return result;
