@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Profile;
                 @SecurityRequirement(name = "JWT Auth"),
         },
         servers = {
+                @Server(url = "https://diyblog.site", description = "개발 서버"),
                 @Server(url = "http://localhost:8080", description = "로컬 서버")
         }
 )
