@@ -75,7 +75,8 @@ public class SearchService {
         SearchWeatherInfoDTO weatherDTO = new SearchWeatherInfoDTO();
         weatherDTO.setLowestTemperature(weather.getLowestTemperature());
         weatherDTO.setHighestTemperature(weather.getHighestTemperature());
-        weatherDTO.setCondition(weather.getCondition());
+        weatherDTO.setPrecipitationForm(weather.getPrecipitationForm());
+        weatherDTO.setSkyCondition(weather.getSkyCondition());
         return weatherDTO;
     }
 }

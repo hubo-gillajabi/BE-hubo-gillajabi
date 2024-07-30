@@ -1,5 +1,7 @@
 package com.hubo.gillajabi.search.domain.document;
 
+import com.hubo.gillajabi.crawl.domain.constant.PrecipitationForm;
+import com.hubo.gillajabi.crawl.domain.constant.SkyCondition;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +44,10 @@ public class CourseSearchDocument {
         private Float highestTemperature;  // 최고 기온
 
         @Field(type = FieldType.Keyword)
-        private String condition;
+        private PrecipitationForm precipitationForm;
+
+        @Field(type = FieldType.Keyword)
+        private final SkyCondition skyCondition;
     }
 
     @MultiField(
