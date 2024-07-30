@@ -14,7 +14,7 @@ import java.util.Date;
 @Configuration
 @EnableScheduling
 @RequiredArgsConstructor
-public class BatchSchedulerConfig {
+public class BatchSchedulerCourseConfig {
 
     private final Job courseSearchJob;
 
