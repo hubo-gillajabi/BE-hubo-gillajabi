@@ -20,7 +20,7 @@ public class BatchSchedulerCourseConfig {
 
     private final JobLauncher jobLauncher;
 
-    @Scheduled(cron = "0 0 1 * * ?")  // 매일 새벽 1시에 실행
+    @Scheduled(cron = "0 30 6 * * ?")  // 매일 새벽 6시30 분 실행
     public void runJob() throws Exception {
         JobParameters parameters = new JobParametersBuilder()
                 .addDate("date", new Date())
