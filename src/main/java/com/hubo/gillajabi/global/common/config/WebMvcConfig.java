@@ -20,7 +20,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
             "/api/**",
             "/graphql",
             "/graphiql/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/admin/**",
     };
 
     @Override
