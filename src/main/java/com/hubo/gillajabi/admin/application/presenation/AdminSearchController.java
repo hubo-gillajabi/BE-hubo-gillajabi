@@ -1,6 +1,7 @@
 package com.hubo.gillajabi.admin.application.presenation;
 
 
+import com.hubo.gillajabi.login.application.annotation.AdminOnly;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class AdminSearchController {
 
     @Operation(summary = "검색 인덱싱", description = "검색 인덱싱을 수행합니다.")
     @PostMapping("/indexing")
+    @AdminOnly
     public ResponseEntity<String> runSearchIndexing() {
         try {
             JobParameters parameters = new JobParametersBuilder()

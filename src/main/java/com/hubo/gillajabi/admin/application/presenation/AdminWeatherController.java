@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.admin.application.presenation;
 
+import com.hubo.gillajabi.login.application.annotation.AdminOnly;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class AdminWeatherController {
 
     @Operation(summary = "날씨 정보 정리", description = "날씨 정보 요약을 수행합니다.")
     @PostMapping("/update")
+    @AdminOnly
     public ResponseEntity<String> runWeatherUpdate() {
         try {
             JobParameters parameters = new JobParametersBuilder()
