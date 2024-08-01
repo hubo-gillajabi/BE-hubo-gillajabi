@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/test")
 public class TestController {
 
-    @MemberOnly
     @GetMapping("/hello")
     public String test() {
         return "world";
