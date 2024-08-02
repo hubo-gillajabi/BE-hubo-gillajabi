@@ -24,7 +24,6 @@ public class SwaggerAuthenticationEntryPoint implements AuthenticationEntryPoint
             String encodedRedirectUrl = URLEncoder.encode(redirectUrl, StandardCharsets.UTF_8);
             response.sendRedirect(loginPageUrl + "?redirect=" + encodedRedirectUrl);
         } else {
-            // 다른 URI에 대한 처리를 여기에 추가할 수 있습니다.
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
     }
