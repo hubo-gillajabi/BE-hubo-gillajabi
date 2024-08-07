@@ -40,4 +40,8 @@ public class MemberAuthentication extends BaseEntity {
     public static MemberAuthentication createByMember(Member member) {
         return new MemberAuthentication(null, member, null, null, RoleStatus.GUEST);
     }
+
+    public void updateRoleStatus(boolean allAgreed) {
+        this.roleStatus = allAgreed ? RoleStatus.USER : RoleStatus.GUEST;
+    }
 }
