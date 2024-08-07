@@ -37,7 +37,7 @@ public class ImageController {
 
     // TODO: admin 이관
     @Operation(summary = "이미지 url 삭제", description = "단 이미 올라간 생성된 url은 삭제 되지 않습니다, 개별 도메인 삭제 필요")
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     @AdminOnly
     public ResponseEntity<String> deleteImage(@RequestParam @NotEmpty String imageUrl) {
         imageUploadService.deleteImage(imageUrl);
