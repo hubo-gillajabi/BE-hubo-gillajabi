@@ -3,6 +3,7 @@ package com.hubo.gillajabi.global.exception;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
+import com.hubo.gillajabi.mail.infrastructure.exception.MailException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,4 +72,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(new ExceptionResponse(404, errorMessage + detail));
     }
+
+    @ExceptionHandler(MailException.class)
+    public ResponseEntity<ExceptionResponse> handleMailException(final MailException e) {
+        log.warn("메일 전송 오류: {}", e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(e.getErrorCode(), e.getErrorMessage()));
+    }
+
 }
