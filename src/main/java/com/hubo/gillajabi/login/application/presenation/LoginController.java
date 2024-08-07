@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.login.application.presenation;
 
+import com.hubo.gillajabi.agreement.domain.service.AgreementService;
 import com.hubo.gillajabi.login.application.dto.response.AccessTokenResponse;
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.application.service.LoginService;
@@ -25,6 +26,7 @@ public class LoginController {
 
     private final LoginService loginService;
     private final MemberService memberService;
+    private final AgreementService agreementService;
 
     @Operation(summary = "게스트 계정생성", description = "게스트 로그인을 수행합니다.")
     @PostMapping("/guest")
@@ -32,6 +34,8 @@ public class LoginController {
             final HttpServletResponse response
     ) {
         final Member guest = memberService.createGuest();
+        agreementService.createAgreements(guest);
+
         final TokenResponse tokenResponse = loginService.loginGuest(guest);
 
         final ResponseCookie cookie = CookieBuilder.buildRefreshTokenCookie(tokenResponse.refreshToken(), COOKIE_TIME);
