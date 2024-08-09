@@ -8,7 +8,8 @@ public enum AuthExceptionCode {
     TOKEN_EXPIRED(1, "토큰이 만료되었습니다.", 401),
     INVALID_TOKEN(2, "토큰이 유효하지 않습니다.", 401),
     ACCESS_DENIED(3, "접근이 거부되었습니다.", 403),
-    CREDENTIALS_EXPIRED(4, "인증 정보가 만료되었습니다.", 401);
+    CREDENTIALS_EXPIRED(4, "인증 정보가 만료되었습니다.", 401),
+    UNSUPPORTED_AUTH_METHOD(5, "지원하지 않는 인증 방식입니다.", 400);
 
     private final int errorCode;
     private final String errorMessage;
