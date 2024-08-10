@@ -46,7 +46,6 @@ jobs:
         run: |
           mkdir -p src/test/resources
           cp -r BE-hubo-gillajabi-resources/test/mockedResponses/* src/test/resources/
-          echo "Copied $(ls -1 src/test/resources/* | wc -l) test mocked files"
 
       - name: Gradle Caching
         uses: actions/cache@v3
