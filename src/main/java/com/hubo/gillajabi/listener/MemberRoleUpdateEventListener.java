@@ -1,6 +1,6 @@
 package com.hubo.gillajabi.listener;
 
-import com.hubo.gillajabi.login.application.service.MemberRoleService;
+import com.hubo.gillajabi.login.domain.service.MemberRoleService;
 import com.hubo.gillajabi.member.infrastructure.dto.MemberRoleUpdateEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class MemberRoleUpdateEventListener {
     public void handleMemberRoleUpdateEvent(MemberRoleUpdateEvent event) {
         boolean result = memberRoleService.updateRole(event.getMember(), event.getMemberAgreements());
         if(!result){
-            log.error("ROle 업데이트 실패: {}", event.getMember().getNickName());
+            log.error("Role 업데이트 실패: {}", event.getMember().getNickName());
         }
 
     }

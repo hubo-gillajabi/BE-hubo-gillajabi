@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MailEventListener{
+public class MailEventListener {
 
     private final MailService mailService;
 
