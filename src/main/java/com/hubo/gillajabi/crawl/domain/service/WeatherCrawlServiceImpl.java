@@ -25,6 +25,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -95,7 +96,8 @@ public class WeatherCrawlServiceImpl implements WeatherCrawlService {
     /**
      * 현재 날씨 데이터에서 최저/최고 기온 데이터를 추출하여 WeatherCurrentDto에 저장
      * 최저기온 : 오전 6시, 최고기온 : 오후 3시
-     * @param current : response
+     *
+     * @param current                : response
      * @param dailyWeatherCurrentDto : 날짜별 날씨 데이터
      */
     private void updateTemperatureData(ApiWeatherCurrentResponse.Current current, WeatherCurrentDto dailyWeatherCurrentDto) {
@@ -124,7 +126,10 @@ public class WeatherCrawlServiceImpl implements WeatherCrawlService {
             LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
             String key = WeatherRedisConstants.makeWeatherKey(city, parsedDate, time);
             String value = objectMapper.writeValueAsString(weatherCurrentDto);
-            stringRedisTemplate.opsForValue().set(key, value);
+
+            // TODO 임시코드
+            long hour = 24;
+            stringRedisTemplate.opsForValue().set(key, value, hour, TimeUnit.HOURS);
         } catch (Exception e) {
             throw new CrawlException(4, "날씨 데이터 저장 오류: " + e.getMessage());
         }
@@ -135,7 +140,10 @@ public class WeatherCrawlServiceImpl implements WeatherCrawlService {
             LocalDate parsedDate = LocalDate.parse(fcstDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
             String dailyKey = WeatherRedisConstants.makeWeatherKey(city, parsedDate, null);
             String dailyValue = objectMapper.writeValueAsString(dailyWeatherCurrentDto);
-            stringRedisTemplate.opsForValue().set(dailyKey, dailyValue);
+
+            // TODO 임시코드
+            long day = 7;
+            stringRedisTemplate.opsForValue().set(dailyKey, dailyValue, day, TimeUnit.DAYS);
         } catch (Exception e) {
             throw new CrawlException(4, "날씨 데이터 저장 오류: " + e.getMessage());
         }
@@ -175,7 +183,10 @@ public class WeatherCrawlServiceImpl implements WeatherCrawlService {
         try {
             String key = WeatherRedisConstants.makeWeatherKey(city, makeKeyDate);
             String value = objectMapper.writeValueAsString(weatherTermDTO);
-            stringRedisTemplate.opsForValue().set(key, value);
+
+            // TODO 임시코드
+            long day = 10;
+            stringRedisTemplate.opsForValue().set(key, value, day, TimeUnit.DAYS);
 
         } catch (Exception e) {
             throw new CrawlException(4, "중기 날씨 데이터 저장 오류: " + e.getMessage());
