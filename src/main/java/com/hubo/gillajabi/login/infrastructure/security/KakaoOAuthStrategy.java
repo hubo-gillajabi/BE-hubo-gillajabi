@@ -35,7 +35,6 @@ public class KakaoOAuthStrategy implements OAuthStrategy {
         return headers;
     }
 
-
     @Override
     public OAuthUserInfo getUserInfo(String accessToken) {
         HttpHeaders headers = getHeaders(accessToken);

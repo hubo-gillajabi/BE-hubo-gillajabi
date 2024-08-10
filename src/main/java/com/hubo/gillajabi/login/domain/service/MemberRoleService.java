@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.login.application.service;
+package com.hubo.gillajabi.login.domain.service;
 
 import com.hubo.gillajabi.agreement.domain.entity.MemberAgreement;
 import com.hubo.gillajabi.login.domain.constant.RoleStatus;

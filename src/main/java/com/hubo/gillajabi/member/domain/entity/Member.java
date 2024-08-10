@@ -2,6 +2,7 @@ package com.hubo.gillajabi.member.domain.entity;
 
 
 import com.hubo.gillajabi.global.BaseEntity;
+import com.hubo.gillajabi.login.domain.constant.OAuthUserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,4 +36,16 @@ public class Member extends BaseEntity {
         return new Member(null, nickName, null, null, LocalDateTime.now());
     }
 
+    public static Member createByOAuthInfo(OAuthUserInfo oAuthUserInfo) {
+        return new Member(null, oAuthUserInfo.getNickname(), oAuthUserInfo.getEmail(), oAuthUserInfo.getProfileImageUrl(), LocalDateTime.now());
+    }
+
+    public Member updateMemberInfo(OAuthUserInfo oAuthUserInfo) {
+        this.nickName = oAuthUserInfo.getNickname();
+        this.email = oAuthUserInfo.getEmail();
+        this.profileImageUrl = oAuthUserInfo.getProfileImageUrl();
+        this.lastLoginAt = LocalDateTime.now();
+
+        return this;
+    }
 }
