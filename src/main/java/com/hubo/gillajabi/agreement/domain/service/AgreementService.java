@@ -38,6 +38,8 @@ public class AgreementService {
 
     private final AgreementTermRepository agreementTermRepository;
 
+    //TODO: 새로운 약관이 생성되면 batch 작업
+
     @Transactional
     public void updateAgreements(final String username, AgreementRequest request) {
         final Member member = memberRepository.getEntityByUserName(username);
