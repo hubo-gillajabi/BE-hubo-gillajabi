@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RoleStatusTest {
+class RoleStatusTest {
 
     @Test
     @DisplayName("Role_USER 로 올바르게 변환한다")
