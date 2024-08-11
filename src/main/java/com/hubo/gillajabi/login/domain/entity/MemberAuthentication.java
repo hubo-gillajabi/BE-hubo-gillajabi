@@ -1,6 +1,7 @@
 package com.hubo.gillajabi.login.domain.entity;
 
 import com.hubo.gillajabi.global.BaseEntity;
+import com.hubo.gillajabi.login.domain.constant.OAuthUserInfo;
 import com.hubo.gillajabi.login.domain.constant.OauthProvider;
 import com.hubo.gillajabi.login.domain.constant.RoleStatus;
 import com.hubo.gillajabi.member.domain.entity.Member;
@@ -22,7 +23,7 @@ public class MemberAuthentication extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER) // TODO 추후 확인 필요
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -43,5 +44,9 @@ public class MemberAuthentication extends BaseEntity {
 
     public void updateRoleStatus(boolean allAgreed) {
         this.roleStatus = allAgreed ? RoleStatus.USER : RoleStatus.GUEST;
+    }
+
+    public void updateProvider(OAuthUserInfo oAuthUserInfo) {
+        this.oauthProvider = oAuthUserInfo.getProvider();
     }
 }
