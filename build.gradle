@@ -91,6 +91,12 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.4'
 
+    // https://mvnrepository.com/artifact/com.drewnoakes/metadata-extractor
+    // EXIF 포맷 지원
+    implementation 'com.drewnoakes:metadata-extractor:2.19.0'
+
+
+
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-graphql
     implementation 'org.springframework.boot:spring-boot-starter-graphql:3.2.5'
