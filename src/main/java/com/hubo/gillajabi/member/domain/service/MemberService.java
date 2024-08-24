@@ -4,6 +4,8 @@ import com.hubo.gillajabi.agreement.infrastructure.dto.AgreementEvent;
 import com.hubo.gillajabi.login.domain.constant.OAuthUserInfo;
 import com.hubo.gillajabi.login.infrastructure.util.SecurityUtil;
 import com.hubo.gillajabi.member.domain.entity.Member;
+import com.hubo.gillajabi.member.infrastructure.exception.MemberException;
+import com.hubo.gillajabi.member.infrastructure.exception.MemberExceptionCode;
 import com.hubo.gillajabi.member.infrastructure.persistence.MemberRepository;
 import com.hubo.gillajabi.member.infrastructure.util.GuestNickNameBuilder;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +82,10 @@ public class MemberService {
                     eventPublisher.publishEvent(new AgreementEvent(member));
                     return member;
                 });
+    }
+
+    public Member findByNickName(String memberName) {
+        return memberRepository.findByNickName(memberName)
+                .orElseThrow(() -> new MemberException(MemberExceptionCode.MEMBER_NOT_FOUND));
     }
 }
