@@ -22,10 +22,10 @@ public class CityResolver {
         return cityService.getAllCities(offset, limit);
     }
 
-    @UserOnly
-    @QueryMapping
-    public City cityDetails(@Argument String cityId) {
-        Long id = Long.parseLong(cityId);
-        return cityService.getCityDetails(id);
-    }
+//    @UserOnly
+//    @QueryMapping
+//    public City cityDetails(@Argument String cityId) {
+//        Long id = Long.parseLong(cityId);
+//        return cityService.getCityDetails(id);
+//    }
 }
