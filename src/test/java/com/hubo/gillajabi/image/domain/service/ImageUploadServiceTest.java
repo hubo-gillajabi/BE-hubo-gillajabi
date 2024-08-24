@@ -50,7 +50,7 @@ class ImageUploadServiceTest {
     void testUploadImage_FileSizeTooLarge() {
         // given
         when(multipartFile.getContentType()).thenReturn("image/jpeg");
-        when(multipartFile.getSize()).thenReturn(4 * 1024 * 1024L); // 4MB
+        when(multipartFile.getSize()).thenReturn(1000 * 1024 * 1024L); // 1000MB
 
         // when & then
         ImageException exception = assertThrows(ImageException.class, () -> imageUploadService.uploadImage(multipartFile));
