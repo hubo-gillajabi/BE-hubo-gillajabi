@@ -29,6 +29,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,7 +169,8 @@ public class WeatherSearchBatchConfig {
                     String key = WeatherRedisConstants.makeWeatherKey(city, date);
                     try {
                         String value = objectMapper.writeValueAsString(summary);
-                        stringRedisTemplate.opsForValue().set(key, value);
+
+                        stringRedisTemplate.opsForValue().set(key, value, Duration.ofDays(5));
                     } catch (JsonProcessingException e) {
                         log.error("날씨 직렬화중 문제 발생 - 도시 : "  + city.getName() + ", 몇 일 :  " + date, e);
                     }
