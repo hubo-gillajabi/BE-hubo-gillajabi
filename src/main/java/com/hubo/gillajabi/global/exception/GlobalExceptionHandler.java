@@ -4,6 +4,8 @@ import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
 import com.hubo.gillajabi.mail.infrastructure.exception.MailException;
+import com.hubo.gillajabi.track.infrastructure.exception.PhotoPointException;
+import com.hubo.gillajabi.track.infrastructure.exception.TrackException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,4 +83,19 @@ public class GlobalExceptionHandler {
                 .body(new ExceptionResponse(e.getErrorCode(), e.getErrorMessage()));
     }
 
+    @ExceptionHandler(PhotoPointException.class)
+    public ResponseEntity<ExceptionResponse> handlePhotoPointException(final PhotoPointException e) {
+        log.warn("포토 포인트 오류 : {} " , e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(TrackException.class)
+    public ResponseEntity<ExceptionResponse> handleTrackException(final TrackException e) {
+        log.warn("트랙 오류 : {} " , e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
 }
