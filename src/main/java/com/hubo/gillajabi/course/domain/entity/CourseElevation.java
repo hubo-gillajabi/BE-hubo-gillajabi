@@ -25,7 +25,7 @@ public class CourseElevation {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    public CourseElevation(String elevation, Course course) {
+    public CourseElevation(final String elevation, final Course course) {
         this.id = null;
         this.elevation = elevation;
         this.course = course;

@@ -18,14 +18,14 @@ public class CourseResolver {
     private final CourseService courseService;
 
     @QueryMapping
-    public CourseGpsPage getCourseGps(@Argument Long courseId) {
-        CourseGpsDto page =  courseService.getCourseGpsPage(courseId);
+    public CourseGpsPage getCourseGps(@Argument final Long courseId) {
+        final CourseGpsDto page =  courseService.getCourseGpsPage(courseId);
         return new CourseGpsPage(page);
     }
 
     @QueryMapping
-    public CourseElevationPage getCourseElevation(@Argument Long courseId) {
-        CourseElevationDto page =  courseService.getCourseElevationPage(courseId);
+    public CourseElevationPage getCourseElevation(@Argument final Long courseId) {
+        final CourseElevationDto page =  courseService.getCourseElevationPage(courseId);
         return new CourseElevationPage(page);
     }
 }

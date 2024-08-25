@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface CourseElevationRepository extends JpaRepository<CourseElevation, Long> {
 
-    default CourseElevation getEntityByCourseId(final Long courseId){
-        if (courseId != null){
+    default CourseElevation getEntityByCourseId(final Long courseId) {
+        if (courseId != null) {
             return findByCourseId(courseId).orElseThrow(() -> new CourseException(CourseExceptionCode.COURSE_ELEVATION_NOT_FOUND));
         }
         return null;
     }
 
 
-    Optional<CourseElevation> findByCourseId(Long courseId);
+    Optional<CourseElevation> findByCourseId(final Long courseId);
 }

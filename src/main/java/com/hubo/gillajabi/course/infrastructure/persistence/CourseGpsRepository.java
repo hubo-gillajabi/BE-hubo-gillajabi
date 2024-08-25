@@ -10,11 +10,11 @@ import java.util.Optional;
 public interface CourseGpsRepository extends JpaRepository<CourseGps, Long> {
 
     default CourseGps getEntityByCourseId(final Long courseId) {
-        if(courseId != null){
+        if (courseId != null) {
             return findByCourseId(courseId).orElseThrow(() -> new CourseException(CourseExceptionCode.COURSE_GPS_NOT_FOUND));
         }
         return null;
     }
 
-    Optional<CourseGps> findByCourseId(Long courseId);
+    Optional<CourseGps> findByCourseId(final Long courseId);
 }

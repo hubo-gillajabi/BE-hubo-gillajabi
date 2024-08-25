@@ -122,15 +122,6 @@ public class CourseParseJobConfig {
     public ItemWriter<ParsedCourseData> parsedDataWriter() {
         return items -> {
             for (ParsedCourseData data : items) {
-                String gpsData = data.getGpsPoints();
-                // 데이터를 압축해야함
-
-                System.out.println("gpsData: " + gpsData);
-                System.out.println("elevations: " + data.getElevations());
-                System.out.println("length" + data.getElevations().length());
-                if (gpsData.length() > 65535) {
-                    log.warn("GPS data too long ({} characters). Truncating.", gpsData.length());
-                }
                 CourseGps courseGps = new CourseGps(data.getGpsPoints(), data.getCourse());
                 courseGpsRepository.save(courseGps);
 

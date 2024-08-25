@@ -18,14 +18,14 @@ public class CourseService {
     private final CourseGpsRepository courseGpsRepository;
     private final CourseElevationRepository courseElevationRepository;
 
-    public CourseGpsDto getCourseGpsPage(Long courseId) {
-        CourseGps courseGps = courseGpsRepository.getEntityByCourseId(courseId);
+    public CourseGpsDto getCourseGpsPage(final Long courseId) {
+        final CourseGps courseGps = courseGpsRepository.getEntityByCourseId(courseId);
 
         return new CourseGpsDto(courseGps);
     }
 
-    public CourseElevationDto getCourseElevationPage(Long courseId) {
-        CourseElevation courseElevation = courseElevationRepository.getEntityByCourseId(courseId);
+    public CourseElevationDto getCourseElevationPage(final Long courseId) {
+        final CourseElevation courseElevation = courseElevationRepository.getEntityByCourseId(courseId);
 
         return new CourseElevationDto(courseElevation);
     }
