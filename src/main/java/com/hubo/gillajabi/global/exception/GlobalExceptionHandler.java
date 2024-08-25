@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.global.exception;
 
+import com.hubo.gillajabi.course.infrastructure.exception.CourseException;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
@@ -94,6 +95,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TrackException.class)
     public ResponseEntity<ExceptionResponse> handleTrackException(final TrackException e) {
         log.warn("트랙 오류 : {} " , e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(CourseException.class)
+    public ResponseEntity<ExceptionResponse> handleCourseException(final CourseException e) {
+        log.warn("코스 오류 : {} " , e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
