@@ -102,7 +102,7 @@ public class ImageUploadService {
 
             LocalDateTime dateTime = getDateTimeFromExif(metadata);
 
-            ImageGpsInfo gpsInfo = ImageGpsInfo.createByGpsInfo(uploadUrl, latitude, longitude,dateTime);
+            ImageGpsInfo gpsInfo = ImageGpsInfo.createByGpsInfo(uploadUrl, latitude, longitude, dateTime);
             imageGpsInfoRepository.save(gpsInfo);
         } else {
             log.info("No GPS information found for image: {}", uploadUrl);

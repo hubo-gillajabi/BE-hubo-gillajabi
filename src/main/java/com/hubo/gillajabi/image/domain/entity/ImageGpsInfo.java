@@ -27,8 +27,7 @@ public class ImageGpsInfo {
     private LocalDateTime createdTime;
 
     public static ImageGpsInfo createByGpsInfo(final String imageUploadUrl, final BigDecimal latitude, final BigDecimal longitude, final LocalDateTime createdTime) {
-        final String gpsInfoKey = GPS_INFO_KEY + imageUploadUrl;
-        return new ImageGpsInfo(gpsInfoKey, latitude, longitude, createdTime);
+        return new ImageGpsInfo(imageUploadUrl, latitude, longitude, createdTime);
     }
 
     public static String getGpsInfoKey(final String imageUploadUrl) {
