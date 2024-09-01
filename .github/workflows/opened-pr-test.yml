@@ -65,8 +65,8 @@ jobs:
           port: ${{ secrets.BE_PORT }}
           password: ${{ secrets.BE_PW }}
           script: |
-            cd hubo/test
-            ./start-test-env.sh
+            cd ~/hubo/test
+            ./start-test-docker-compose.sh
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -83,8 +83,8 @@ jobs:
           port: ${{ secrets.BE_PORT }}
           password: ${{ secrets.BE_PW }}
           script: |
-            cd hubo/test
-            ./stop-test-env.sh
+            cd ~/hubo/test
+            ./stop-test-docker-compose.sh
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
