@@ -31,6 +31,19 @@ public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
 
+    private final String[] ALLOWED_PATHS = {
+            "/api/admin/login",
+            "/admin/login",
+            "/api/**",
+            "/admin/graphiql",
+            "/admin/swagger",
+            "/graphql",
+            "/graphiql/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -38,9 +51,7 @@ public class SecurityConfig {
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/login", "/admin/login", "/api/**", "/admin/graphiql",
-                                "/admin/swagger", "/graphql", "/graphiql/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers(ALLOWED_PATHS).permitAll()
                         .requestMatchers("/admin/**", "/v3/api-docs/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
