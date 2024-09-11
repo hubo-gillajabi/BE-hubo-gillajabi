@@ -17,4 +17,5 @@ public class MemberException extends RuntimeException {
     public MemberException(MemberExceptionCode memberExceptionCode) {
         this(memberExceptionCode.getErrorCode(), memberExceptionCode.getErrorMessage(), memberExceptionCode.getHttpStatus());
     }
+
 }

@@ -5,6 +5,7 @@ import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
 import com.hubo.gillajabi.mail.infrastructure.exception.MailException;
+import com.hubo.gillajabi.review.infrastructure.exception.PostException;
 import com.hubo.gillajabi.track.infrastructure.exception.PhotoPointException;
 import com.hubo.gillajabi.track.infrastructure.exception.TrackException;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +104,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CourseException.class)
     public ResponseEntity<ExceptionResponse> handleCourseException(final CourseException e) {
         log.warn("코스 오류 : {} " , e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(PostException.class)
+    public ResponseEntity<ExceptionResponse> handlePostException(final PostException e) {
+        log.warn("포스트 오류 : {} " , e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
