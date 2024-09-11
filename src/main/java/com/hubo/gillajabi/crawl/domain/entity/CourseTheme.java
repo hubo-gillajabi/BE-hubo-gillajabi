@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.crawl.domain.entity;
 
+import com.hubo.gillajabi.course.domain.entity.CourseTag;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseThemeRequest;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
@@ -29,11 +30,8 @@ public class CourseTheme extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "courseTheme", fetch = FetchType.LAZY)
-    private List<CourseTag> courseTags;
-
     public static CourseTheme createCourseTheme(CourseThemeRequest requestDTO) {
-        return new CourseTheme(null, requestDTO.getName(), requestDTO.getShortDescription(), requestDTO.getDescription(),null);
+        return new CourseTheme(null, requestDTO.getName(), requestDTO.getShortDescription(), requestDTO.getDescription());
     }
 
     public void update(CourseThemeRequest requestDTO) {
