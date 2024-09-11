@@ -31,6 +31,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,12 +100,12 @@ public class CourseParseJobConfig {
             for (JsonNode point : trkpts) {
                 count++;
                 if (count % 5 == 0) {
-                    double lat = point.path("lat").asDouble();
-                    double lon = point.path("lon").asDouble();
-                    double ele = point.path("ele").asDouble();
+                    BigDecimal lat = BigDecimal.valueOf(point.path("lat").asDouble()).setScale(6, RoundingMode.HALF_UP);
+                    BigDecimal lon = BigDecimal.valueOf(point.path("lon").asDouble()).setScale(6, RoundingMode.HALF_UP);
+                    BigDecimal ele = BigDecimal.valueOf(point.path("ele").asDouble()).setScale(6, RoundingMode.HALF_UP);
 
-                    gpsPoints.add(String.format("[%.6f,%.6f]", lat, lon));
-                    elevations.add(String.valueOf(ele));
+                    gpsPoints.add(String.format("[%s,%s]", lat, lon));
+                    elevations.add(ele.toString());
                 }
             }
 

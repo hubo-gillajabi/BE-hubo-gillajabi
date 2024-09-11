@@ -3,6 +3,7 @@ package com.hubo.gillajabi.track.application.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -12,7 +13,7 @@ public class TrackSendRequest {
     // 걸음수 (step)
     private Long step;
 
-    private Double distance;
+    private BigDecimal distance;
 
     private Long calorie;
 

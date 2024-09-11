@@ -8,14 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 @RedisHash(value = "track-status")
 public class TrackStatus {
-
-//    private static final String TRACK_STATUS_KEY = "track-status:";
 
     @Id
     private String id;
@@ -24,7 +23,7 @@ public class TrackStatus {
     private Long step;
 
     // 이동 거리 (km)
-    private Double distance;
+    private BigDecimal distance;
 
     // 칼로리 (kcal)
     private Long calorie;
@@ -39,7 +38,7 @@ public class TrackStatus {
 
     public static TrackStatus createByMemberAndTrackId(Member member, Long id) {
         String trackStatusKey = member.getNickName();
-        return new TrackStatus(trackStatusKey, 0L, 0.0, 0L, LocalDateTime.now(), id);
+        return new TrackStatus(trackStatusKey, 0L, BigDecimal.ZERO, 0L, LocalDateTime.now(), id);
     }
 
     public void updateByRequest(TrackStatusUpdateRequest trackStatusUpdateRequest) {

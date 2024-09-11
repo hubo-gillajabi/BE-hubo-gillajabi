@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -70,12 +71,12 @@ public class ApiDuruGpxResponse {
     @JsonIgnoreProperties(ignoreUnknown = true) // 알려지지 않은 속성 무시
     public static class Trkpt {
         @JacksonXmlProperty(isAttribute = true)
-        private double lat;
+        private BigDecimal lat;
 
         @JacksonXmlProperty(isAttribute = true)
-        private double lon;
+        private BigDecimal lon;
 
         @JacksonXmlProperty
-        private double ele;
+        private BigDecimal ele;
     }
 }

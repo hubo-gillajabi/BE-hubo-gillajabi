@@ -43,7 +43,4 @@ public class CourseSection extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "detail_id", unique = true)
     private CourseDetail courseDetail;
-
-    @OneToMany(mappedBy = "courseSection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CourseTag> courseTags;
 }

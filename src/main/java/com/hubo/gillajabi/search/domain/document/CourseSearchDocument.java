@@ -19,7 +19,7 @@ public class CourseSearchDocument {
     @Id
     private String id;
 
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword, index = false )
     private List<String> images;
 
     @Field(type = FieldType.Nested)
@@ -37,16 +37,16 @@ public class CourseSearchDocument {
     @Builder
     @Getter
     public static class WeatherInfo {
-        @Field(type = FieldType.Float)
+        @Field(type = FieldType.Float, index = false)
         private Float lowestTemperature;  // 최저 기온
 
-        @Field(type = FieldType.Float)
+        @Field(type = FieldType.Float, index = false)
         private Float highestTemperature;  // 최고 기온
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private PrecipitationForm precipitationForm;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private final SkyCondition skyCondition;
     }
 
@@ -96,7 +96,7 @@ public class CourseSearchDocument {
         )
         private String name;
 
-        @Field(type = FieldType.Text)
+        @Field(type = FieldType.Text, index = false)
         private String shortDescription;
     }
 

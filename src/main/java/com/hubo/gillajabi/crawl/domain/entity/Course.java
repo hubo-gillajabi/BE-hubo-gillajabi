@@ -2,19 +2,24 @@ package com.hubo.gillajabi.crawl.domain.entity;
 
 
 import com.hubo.gillajabi.city.domain.entity.City;
+import com.hubo.gillajabi.course.domain.entity.CourseTag;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
 import com.hubo.gillajabi.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table
 public class Course extends BaseEntity {
@@ -55,12 +60,74 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private BigDecimal averageRating = BigDecimal.ZERO;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer totalRatingCount = 0;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long totalRatingSum = 0L;
+
+    @OneToMany(mappedBy = "course")
+    private Set<CourseTag> courseTags = new HashSet<>();
+
+    @Builder
+    public Course(String originName, Integer distance, Integer totalTimeRequired, CourseLevel level,
+                  String shortDescription, String courseNumber, CourseDetail courseDetail,
+                  List<CourseSection> courseSections, CourseTheme courseTheme, City city) {
+        this.originName = originName;
+        this.distance = distance;
+        this.totalTimeRequired = totalTimeRequired;
+        this.level = level;
+        this.shortDescription = shortDescription;
+        this.courseNumber = courseNumber;
+        this.courseDetail = courseDetail;
+        this.courseSections = courseSections;
+        this.courseTheme = courseTheme;
+        this.city = city;
+    }
 
     public static Course createCourse(final CourseRequest request) {
-        return new Course(null, request.getCourseName(), request.getDistance(), request.getTotalRequiredHours(),
-                request.getLevel(), request.getShortDescription(), request.getCourseNumber(),
-                null, null, request.getCourseTheme(), request.getCity());
+        return Course.builder()
+                .originName(request.getCourseName())
+                .distance(request.getDistance())
+                .totalTimeRequired(request.getTotalRequiredHours())
+                .level(request.getLevel())
+                .shortDescription(request.getShortDescription())
+                .courseNumber(request.getCourseNumber())
+                .courseTheme(request.getCourseTheme())
+                .city(request.getCity())
+                .build();
     }
+
+    public void addRating(int rating) {
+        this.totalRatingSum += rating;
+        this.totalRatingCount++;
+        updateAverageRating();
+    }
+
+    public void removeRating(int rating) {
+        this.totalRatingSum -= rating;
+        this.totalRatingCount--;
+        updateAverageRating();
+    }
+
+    private void updateAverageRating() {
+        if (this.totalRatingCount > 0) {
+            BigDecimal totalRatingSumBD = BigDecimal.valueOf(this.totalRatingSum);
+            BigDecimal totalRatingCountBD = BigDecimal.valueOf(this.totalRatingCount);
+
+            // 소수점 1자리까지 반올림된 값을 설정
+            this.averageRating = totalRatingSumBD.divide(totalRatingCountBD, 1, RoundingMode.HALF_UP);
+        } else {
+            this.averageRating = BigDecimal.ZERO;
+        }
+    }
+
 
     public boolean checkUpdate(final CourseRequest request) {
         boolean isUpdated = false;
@@ -123,6 +190,11 @@ public class Course extends BaseEntity {
 
     public void setCourseDetail(CourseDetail courseDetail) {
         this.courseDetail = courseDetail;
+    }
+
+
+    public void addCourseTag(CourseTag courseTag) {
+        this.courseTags.add(courseTag);
     }
 }
 

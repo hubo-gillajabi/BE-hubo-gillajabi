@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -13,7 +15,7 @@ public class TrackStatusUpdateRequest {
 
     private Long step;
 
-    private Double distance;
+    private BigDecimal distance;
 
     private Long calorie;
 

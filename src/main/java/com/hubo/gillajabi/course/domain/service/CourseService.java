@@ -6,6 +6,8 @@ import com.hubo.gillajabi.course.infrastructure.dto.response.CourseElevationDto;
 import com.hubo.gillajabi.course.infrastructure.dto.response.CourseGpsDto;
 import com.hubo.gillajabi.course.infrastructure.persistence.CourseElevationRepository;
 import com.hubo.gillajabi.course.infrastructure.persistence.CourseGpsRepository;
+import com.hubo.gillajabi.crawl.domain.entity.Course;
+import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

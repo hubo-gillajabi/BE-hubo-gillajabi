@@ -78,6 +78,12 @@ public class TrackParseJobConfig {
 
             List<TrackSnapshot> snapshots = trackSnapshotRepository.findByTrackRecordIdOrderByCreatedTimeAsc(trackId);
 
+            if(snapshots.isEmpty()) {
+                log.error("트랙 스냅샷이 존재하지 않습니다. trackId: {}", trackId);
+                trackRecordRepository.deleteById(trackId);
+                return null;
+            }
+
             StringBuilder gpsDataBuilder = new StringBuilder();
             StringBuilder elevationDataBuilder = new StringBuilder();
             StringBuilder speedDataBuilder = new StringBuilder();
@@ -110,10 +116,12 @@ public class TrackParseJobConfig {
                 chunk -> {
                     List<? extends TrackRecord> items = chunk.getItems();
                     for (TrackRecord trackRecord : items) {
-                        trackRecordRepository.save(trackRecord);
-                        trackGpsDataRepository.save(trackRecord.getGpsData());
-                        trackElevationDataRepository.save(trackRecord.getElevationData());
-                        trackSpeedDataRepository.save(trackRecord.getSpeedData());
+                        if (trackRecord != null) {
+                            trackRecordRepository.save(trackRecord);
+                            trackGpsDataRepository.save(trackRecord.getGpsData());
+                            trackElevationDataRepository.save(trackRecord.getElevationData());
+                            trackSpeedDataRepository.save(trackRecord.getSpeedData());
+                        }
                     }
                 }
         ));

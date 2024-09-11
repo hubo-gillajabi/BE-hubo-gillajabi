@@ -1,6 +1,7 @@
 package com.hubo.gillajabi.image.domain.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hubo.gillajabi.image.application.dto.response.ImageUrlResponse;
 import com.hubo.gillajabi.image.domain.constant.ImageType;
 import com.hubo.gillajabi.image.domain.entity.ImageGpsInfo;
@@ -81,12 +82,23 @@ public class ImageUploadService {
         }
     }
 
+    /*
+    No content length specified for stream data.
+    Stream contents will be buffered in memory and could result in out of memory errors.
+     */
     private void uploadImageToS3(MultipartFile file, String uploadUrl) {
         String s3Key = getS3KeyFromUrl(uploadUrl);
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
-            awsS3Config.s3Client().putObject(bucketName, s3Key, file.getInputStream(), metadata);
+            metadata.setContentLength(file.getSize());
+
+            awsS3Config.s3Client().putObject(new PutObjectRequest(
+                    bucketName,
+                    s3Key,
+                    file.getInputStream(),
+                    metadata
+            ));
         } catch (IOException e) {
             throw new ImageException(ImageExceptionCode.IMAGE_UPLOAD_FAILED);
         }
@@ -102,7 +114,7 @@ public class ImageUploadService {
 
             LocalDateTime dateTime = getDateTimeFromExif(metadata);
 
-            ImageGpsInfo gpsInfo = ImageGpsInfo.createByGpsInfo(uploadUrl, latitude, longitude,dateTime);
+            ImageGpsInfo gpsInfo = ImageGpsInfo.createByGpsInfo(uploadUrl, latitude, longitude, dateTime);
             imageGpsInfoRepository.save(gpsInfo);
         } else {
             log.info("No GPS information found for image: {}", uploadUrl);

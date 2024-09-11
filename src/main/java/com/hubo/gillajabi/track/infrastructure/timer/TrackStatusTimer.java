@@ -16,7 +16,7 @@ public class TrackStatusTimer {
     private final RedisTemplate<String, String> redisTemplate;
 
     private static final String TIMER_KEY_PREFIX = "track-status-timer:";
-    private static final long ACTIVE_EXPIRATION_TIME_MINUTES = 1;
+    private static final long ACTIVE_EXPIRATION_TIME_MINUTES = 30;
     private static final long PAUSED_EXPIRATION_TIME_HOURS = 2;
     private static final long STOP_EXPIRATION_TIME_SECONDS = 2;
 

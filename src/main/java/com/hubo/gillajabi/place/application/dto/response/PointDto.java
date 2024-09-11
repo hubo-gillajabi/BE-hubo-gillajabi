@@ -30,8 +30,8 @@ public class PointDto {
         List<PointDto> pointDtos = new ArrayList<>();
         for (Place place : places) {
             PointDto pointDto = new PointDto();
-            pointDto.setLatitude(BigDecimal.valueOf(place.getLocation()[1]));
-            pointDto.setLongitude(BigDecimal.valueOf(place.getLocation()[0]));
+            pointDto.setLatitude(place.getLocation()[1]);
+            pointDto.setLongitude(place.getLocation()[0]);
             pointDto.setName(place.getName());
             pointDto.setCategory(place.getType());
             pointDto.setDescription(place.getDescription());

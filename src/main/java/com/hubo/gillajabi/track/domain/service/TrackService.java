@@ -2,6 +2,7 @@ package com.hubo.gillajabi.track.domain.service;
 
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
+import com.hubo.gillajabi.global.type.StatusType;
 import com.hubo.gillajabi.location.application.dto.request.LocationHandlingRequest;
 import com.hubo.gillajabi.location.domain.service.constant.LocationCollectionType;
 import com.hubo.gillajabi.location.domain.service.constant.LocationServiceType;
@@ -15,6 +16,7 @@ import com.hubo.gillajabi.track.domain.entity.TrackSnapshot;
 import com.hubo.gillajabi.track.domain.entity.TrackStatus;
 import com.hubo.gillajabi.track.infrastructure.dto.request.TrackSnapshotRequest;
 import com.hubo.gillajabi.track.infrastructure.dto.request.TrackStatusUpdateRequest;
+import com.hubo.gillajabi.track.infrastructure.dto.response.TrackGpsDto;
 import com.hubo.gillajabi.track.infrastructure.exception.TrackException;
 import com.hubo.gillajabi.track.infrastructure.exception.TrackExceptionCode;
 import com.hubo.gillajabi.track.infrastructure.persistence.TrackRecordRepository;
@@ -118,4 +120,16 @@ public class TrackService {
 
         trackStatusTimer.restartTimerForMember(username);
     }
+
+    public TrackGpsDto getTrackGps(String username, Long trackId) {
+        Member member = memberRepository.getEntityByUserName(username);
+        TrackRecord trackRecord = trackRecordRepository.getEntityById(trackId);
+
+        if(trackRecord.getStatus() == StatusType.DISABLE && !trackRecord.getMember().equals(member)){
+            throw new TrackException(TrackExceptionCode.TRACK_NOT_FOUND);
+        }
+
+        return new TrackGpsDto(trackRecord.getGpsData().getGpsData());
+    }
+
 }

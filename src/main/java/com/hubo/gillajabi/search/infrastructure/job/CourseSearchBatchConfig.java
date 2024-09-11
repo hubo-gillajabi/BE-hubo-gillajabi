@@ -6,7 +6,6 @@ import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.city.infrastructure.persistence.CityRepository;
 import com.hubo.gillajabi.crawl.domain.constant.WeatherRedisConstants;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
-import com.hubo.gillajabi.crawl.domain.entity.CourseTag;
 import com.hubo.gillajabi.crawl.domain.entity.CourseTheme;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.WeatherCurrentDto;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
@@ -277,9 +276,7 @@ public class CourseSearchBatchConfig {
     }
 
     private List<String> getTagsForTheme(CourseTheme theme) {
-
-        return theme.getCourseTags().stream()
-                .map(CourseTag::getName)
-                .toList();
+        //TODO
+        return null;
     }
 }

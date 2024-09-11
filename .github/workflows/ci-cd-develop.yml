@@ -25,10 +25,10 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
-#      - name: copy application.yml files from submodule
-#        run: |
-#          mkdir -p src/main/resources
-#          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
+      #      - name: copy application.yml files from submodule
+      #        run: |
+      #          mkdir -p src/main/resources
+      #          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -73,26 +73,57 @@ jobs:
         run: |
           docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
-    
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    env:
-#      TAG: ${{ env.TAG }}
-#    steps:
-#      - name: checkout source code
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.BE_HOST }}
-#          username: ${{ secrets.BE_USER }}
-#          port: ${{ secrets.BE_PORT }}
-#          password: ${{ secrets.BE_PW }}
-#          script: |
-#            cd hubo
-#            sudo docker login
-#            sudo sed -i 's|image: haroya01/hubo:.*|image: haroya01/hubo:'"$TAG"'|' docker-compose.yml
-#            sudo docker-compose pull backend
-#            sudo docker-compose up -d backend
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ env.TAG }}
+    steps:
+      - name: checkout source code
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BE_HOST }}
+          username: ${{ secrets.BE_USER }}
+          port: ${{ secrets.BE_PORT }}
+          password: ${{ secrets.BE_PW }}
+
+      - name: dev deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: |
+          cd hubo
+          sudo docker pull backend
+          sudo docker-compose up -d --no-deps backend
+
+      - name : prod deploy
+        if: github.event_name == 'release'
+
+        ## TODO: 수정 필요
+        run: |
+          cd hubo
+          
+
+
+
+      #  deploy:
+      #    needs: build
+      #    runs-on: ubuntu-latest
+      #    env:
+      #      TAG: ${{ env.TAG }}
+      #    steps:
+      #      - name: checkout source code
+      #        uses: appleboy/ssh-action@master
+      #        with:
+      #          host: ${{ secrets.BE_HOST }}
+      #          username: ${{ secrets.BE_USER }}
+      #          port: ${{ secrets.BE_PORT }}
+      #          password: ${{ secrets.BE_PW }}
+      #          script: |
+      #            cd hubo
+      #            sudo docker login
+      #            sudo sed -i 's|image: haroya01/hubo:.*|image: haroya01/hubo:'"$TAG"'|' docker-compose.yml
+      #            sudo docker-compose pull backend
+      #            sudo docker-compose up -d backend
       
 
   

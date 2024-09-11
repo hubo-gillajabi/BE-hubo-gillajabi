@@ -8,13 +8,17 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@SQLRestriction(value = "status != 'DELETED'")
 public class TrackRecord extends BaseEntity {
 
     @Id
@@ -43,12 +47,12 @@ public class TrackRecord extends BaseEntity {
 
     private Long step;
 
-    private Double distance;
+    private BigDecimal distance;
 
     private Long calorie;
 
     public static TrackRecord createByMember(final Member member, final Course course) {
-        return new TrackRecord(null, null, null, null, null, member, course, 0L,0D,0L);
+        return new TrackRecord(null, null, null, null, null, member, course, 0L,BigDecimal.ZERO,0L);
     }
 
     public void addDataEntity(TrackGpsData trackGpsData, TrackElevationData trackElevationData,
@@ -59,5 +63,21 @@ public class TrackRecord extends BaseEntity {
         this.step = trackStatus.getStep();
         this.distance = trackStatus.getDistance();
         this.calorie = trackStatus.getCalorie();
+    }
+
+    public void addPointImages(Set<PhotoPoint> photoPoints) {
+        this.photoPoints.addAll(photoPoints);
+        PhotoPoint.addTrackRecord(photoPoints, this);
+    }
+
+    public void addPhotoPoints(Set<PhotoPoint> photoPoints) {
+        this.photoPoints.addAll(photoPoints);
+        PhotoPoint.addTrackRecord(photoPoints, this);
+    }
+
+    public void checkTrackOwner(Member member) {
+        if (!this.member.equals(member)) {
+            throw new IllegalArgumentException("트랙의 소유자가 아닙니다.");
+        }
     }
 }
