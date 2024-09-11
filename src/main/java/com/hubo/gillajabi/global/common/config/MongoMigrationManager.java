@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,9 +60,9 @@ public class MongoMigrationManager {
             rows.remove(0); // 첫줄 표 제목 제거
             for (String[] row : rows) {
                 Place place = new Place();
-                place.setLocation(new double[]{
-                        Double.parseDouble(row[0]), // longitude
-                        Double.parseDouble(row[1])  // latitude
+                place.setLocation(new BigDecimal[]{
+                        new BigDecimal(row[0]),
+                        new BigDecimal(row[1])
                 });
                 place.setName(row[2]);
                 place.setType(PlaceType.fromKoreanName(row[3]));
