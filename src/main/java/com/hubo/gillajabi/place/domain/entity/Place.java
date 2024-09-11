@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+
 @Document(collection = "places")
 @CompoundIndexes({
         @CompoundIndex(name = "type_courseId", def = "{'type': 1, 'courseId': 1}", unique = true),
@@ -26,7 +28,7 @@ public class Place {
     private String id;
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-    private double[] location;  // [경도, 위도] 순서
+    private BigDecimal[] location;  // [경도, 위도] 순서
 
     private String name;
 
