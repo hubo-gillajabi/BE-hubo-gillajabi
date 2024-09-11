@@ -2,11 +2,15 @@ package com.hubo.gillajabi.city.application.dto.response;
 
 import com.hubo.gillajabi.city.domain.entity.City;
 import com.hubo.gillajabi.crawl.domain.constant.Province;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CityPreviewDTO {
     private Long id;
     private String name;
