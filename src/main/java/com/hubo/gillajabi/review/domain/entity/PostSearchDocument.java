@@ -65,6 +65,9 @@ public class PostSearchDocument {
     @Field(type = FieldType.Nested)
     private CityDocument city;
 
+    @Field(type = FieldType.Nested, index = false)
+    private String content;
+
 
     public static PostSearchDocument fromPost(Post post) {
         PostSearchDocument postSearchDocument = new PostSearchDocument();
@@ -80,7 +83,15 @@ public class PostSearchDocument {
         postSearchDocument.setCreatedTime(post.getCreatedTime().toLocalDate());
         postSearchDocument.setCourse(CourseDocument.fromCourse(post.getTrackRecord().getCourse()));
         postSearchDocument.setCity(CityDocument.fromCity(post.getTrackRecord().getCourse().getCity()));
+        postSearchDocument.setContent(sliceContent(post.getContent()));
         return postSearchDocument;
+    }
+
+    private static String sliceContent(String content) {
+        if (content == null) {
+            return "";
+        }
+        return content.length() > 45 ? content.substring(0, 45) + "..." : content;
     }
 
 
