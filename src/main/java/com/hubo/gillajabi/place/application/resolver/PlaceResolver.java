@@ -1,4 +1,4 @@
-package com.hubo.gillajabi.place.application.presenation;
+package com.hubo.gillajabi.place.application.resolver;
 
 import com.hubo.gillajabi.place.application.dto.response.PointDto;
 import com.hubo.gillajabi.place.application.dto.response.PointResponse;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class PlaceController {
+public class PlaceResolver {
 
     private final PlaceService placeService;
 
