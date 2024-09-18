@@ -4,7 +4,6 @@ import com.hubo.gillajabi.image.domain.entity.ImageUploadUrl;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageExceptionCode;
 import com.hubo.gillajabi.image.infrastructure.presistence.ImageUploadUrlRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +36,7 @@ class ImageValidationServiceTest {
         when(imageUploadUrlRepository.findById(imageUrl)).thenReturn(Optional.of(imageUploadUrl));
 
         // when
-        imageValidationService.validateAndDeleteImageUrl(imageUrl);
+        imageValidationService.validateImageUrl(imageUrl);
 
         // then
         verify(imageUploadUrlRepository, times(1)).delete(imageUploadUrl);
@@ -52,7 +51,7 @@ class ImageValidationServiceTest {
 
         // when & then
         ImageException exception = assertThrows(ImageException.class, () -> {
-            imageValidationService.validateAndDeleteImageUrl(imageUrl);
+            imageValidationService.validateImageUrl(imageUrl);
         });
         assertEquals(ImageExceptionCode.IMAGE_NOT_VALID.getErrorCode(), exception.getErrorCode());
     }
@@ -69,7 +68,7 @@ class ImageValidationServiceTest {
         when(imageUploadUrlRepository.findById(imageUrls.get(1))).thenReturn(Optional.of(imageUploadUrl2));
 
         // when
-        imageValidationService.validateAndDeleteImageUrls(imageUrls);
+        imageValidationService.validateImageUrls(imageUrls);
 
         // then
         verify(imageUploadUrlRepository, times(1)).delete(imageUploadUrl1);
@@ -85,7 +84,7 @@ class ImageValidationServiceTest {
 
         // when & then
         ImageException exception = assertThrows(ImageException.class, () -> {
-            imageValidationService.validateAndDeleteImageUrls(imageUrls);
+            imageValidationService.validateImageUrls(imageUrls);
         });
         assertEquals(ImageExceptionCode.IMAGE_NOT_VALID.getErrorCode(), exception.getErrorCode());
     }

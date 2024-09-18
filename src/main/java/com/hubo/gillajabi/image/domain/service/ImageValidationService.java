@@ -15,17 +15,26 @@ public class ImageValidationService {
 
     private final ImageUploadUrlRepository imageUploadUrlRepository;
 
-    public void validateAndDeleteImageUrls(List<String> imageUrls) {
+    public void validateImageUrls(List<String> imageUrls) {
         for (String imageUrl : imageUrls) {
-            validateAndDeleteImageUrl(imageUrl);
+            validateImageUrl(imageUrl);
         }
     }
 
-    public void validateAndDeleteImageUrl(String imageUrl) {
-        ImageUploadUrl imageUploadUrl = imageUploadUrlRepository.findById(imageUrl).orElseThrow(
+    public void validateImageUrl(String imageUrl) {
+        imageUploadUrlRepository.findById(imageUrl).orElseThrow(
                 () -> new ImageException(ImageExceptionCode.IMAGE_NOT_VALID));
-
-        imageUploadUrlRepository.delete(imageUploadUrl);
-
     }
+
+    public void deleteImageUrls(List<String> imageUrls) {
+        for (String imageUrl : imageUrls) {
+            deleteImageUrl(imageUrl);
+        }
+    }
+
+    public void deleteImageUrl(String imageUrl) {
+        imageUploadUrlRepository.deleteById(imageUrl);
+    }
+
+    //        imageUploadUrlRepository.delete(imageUploadUrl);
 }

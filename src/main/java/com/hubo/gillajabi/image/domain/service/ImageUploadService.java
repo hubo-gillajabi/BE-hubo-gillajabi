@@ -104,6 +104,9 @@ public class ImageUploadService {
         }
     }
 
+    /*
+    gps가 사진에서 추출 해야되는 경우 ImageGpsInfo를 사용할것
+     */
     private void extractAndSaveImageInfo(MultipartFile file, String uploadUrl) throws IOException, ImageProcessingException {
         Metadata metadata = ImageMetadataReader.readMetadata(file.getInputStream());
 

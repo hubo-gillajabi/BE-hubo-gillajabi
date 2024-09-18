@@ -46,7 +46,7 @@ class ImageUploadAspectTest {
         imageUploadAspect.validateImageUploadUrls(proceedingJoinPoint);
 
         // then
-        verify(imageValidationService, times(1)).validateAndDeleteImageUrl("http://example.com/image.jpg");
+        verify(imageValidationService, times(1)).validateImageUrl("http://example.com/image.jpg");
         verify(proceedingJoinPoint, times(1)).proceed();
     }
 
@@ -63,7 +63,7 @@ class ImageUploadAspectTest {
         imageUploadAspect.validateImageUploadUrls(proceedingJoinPoint);
 
         // then
-        verify(imageValidationService, times(1)).validateAndDeleteImageUrls(imageUrls);
+        verify(imageValidationService, times(1)).validateImageUrls(imageUrls);
         verify(proceedingJoinPoint, times(1)).proceed();
     }
 }
