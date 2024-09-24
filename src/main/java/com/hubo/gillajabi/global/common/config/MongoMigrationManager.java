@@ -53,7 +53,7 @@ public class MongoMigrationManager {
                     mongoTemplate.save(placeDocument);
                 }
             }
-            System.out.println("데이터 마이그레이션 완료: " + resource.getFilename());
+            log.info("데이터 마이그레이션 완료: " + resource.getFilename());
         }
     }
 
