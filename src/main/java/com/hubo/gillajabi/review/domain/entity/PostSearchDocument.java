@@ -102,7 +102,6 @@ public class PostSearchDocument {
     }
 
     public CoursePreview getCoursePreview() {
-        System.out.println("this.course.getId() = " + this.course.getId());
         return new CoursePreview(Long.parseLong(this.course.getId()), this.course.getName());
     }
 
@@ -111,7 +110,7 @@ public class PostSearchDocument {
     }
 
     public MemberPreview getMemberPreview() {
-        return new MemberPreview(this.member.getNickName(), this.member.getProfileImageUrl());
+        return new MemberPreview(this.member.getId(), this.member.getNickName(), this.member.getProfileImageUrl());
     }
 }
 
@@ -156,6 +155,9 @@ class CityDocument {
 @Getter
 @Setter
 class MemberDocument {
+    @Field(type = FieldType.Keyword)
+    private Long id;
+
     @Field(type = FieldType.Text, analyzer = "my_nori_analyzer")
     private String nickName;
 
@@ -164,6 +166,7 @@ class MemberDocument {
 
     public static MemberDocument fromMember(Member member) {
         MemberDocument memberDocument = new MemberDocument();
+        memberDocument.setId(member.getId());
         memberDocument.setNickName(member.getNickName());
         memberDocument.setProfileImageUrl(member.getProfileImageUrl());
         return memberDocument;
