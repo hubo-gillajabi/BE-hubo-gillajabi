@@ -1,96 +1,70 @@
 package com.hubo.gillajabi.point.domain.entity;
 
-
-import com.hubo.gillajabi.global.type.StatusType;
+import com.hubo.gillajabi.crawl.domain.entity.Course;
+import com.hubo.gillajabi.global.BaseEntity;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import com.hubo.gillajabi.point.application.dto.request.UserPointRequest;
-import jakarta.persistence.Id;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import com.hubo.gillajabi.track.domain.entity.PhotoPoint;
+import com.hubo.gillajabi.track.domain.entity.TrackRecord;
+import jakarta.persistence.*;
+import lombok.Getter;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "user_points")
-@CompoundIndexes({
-        @CompoundIndex(name = "course_id", def = "{'courseId': 1}"),
-        @CompoundIndex(name = "user_id", def = "{'memberProfile.userId': 1}"),
-        @CompoundIndex(name = "location", def = "{'location': '2dsphere'}")
-})
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@Entity
 @Getter
-@Builder
-public class UserPoint {
+@Table(name = "user_point")
+@SQLRestriction(value = "status != 'DELETED'")
+public class UserPoint extends BaseEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-    private BigDecimal[] location;
+    private BigDecimal longitude;
 
-    @Field("content")
+    private BigDecimal latitude;
+
     private String content;
 
-    @Field("course_id")
-    private Long courseId;
+    @OneToMany(mappedBy = "userPoint", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<PhotoPoint> photoPoint;
 
-    @Builder.Default
-    @Field("image_urls")
-    private List<String> imageUrls = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    @Field("member_profile")
-    private MemberProfile memberProfile;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @CreatedDate
-    @Field("created_time")
-    private LocalDateTime createdTime;
+    public static UserPoint createByMemberAndTrackRecordAndRequest(Member member, UserPointRequest request,
+                                                                   TrackRecord trackRecord) {
+        UserPoint userPoint = new UserPoint();
+        userPoint.member = member;
+        userPoint.longitude = request.longitude();
+        userPoint.latitude = request.latitude();
+        userPoint.content = request.content();
+        userPoint.course = trackRecord.getCourse();
 
-    @LastModifiedDate
-    @Field("modified_time")
-    private LocalDateTime modifiedTime;
-
-    @Field("status")
-    private StatusType status = StatusType.ENABLE;
-
-
-    public static UserPoint createByMemberAndUserPoint(Member member, UserPointRequest request) {
-        return UserPoint.builder()
-                .location(new BigDecimal[]{request.latitude(), request.longitude()})
-                .content(request.content())
-                .courseId(request.courseId())
-                .memberProfile(MemberProfile.createByMember(member))
-                .imageUrls(request.getImageUrls())
-                .build();
+        return userPoint;
     }
-}
 
-@Getter
-@AllArgsConstructor
-class MemberProfile {
-    @Field("member_id")
-    private Long memberId;
+    public void addPhotoPoint(List<PhotoPoint> photoPoint) {
+        this.photoPoint = photoPoint;
+    }
 
-    @Field("profile_image_url")
-    private String profileImageUrl;
+    public void isOwner(Member member) {
+        if (!this.member.equals(member)) {
+            throw new RuntimeException("사용자의 포인트가 아닙니다.");
+        }
+    }
 
-    @Field("nick_name")
-    private String nickName;
-
-    public static MemberProfile createByMember(Member member) {
-        return new MemberProfile(
-                member.getId(),
-                member.getProfileImageUrl(),
-                member.getNickName());
+    @Override
+    public void changeStatusToDeleted(){
+        super.changeStatusToDeleted();
+        this.photoPoint.forEach(PhotoPoint::changeStatusToDeleted);
     }
 }
