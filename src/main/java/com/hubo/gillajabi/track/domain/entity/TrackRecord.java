@@ -80,4 +80,8 @@ public class TrackRecord extends BaseEntity {
             throw new IllegalArgumentException("트랙의 소유자가 아닙니다.");
         }
     }
+
+    public void addPhotoPoint(List<PhotoPoint> photoPoint) {
+        this.photoPoints.addAll(photoPoint);
+    }
 }
