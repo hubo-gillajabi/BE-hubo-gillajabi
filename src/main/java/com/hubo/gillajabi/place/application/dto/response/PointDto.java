@@ -1,7 +1,7 @@
 package com.hubo.gillajabi.place.application.dto.response;
 
 import com.hubo.gillajabi.place.domain.constant.PlaceType;
-import com.hubo.gillajabi.place.domain.entity.Place;
+import com.hubo.gillajabi.place.domain.entity.PlaceDocument;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PointDto {
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private Double latitude;
+    private Double longitude;
     private String name;
     private PlaceType category;
     private String description;
@@ -26,18 +26,18 @@ public class PointDto {
     private String mapUrl;
     private Integer courseId;
 
-    public static List<PointDto> from(List<Place> places) {
+    public static List<PointDto> from(List<PlaceDocument> placeDocuments) {
         List<PointDto> pointDtos = new ArrayList<>();
-        for (Place place : places) {
+        for (PlaceDocument placeDocument : placeDocuments) {
             PointDto pointDto = new PointDto();
-            pointDto.setLatitude(place.getLocation()[1]);
-            pointDto.setLongitude(place.getLocation()[0]);
-            pointDto.setName(place.getName());
-            pointDto.setCategory(place.getType());
-            pointDto.setDescription(place.getDescription());
-            pointDto.setImageUrl(place.getImageUrl());
-            pointDto.setMapUrl(place.getMapUrl());
-            pointDto.setCourseId(place.getCourseId());
+            pointDto.setLongitude(placeDocument.getLocation().getX());
+            pointDto.setLatitude(placeDocument.getLocation().getY());
+            pointDto.setName(placeDocument.getName());
+            pointDto.setCategory(placeDocument.getType());
+            pointDto.setDescription(placeDocument.getDescription());
+            pointDto.setImageUrl(placeDocument.getImageUrl());
+            pointDto.setMapUrl(placeDocument.getMapUrl());
+            pointDto.setCourseId(placeDocument.getCourseId());
             pointDtos.add(pointDto);
         }
         return pointDtos;
