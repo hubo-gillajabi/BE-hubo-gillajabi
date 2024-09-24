@@ -15,9 +15,6 @@ public interface CourseBookMarkRepository extends JpaRepository<CourseBookMark, 
 
     void deleteByMemberAndCourse(Member member, Course course);
 
-    @Query("SELECT cb.course FROM CourseBookMark cb WHERE cb.member = :member")
-    List<Course> findAllBookMarkedCourse( Member member);
-
     @Query("SELECT cb.id FROM CourseBookMark cb WHERE cb.member = :member")
     Set<Long> findAllBookMarkedCourseIds(Member member);
 

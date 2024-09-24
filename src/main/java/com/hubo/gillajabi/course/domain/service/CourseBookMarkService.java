@@ -22,7 +22,7 @@ public class CourseBookMarkService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public boolean toggleCourseBookmark(Long courseId, String userName) {
+    public void toggleCourseBookmark(Long courseId, String userName) {
         Member member = memberRepository.getEntityByUserName(userName);
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("코스 없음"));
@@ -30,12 +30,24 @@ public class CourseBookMarkService {
         boolean existingBookmark = courseBookMarkRepository.existsByMemberAndCourse(member, course);
 
         if (existingBookmark) {
-            courseBookMarkRepository.deleteByMemberAndCourse(member, course);
-            return false;
-        } else {
-            CourseBookMark newBookmark = new CourseBookMark(member, course);
-            courseBookMarkRepository.save(newBookmark);
-            return true;
+            throw new RuntimeException("이미 북마크 중입니다");
         }
+
+        CourseBookMark newBookmark = new CourseBookMark(member, course);
+        courseBookMarkRepository.save(newBookmark);
+    }
+
+    @Transactional
+    public void deleteCourseBookmark(Long id, String username) {
+        Member member = memberRepository.getEntityByUserName(username);
+
+        CourseBookMark courseBookMark = courseBookMarkRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("북마크 없음"));
+
+        if (!courseBookMark.getMember().equals(member)) {
+            throw new IllegalArgumentException("북마크 삭제 권한 없음");
+        }
+
+        courseBookMark.changeStatusToDeleted();
     }
 }

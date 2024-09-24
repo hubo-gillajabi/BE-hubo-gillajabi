@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.ResponseEntity.noContent;
+
 @RestController
 @RequestMapping("/api/course/bookmark")
 @Tag(name = "CourseBookmark", description = "코스 북마크 관련 API")
@@ -21,10 +23,18 @@ public class CourseBookMarkController {
     @Operation(summary = "코스 북마크 토글", description = "북마크를 추가하거나 삭제합니다.")
     @PostMapping("/{id}")
     @UserOnly
-    public ResponseEntity<String> toggleCourseBookmark(@PathVariable Long id) {
+    public ResponseEntity toggleCourseBookmark(@PathVariable Long id) {
         String username = SecurityUtil.getCurrentUsername();
-        boolean isBookmarked = courseBookMarkService.toggleCourseBookmark(id, username);
-        String message = isBookmarked ? "코스 북마크가 추가되었습니다." : "코스 북마크가 삭제되었습니다.";
-        return ResponseEntity.ok().body(message);
+        courseBookMarkService.toggleCourseBookmark(id, username);
+        return ResponseEntity.ok().body("북마크를 추가했습니다.");
+    }
+
+    @Operation(summary = "코스 북마크 해제", description =  "북마크를 제거 합니다")
+    @DeleteMapping("/{id}")
+    @UserOnly
+    public ResponseEntity deleteCourseBookmark(@PathVariable Long id){
+        String username = SecurityUtil.getCurrentUsername();
+        courseBookMarkService.deleteCourseBookmark(id, username);
+        return new ResponseEntity(noContent().build().getStatusCode());
     }
 }
