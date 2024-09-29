@@ -58,6 +58,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    
 
     steps:
       - name: Wait for Elasticsearch
@@ -73,6 +74,27 @@ jobs:
         run: |
           curl -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health
 
+      - name: Install Elasticsearch plugin
+        run: |
+          docker exec $(docker ps -q --filter "name=elasticsearch") \
+          /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch analysis-nori
+
+      - name: Restart Elasticsearch
+        run: |
+          docker restart $(docker ps -q --filter "name=elasticsearch")
+
+      - name: Wait for Elasticsearch
+        run: |
+          timeout 300 bash -c '
+          until curl -s http://127.0.0.1:9200/_cluster/health | grep -q '"status":"green"'; do
+            echo "Waiting for Elasticsearch..."
+            sleep 5
+          done
+          '
+
+      - name: Verify Elasticsearch Health
+        run: |
+          curl -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health
 
       - name: MySQL connection health check
         run: |
