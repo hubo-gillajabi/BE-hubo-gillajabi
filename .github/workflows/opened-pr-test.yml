@@ -61,6 +61,7 @@ jobs:
       - name: Verify MySQL connection and configure access
         run: |
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;"
+          mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS hubo;"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY '${{ secrets.MYSQL_ROOT_PASSWORD }}';"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "FLUSH PRIVILEGES;"
