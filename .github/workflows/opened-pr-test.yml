@@ -83,12 +83,12 @@ jobs:
         run: |
           docker restart $(docker ps -q --filter "name=elasticsearch")
 
-      - name: Wait for Elasticsearch
+      - name: Wait for Elasticsearch after restart
         run: |
-          timeout 300 bash -c '
-          until curl -s http://127.0.0.1:9200/_cluster/health | grep -q '"status":"green"'; do
-            echo "Waiting for Elasticsearch..."
-            sleep 5
+          timeout 600 bash -c '
+          until curl -s -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health | grep -q "status\":\"[green|yellow]"; do
+            echo "Waiting for Elasticsearch to be operational..."
+            sleep 15
           done
           '
 
