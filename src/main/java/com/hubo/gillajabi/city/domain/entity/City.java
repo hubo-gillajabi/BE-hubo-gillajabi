@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "province"})})
+@Builder
 public class City {
 
     @Id

@@ -7,7 +7,7 @@ import com.hubo.gillajabi.point.application.dto.request.UserPointRequest;
 import com.hubo.gillajabi.track.domain.entity.PhotoPoint;
 import com.hubo.gillajabi.track.domain.entity.TrackRecord;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
@@ -17,6 +17,9 @@ import java.util.List;
 @Getter
 @Table(name = "user_point")
 @SQLRestriction(value = "status != 'DELETED'")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class UserPoint extends BaseEntity {
 
     @Id

@@ -6,10 +6,7 @@ import com.hubo.gillajabi.member.domain.entity.Member;
 import com.hubo.gillajabi.point.application.dto.request.UserPointRequest;
 import com.hubo.gillajabi.point.domain.entity.UserPoint;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
@@ -21,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @SQLRestriction(value = "status != 'DELETED'")
+@Builder
 public class PhotoPoint extends BaseEntity {
 
     @Id
