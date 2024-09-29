@@ -53,6 +53,11 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_ROOT_PASSWORD }}
         ports:
           - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ping:1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Wait for Elasticsearch
@@ -67,7 +72,7 @@ jobs:
       - name: Verify Elasticsearch Health
         run: |
           curl -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health
-    
+
 
       - name: MySQL connection health check
         run: |
@@ -102,6 +107,11 @@ jobs:
           
           echo "Showing final databases:"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;" || echo "Failed to show final databases"
+
+      - name: Verify MongoDB Connection
+        run: |
+          sudo apt-get install -y mongodb-clients
+          mongosh --host localhost --port 27017 -u ${{ secrets.MONGO_ROOT_USERNAME }} -p ${{ secrets.MONGO_ROOT_PASSWORD }} --eval "db.runCommand({ping:1})"
 
       - name: Checkout secret code
         uses: actions/checkout@v3
