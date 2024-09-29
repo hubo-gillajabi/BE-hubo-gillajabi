@@ -137,7 +137,11 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Test with Gradle
-        run: ./gradlew test -Dspring.profiles.active=test
+        env:
+          SPRING_PROFILES_ACTIVE: test
+          LOGGING_LEVEL_ROOT: DEBUG
+          LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: DEBUG
+        run: ./gradlew test --debug -Dspring.profiles.active=test
 
       #      - name: Stop test environment on remote server
       #        if: always() # 무조건 실행
