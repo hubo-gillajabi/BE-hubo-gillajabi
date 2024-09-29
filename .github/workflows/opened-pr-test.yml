@@ -11,8 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      REDIS_PORT: ${{ secrets.REDIS_PORT }}
 
     services:
       mysql:
@@ -27,7 +25,7 @@ jobs:
       redis:
         image: redis:latest
         ports:
-          - ${{ env.REDIS_PORT }}:6379
+          - 6379:6379
 
       mongodb:
         image: mongo:latest
