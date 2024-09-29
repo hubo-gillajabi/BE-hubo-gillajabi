@@ -52,6 +52,19 @@ jobs:
           - 27017:27017
 
     steps:
+      - name: Wait for Elasticsearch
+        run: |
+          timeout 300 bash -c '
+          until curl -s -o /dev/null -w "%{http_code}" http://localhost:9200 | grep -q "200"; do
+          echo "Waiting for Elasticsearch..."
+          sleep 5
+          done
+          '
+          
+          - name: Elasticsearch connection
+            run: |
+              curl -v http://localhost:9200
+
       - name: Elasticsearch connection
         run: |
           curl http://127.0.0.1:9200
