@@ -1,5 +1,6 @@
 package com.hubo.gillajabi.point.domain.service;
 
+import com.hubo.gillajabi.course.domain.entity.CourseBookMark;
 import com.hubo.gillajabi.course.infrastructure.persistence.CourseBookMarkRepository;
 import com.hubo.gillajabi.global.dto.CursorPageInfo;
 import com.hubo.gillajabi.member.domain.entity.Member;
@@ -13,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
-import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class UserPointSearchService {
 
     private Slice<UserPointDocument> fetchUserPointDocuments(Boolean bookmarked, String cursor, Member member, Pageable pageable) {
         if (bookmarked) {
-            Set<Long> bookmarkedCourseIds = courseBookMarkRepository.findAllBookMarkedCourseIds(member);
+            List<Long> bookmarkedCourseIds =  courseBookMarkRepository.findCourseIdsByMember(member);
             return userPointDocumentRepository.findByCourseIdInWithCursor(bookmarkedCourseIds, cursor, pageable);
         } else {
             return userPointDocumentRepository.findAllWithCursor(cursor, pageable);
@@ -56,14 +56,14 @@ public class UserPointSearchService {
     }
 
     public UserPointResponse getUserPointPreviewsByCourse(@Nullable final Long courseId, final Double latitude,
-                                                          final Double longitude, final Double radius){
+                                                          final Double longitude, final Double radius) {
         GeoJsonPoint geoJsonPoint = new GeoJsonPoint(longitude, latitude);
         Distance distance = new Distance(radius, Metrics.KILOMETERS);
         List<UserPointDocument> userPointsSlice = fetchUserPointDocumentsByCourse(courseId, geoJsonPoint, distance);
         return createUserPointResponse(userPointsSlice);
     }
 
-    private List<UserPointDocument> fetchUserPointDocumentsByCourse(Long courseId, GeoJsonPoint point, Distance distance){
+    private List<UserPointDocument> fetchUserPointDocumentsByCourse(Long courseId, GeoJsonPoint point, Distance distance) {
         if (courseId != null) {
             return userPointDocumentRepository.findByCourseIdAndLocationNear(courseId, point, distance);
         } else {

@@ -68,7 +68,7 @@ public class UserPointService {
 
         userPointRepository.save(userPoint);
 
-        final UserPointDocument userPointDocument = UserPointDocument.createByMemberAndUserPoint(member, userPoint);
+        final UserPointDocument userPointDocument = UserPointDocument.createByUserPoint(userPoint);
         userPointDocumentRepository.save(userPointDocument);
 
         trackStatusTimer.restartTimerForMember(username);
