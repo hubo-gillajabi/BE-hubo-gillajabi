@@ -108,11 +108,6 @@ jobs:
           echo "Showing final databases:"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;" || echo "Failed to show final databases"
 
-      - name: Verify MongoDB Connection
-        run: |
-          sudo apt-get install -y mongodb-clients
-          mongosh --host localhost --port 27017 -u ${{ secrets.MONGO_ROOT_USERNAME }} -p ${{ secrets.MONGO_ROOT_PASSWORD }} --eval "db.runCommand({ping:1})"
-
       - name: Checkout secret code
         uses: actions/checkout@v3
         with:
