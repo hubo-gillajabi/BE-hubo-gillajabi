@@ -40,6 +40,9 @@ jobs:
         env:
           discovery.type: single-node
           xpack.security.enabled: false
+          ELASTIC_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          xpack.security.authc.api_key.enabled: true
+          xpack.security.transport.ssl.enabled: false
         ports:
           - 9200:9200
 
@@ -54,20 +57,22 @@ jobs:
     steps:
       - name: Wait for Elasticsearch
         run: |
-          timeout 300 bash -c '
-          while ! curl -s -o /dev/null -w "%{http_code}" http://localhost:9200 | grep -q "200"; do
+          timeout 600 bash -c '
+          while ! curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:9200 | grep -q "200"; do
             echo "Waiting for Elasticsearch..."
             sleep 5
           done
           '
 
+
       - name: Elasticsearch connection
         run: |
           curl -v http://localhost:9200
 
-      - name: Elasticsearch connection
+      - name: Verify Elasticsearch Health
         run: |
-          curl http://127.0.0.1:9200
+          curl -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health
+    
 
       - name: MySQL connection health check
         run: |
