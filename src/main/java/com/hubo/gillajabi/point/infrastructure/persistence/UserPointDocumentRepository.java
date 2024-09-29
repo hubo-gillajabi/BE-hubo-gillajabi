@@ -24,15 +24,15 @@ public interface UserPointDocumentRepository extends MongoRepository<UserPointDo
     }
 
     @Query("{'courseId': {'$in': ?0}, '_id': {'$gt': ?1}}")
-    Slice<UserPointDocument> findByCourseIdInAndIdAfter(Set<Long> bookmarkedCourseIds, String cursor, Pageable pageable);
+    Slice<UserPointDocument> findByCourseIdInAndIdAfter(List<Long> bookmarkedCourseIds, String cursor, Pageable pageable);
 
-    default Slice<UserPointDocument> findByCourseIdInWithCursor(Set<Long> bookmarkedCourseIds, String cursor, Pageable pageable) {
+    default Slice<UserPointDocument> findByCourseIdInWithCursor(List<Long> bookmarkedCourseIds, String cursor, Pageable pageable) {
         return cursor == null ? findByCourseIdIn(bookmarkedCourseIds, pageable) :
                 findByCourseIdInAndIdAfter(bookmarkedCourseIds, cursor, pageable);
     }
 
     @Query("{'courseId': {'$in': ?0}}")
-    Slice<UserPointDocument> findByCourseIdIn(Set<Long> bookmarkedCourseIds, Pageable pageable);
+    Slice<UserPointDocument> findByCourseIdIn(List<Long> bookmarkedCourseIds, Pageable pageable);
 
     @Query("{'userPointId': ?0}")
     UserPointDocument findByUserPointId(Long id);

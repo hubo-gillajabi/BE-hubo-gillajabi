@@ -49,7 +49,7 @@ public class PostPreview {
 
     private String content;
 
-    public static PostPreview fromPostSearchDocument(PostSearchDocument postSearchDocument, Set<Long> bookmarkedPostIds) {
+    public static PostPreview fromPostSearchDocument(PostSearchDocument postSearchDocument, List<Long> bookmarkedPostIds) {
         return PostPreview.builder()
                 .id(postSearchDocument.getId())
                 .title(postSearchDocument.getTitle())

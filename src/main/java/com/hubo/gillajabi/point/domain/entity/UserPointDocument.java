@@ -54,9 +54,9 @@ public class UserPointDocument {
     /*
     longgitude가 먼저 들어와야 됨
      */
-    public static UserPointDocument createByMemberAndUserPoint(final Member member, final UserPoint userPoint) {
+    public static UserPointDocument createByUserPoint(final UserPoint userPoint) {
         UserPointDocument userPointDocument = new UserPointDocument();
-        userPointDocument.memberProfile = MemberProfile.createByMember(member);
+        userPointDocument.memberProfile = MemberProfile.createByMember(userPoint.getMember());
         userPointDocument.content = userPoint.getContent();
         userPointDocument.location = new GeoJsonPoint(userPoint.getLongitude().doubleValue(), userPoint.getLatitude().doubleValue());
         userPointDocument.courseId = userPoint.getCourse().getId();
