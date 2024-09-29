@@ -8,8 +8,4 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class HuboApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
 }
