@@ -130,6 +130,18 @@ jobs:
           echo "Showing final databases:"
           mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;" || echo "Failed to show final databases"
 
+
+      - name: Debug Elasticsearch before tests
+        run: |
+          echo "Checking Elasticsearch status before running tests..."
+          curl -s -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/health | jq .
+          echo "Listing Elasticsearch indices..."
+          curl -s -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cat/indices?v
+          echo "Checking Elasticsearch plugins..."
+          curl -s -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cat/plugins?v
+          echo "Checking Elasticsearch settings..."
+          curl -s -u elastic:${{ secrets.MYSQL_ROOT_PASSWORD }} http://127.0.0.1:9200/_cluster/settings?pretty
+
       - name: Checkout secret code
         uses: actions/checkout@v3
         with:
