@@ -46,6 +46,7 @@ class ImageValidationServiceTest {
     @DisplayName("단일 이미지 URL 검증 및 삭제 - 실패")
     void 단일_이미지_url_검증_및_실패() {
         // given
+        System.out.println("저기");
         String imageUrl = "http://example.com/image.jpg";
         when(imageUploadUrlRepository.findById(imageUrl)).thenReturn(Optional.empty());
 
@@ -60,6 +61,7 @@ class ImageValidationServiceTest {
     @DisplayName("여러 이미지 URL 검증 및 삭제 - 성공")
     void 여러_이미지_URL_검증_및_삭제_성공() {
         // given
+        System.out.println("여기");
         List<String> imageUrls = Arrays.asList("http://example.com/image1.jpg", "http://example.com/image2.jpg");
         ImageUploadUrl imageUploadUrl1 = new ImageUploadUrl(imageUrls.get(0), null);
         ImageUploadUrl imageUploadUrl2 = new ImageUploadUrl(imageUrls.get(1), null);

@@ -104,8 +104,6 @@ public class UserPointFixture extends FixtureBase {
                 .course(course)
                 .build();
 
-        System.out.println("userPointid 시발" + userPoint.getCourse().getId());
-
         return userPointRepository.save(userPoint);
     }
 
@@ -143,8 +141,6 @@ public class UserPointFixture extends FixtureBase {
                 .member(member)
                 .course(course)
                 .build();
-
-        System.out.println("courseBookMarkid 시발" + courseBookMark.getCourse().getId());
 
         return courseBookMarkRepository.save(courseBookMark);
     }

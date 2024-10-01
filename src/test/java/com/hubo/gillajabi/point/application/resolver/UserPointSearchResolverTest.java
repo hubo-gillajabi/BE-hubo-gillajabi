@@ -28,9 +28,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.hubo.gillajabi.search.infrastructure.config.ElasticsearchConfig;
 import com.hubo.gillajabi.track.domain.entity.PhotoPoint;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.BeanArbitraryIntrospector;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.SliceImpl;
@@ -99,6 +103,14 @@ class UserPointSearchResolverTest {
     @Autowired
     private UserPointFixture userPointFixture;
 
+    @Autowired
+    protected ApplicationContext context;
+
+    @Before
+    void checkBean(){
+        context.getBean(ElasticsearchConfig.class);
+    }
+
     @AfterEach
     void cleanupAfterTest() {
         mongoTemplate.getCollectionNames().forEach(collectionName -> {
@@ -115,10 +127,12 @@ class UserPointSearchResolverTest {
     @Test
     void 북마크_없는_유저_포인트_조회_200() throws Exception {
         // given
+        System.out.println("여기1");
         MemberAuthentication memberAuthentication = userPointFixture.createAndLoadMember("testUser", RoleStatus.USER);
         TokenResponse tokenResponse = userPointFixture.createAndLoadTokenResponse(memberAuthentication);
         UserPointDocument userPointDocument = userPointFixture.createUserPointDocument(memberAuthentication.getMember());
 
+        System.out.println("여기2");
         String requestJson = """
                 {
                   "query": "query {
@@ -347,6 +361,11 @@ class UserPointSearchResolverTest {
                 .asLong();
 
         assertThat(userPointId).isEqualTo(userPointDocument.getUserPointId());
+    }
+
+    @Test
+    void 여기() {
+        System.out.println("test");
     }
 
 }
