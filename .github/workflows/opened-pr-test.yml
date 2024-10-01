@@ -214,14 +214,14 @@ jobs:
           LOGGING_LEVEL_COM_HUBO_GILLAJABI: TRACE
 
       - name: Upload test logs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-logs
           path: logs/test_output.log
 
       - name: Upload Gradle logs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: gradle-logs
