@@ -210,24 +210,7 @@ jobs:
           ./gradlew test -Dspring.profiles.active=test --info --stacktrace 2>&1 | tee logs/test_output.log
         env:
           LOGGING_LEVEL_ROOT: DEBUG
-          LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: TRACE
-          LOGGING_LEVEL_COM_HUBO_GILLAJABI: TRACE
-          LOGGING_LEVEL_ORG_ELASTICSEARCH: TRACE
-          LOGGING_LEVEL_CO_ELASTIC_CLIENTS: TRACE
-
-      - name: Display test output
-        if: always()
-        run: |
-          echo "=============== TEST OUTPUT ==============="
-          cat logs/test_output.log
-          echo "============================================"
-
-      - name: Display last 100 lines of test output
-        if: failure()
-        run: |
-          echo "========= LAST 100 LINES OF TEST OUTPUT ========="
-          tail -n 100 logs/test_output.log
-          echo "================================================="
+          LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: DEBUG
 
       - name: Upload test logs
         uses: actions/upload-artifact@v4
