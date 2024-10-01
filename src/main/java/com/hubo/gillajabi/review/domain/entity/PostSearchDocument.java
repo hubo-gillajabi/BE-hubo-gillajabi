@@ -65,9 +65,8 @@ public class PostSearchDocument {
     @Field(type = FieldType.Nested)
     private CityDocument city;
 
-    @Field(type = FieldType.Nested, index = false)
+    @Field(type = FieldType.Text, index = false)
     private String content;
-
 
     public static PostSearchDocument fromPost(Post post) {
         PostSearchDocument postSearchDocument = new PostSearchDocument();
