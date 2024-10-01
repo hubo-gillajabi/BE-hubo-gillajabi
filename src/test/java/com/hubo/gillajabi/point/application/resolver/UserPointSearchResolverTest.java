@@ -74,6 +74,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import co.elastic.clients.json.ObjectDeserializer;
 import java.util.Objects;
 
 @AutoConfigureMockMvc
