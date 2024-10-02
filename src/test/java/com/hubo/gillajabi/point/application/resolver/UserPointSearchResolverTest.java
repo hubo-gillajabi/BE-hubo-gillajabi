@@ -8,6 +8,7 @@ import com.hubo.gillajabi.course.domain.entity.CourseBookMark;
 import com.hubo.gillajabi.course.infrastructure.persistence.CourseBookMarkRepository;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
+import com.hubo.gillajabi.login.application.annotation.MemberOnly;
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.domain.constant.RoleStatus;
 import com.hubo.gillajabi.login.domain.entity.MemberAuthentication;
@@ -54,6 +55,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,7 +76,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+
 import co.elastic.clients.json.ObjectDeserializer;
+
 import java.util.Objects;
 
 @AutoConfigureMockMvc
@@ -107,11 +111,6 @@ class UserPointSearchResolverTest {
     @Autowired
     protected ApplicationContext context;
 
-    @Before
-    void checkBean(){
-        context.getBean(ElasticsearchConfig.class);
-    }
-
     @AfterEach
     void cleanupAfterTest() {
         mongoTemplate.getCollectionNames().forEach(collectionName -> {
@@ -128,12 +127,10 @@ class UserPointSearchResolverTest {
     @Test
     void 북마크_없는_유저_포인트_조회_200() throws Exception {
         // given
-        System.out.println("여기1");
         MemberAuthentication memberAuthentication = userPointFixture.createAndLoadMember("testUser", RoleStatus.USER);
         TokenResponse tokenResponse = userPointFixture.createAndLoadTokenResponse(memberAuthentication);
         UserPointDocument userPointDocument = userPointFixture.createUserPointDocument(memberAuthentication.getMember());
 
-        System.out.println("여기2");
         String requestJson = """
                 {
                   "query": "query {
@@ -364,14 +361,184 @@ class UserPointSearchResolverTest {
         assertThat(userPointId).isEqualTo(userPointDocument.getUserPointId());
     }
 
+    @DisplayName("기준점으로 조회시 근처에 해당 코스의 유저 포인트의 데이터가 있는경우")
     @Test
-    void 여기() {
-        System.out.println("test");
+    void 기준점_중심으로_조회시_해당_코스의_유저_포인트가_있는경우() throws Exception {
+        // given
+        MemberAuthentication memberAuthentication = userPointFixture.createAndLoadMember("testUser", RoleStatus.USER);
+        TokenResponse tokenResponse = userPointFixture.createAndLoadTokenResponse(memberAuthentication);
+        Course course = userPointFixture.createAndLoadCourse();
+        UserPointDocument userPointDocument = userPointFixture.createUserPointDocument(memberAuthentication.getMember(), course);
+        userPointFixture.createCourseBookMark(memberAuthentication.getMember(), course);
+
+        // when
+        String requestJson = String.format("""
+                {
+                  "query": "query {
+                    getUsedPointPreviewsByCourse(courseId: %d, latitude: 37.123456, longitude: 127.123456, radius: 100.00){
+                      userPointPreviews {
+                        id
+                        content
+                        userPointId
+                        course {
+                          id
+                          name
+                        }
+                        longitude
+                        latitude
+                        imageUrl
+                        member {
+                          id
+                          nickname
+                          profile
+                        }
+                      }
+                      pageInfo {
+                        nextCursor
+                        hasNextPage
+                      }
+                    }
+                  }"
+                }
+                """, course.getId()).replace("\n", "").replace("\r", "");
+
+
+        String result = mockMvc
+                .perform(
+                        post("/graphql")
+                                .header("Authorization", "Bearer " + tokenResponse.accessToken())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // then
+        JsonNode rootNode = objectMapper.readTree(result);
+        Long userPointId = rootNode.path("data")
+                .path("getUsedPointPreviewsByCourse")
+                .path("userPointPreviews")
+                .get(0)
+                .path("userPointId")
+                .asLong();
+
+        assertThat(userPointId).isEqualTo(userPointDocument.getUserPointId());
     }
 
+    @DisplayName("기준점을 중심으로 조회시 해당 코스 포인트는 있지만 근처에 유저 포인트의 데이터가 없는경우")
+    @Test
+    void 기준점_중심으로_조회시_해당_코스의_포인트가_존재하지만_근처에_없는_경우() throws Exception {
+        // given
+        MemberAuthentication memberAuthentication = userPointFixture.createAndLoadMember("testUser", RoleStatus.USER);
+        TokenResponse tokenResponse = userPointFixture.createAndLoadTokenResponse(memberAuthentication);
+        Course course = userPointFixture.createAndLoadCourse();
+        UserPointDocument userPointDocument = userPointFixture.createUserPointDocument(memberAuthentication.getMember(), course);
+        userPointFixture.createCourseBookMark(memberAuthentication.getMember(), course);
+
+        // when
+        String requestJson = String.format("""
+                {
+                  "query": "query {
+                    getUsedPointPreviewsByCourse(courseId: %d, latitude: 11.00, longitude: 11.00, radius: 1.00){
+                      userPointPreviews {
+                        id
+                        content
+                        userPointId
+                        course {
+                          id
+                          name
+                        }
+                        longitude
+                        latitude
+                        imageUrl
+                        member {
+                          id
+                          nickname
+                          profile
+                        }
+                      }
+                      pageInfo {
+                        nextCursor
+                        hasNextPage
+                      }
+                    }
+                  }"
+                }
+                """, course.getId()).replace("\n", "").replace("\r", "");
+
+
+        String result = mockMvc
+                .perform(
+                        post("/graphql")
+                                .header("Authorization", "Bearer " + tokenResponse.accessToken())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // then
+        JsonNode rootNode = objectMapper.readTree(result);
+        JsonNode userPointPreviews =
+                rootNode.path("data")
+                        .path("getUsedPointPreviewsByCourse")
+                        .path("userPointPreviews");
+
+        assertThat(userPointPreviews.size()).isEqualTo(0);
+    }
+
+    @DisplayName("기준점_중심으로_조회시_비회원인_경우_실패")
+    @Test
+    void 기준점_중심으로_조회시_비회원인_경우() throws Exception {
+        // when
+        String requestJson = String.format("""
+                {
+                  "query": "query {
+                    getUsedPointPreviewsByCourse(courseId: 1, latitude: 11.00, longitude: 11.00, radius: 1.00){
+                      userPointPreviews {
+                        id
+                        content
+                        userPointId
+                        course {
+                          id
+                          name
+                        }
+                        longitude
+                        latitude
+                        imageUrl
+                        member {
+                          id
+                          nickname
+                          profile
+                        }
+                      }
+                      pageInfo {
+                        nextCursor
+                        hasNextPage
+                      }
+                    }
+                  }"
+                }
+                """.replace("\n", "").replace("\r", ""));
+
+
+        String result = mockMvc
+                .perform(
+                        post("/graphql")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // then
+        JsonNode rootNode = objectMapper.readTree(result);
+        JsonNode errorsNode = rootNode.path("errors");
+
+        assertThat(errorsNode.isArray()).isTrue();
+        assertThat(errorsNode.size()).isEqualTo(1);
+        assertThat(errorsNode.get(0).path("message").asText()).isEqualTo("접근이 거부되었습니다.");
+    }
+
+
 }
-
-
-//
-//    @DisplayName("북마크로 조회시 해당 북마크 코스의 포인트가 있는경우")
-//    @Test

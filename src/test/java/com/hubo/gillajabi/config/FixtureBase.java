@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +36,10 @@ public abstract class FixtureBase {
     private TokenProvider tokenProvider;
 
     protected <T extends JpaRepository<?, ?>> T getRepository(Class<T> repositoryClass) {
+        return context.getBean(repositoryClass);
+    }
+
+    protected <T extends CrudRepository<?, ?>> T getCrudRepository(Class<T> repositoryClass) {
         return context.getBean(repositoryClass);
     }
 
