@@ -8,6 +8,8 @@ import com.hubo.gillajabi.course.infrastructure.persistence.CourseBookMarkReposi
 import com.hubo.gillajabi.crawl.domain.constant.Province;
 import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.crawl.infrastructure.persistence.CourseRepository;
+import com.hubo.gillajabi.image.domain.entity.ImageUploadUrl;
+import com.hubo.gillajabi.image.infrastructure.presistence.ImageUploadUrlRepository;
 import com.hubo.gillajabi.login.application.dto.response.TokenResponse;
 import com.hubo.gillajabi.login.domain.constant.RoleStatus;
 import com.hubo.gillajabi.login.domain.entity.MemberAuthentication;
@@ -30,7 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -160,4 +164,14 @@ public class UserPointFixture extends FixtureBase {
 
         return userPointRepository.save(userPoint);
     }
+
+    public ImageUploadUrl createImageUploadUrl(String url){
+        ImageUploadUrlRepository imageUploadUrlRepository = getCrudRepository(ImageUploadUrlRepository.class);
+
+        ImageUploadUrl imageUploadUrl = ImageUploadUrl.createByUrl(url);
+        return imageUploadUrlRepository.save(imageUploadUrl);
+    }
+
+    //startTrack
+
 }
