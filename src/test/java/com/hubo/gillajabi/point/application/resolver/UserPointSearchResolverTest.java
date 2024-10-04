@@ -34,6 +34,7 @@ import com.hubo.gillajabi.track.domain.entity.PhotoPoint;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.BeanArbitraryIntrospector;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,9 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeospatialIndex;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -110,6 +114,15 @@ class UserPointSearchResolverTest {
 
     @Autowired
     protected ApplicationContext context;
+
+    @BeforeEach
+    void setUp() {
+        mongoTemplate.indexOps(UserPointDocument.class).ensureIndex(
+                new GeospatialIndex("location")
+                        .typed(GeoSpatialIndexType.GEO_2DSPHERE)
+                        .named("user_points_location_2dsphere")
+        );
+    }
 
     @AfterEach
     void cleanupAfterTest() {

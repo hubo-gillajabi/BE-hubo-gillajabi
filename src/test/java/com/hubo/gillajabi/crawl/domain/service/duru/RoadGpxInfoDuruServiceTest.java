@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,11 @@ class RoadGpxInfoDuruServiceTest {
 
     public void mockApiResponseService() throws JsonProcessingException {
         // 외부 의존성을 모킹한다
-        ApiDuruGpxResponse apiDuruGpxResponse = fixtureMonkey.giveMeOne(ApiDuruGpxResponse.class);
+        ApiDuruGpxResponse apiDuruGpxResponse = fixtureMonkey.giveMeBuilder(ApiDuruGpxResponse.class)
+                .size("trk.trkseg", 1)     // trkseg 리스트의 크기를 1로 제한
+                .size("trk.trkseg[*].trkpt", 2) // trkpt 리스트의 크기를 2로 제한
+                .sample();
+
 
         // XML로 변환
         XmlMapper xmlMapper = new XmlMapper();
