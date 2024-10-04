@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TrackStartRequest {
 

@@ -4,6 +4,8 @@ import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.global.BaseEntity;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import com.hubo.gillajabi.point.application.dto.request.UserPointRequest;
+import com.hubo.gillajabi.point.infrastructure.exception.UserPointException;
+import com.hubo.gillajabi.point.infrastructure.exception.UserPointExceptionCode;
 import com.hubo.gillajabi.track.domain.entity.PhotoPoint;
 import com.hubo.gillajabi.track.domain.entity.TrackRecord;
 import jakarta.persistence.*;
@@ -61,7 +63,7 @@ public class UserPoint extends BaseEntity {
 
     public void isOwner(Member member) {
         if (!this.member.equals(member)) {
-            throw new RuntimeException("사용자의 포인트가 아닙니다.");
+            throw new UserPointException(UserPointExceptionCode.NOT_OWNER);
         }
     }
 

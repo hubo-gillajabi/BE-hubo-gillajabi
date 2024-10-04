@@ -63,8 +63,8 @@ public class UserPointService {
 
         final UserPoint userPoint = UserPoint.createByMemberAndTrackRecordAndRequest(member, request, trackRecord);
         final List<PhotoPoint> photoPoint = PhotoPoint.createByImageUrlAndTrackRecordAndUserPoint(request, trackRecord, userPoint);
-        trackRecord.addPhotoPoint(photoPoint);
         userPoint.addPhotoPoint(photoPoint);
+        trackRecord.addPhotoPoint(photoPoint);
 
         userPointRepository.save(userPoint);
 

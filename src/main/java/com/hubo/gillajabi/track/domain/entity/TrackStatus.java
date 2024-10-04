@@ -36,9 +36,9 @@ public class TrackStatus {
         return memberName;
     }
 
-    public static TrackStatus createByMemberAndTrackId(Member member, Long id) {
+    public static TrackStatus createByMemberAndTrackId(Member member, Long trackId) {
         String trackStatusKey = member.getNickName();
-        return new TrackStatus(trackStatusKey, 0L, BigDecimal.ZERO, 0L, LocalDateTime.now(), id);
+        return new TrackStatus(trackStatusKey, 0L, BigDecimal.ZERO, 0L, LocalDateTime.now(), trackId);
     }
 
     public void updateByRequest(TrackStatusUpdateRequest trackStatusUpdateRequest) {
