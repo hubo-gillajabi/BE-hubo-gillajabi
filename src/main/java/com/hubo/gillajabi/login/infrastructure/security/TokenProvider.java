@@ -105,7 +105,6 @@ public class TokenProvider {
         return null;
     }
 
-    //TODO
     public boolean isValidRefreshAndInvalidAccess(final String refreshToken, final String accessToken) {
         validateRefreshToken(refreshToken);
         try {

@@ -73,6 +73,7 @@ public class Course extends BaseEntity {
     private Long totalRatingSum = 0L;
 
     @OneToMany(mappedBy = "course")
+    @Builder.Default
     private Set<CourseTag> courseTags = new HashSet<>();
 
     @Builder

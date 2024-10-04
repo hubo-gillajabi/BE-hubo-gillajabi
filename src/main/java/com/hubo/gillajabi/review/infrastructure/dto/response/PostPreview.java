@@ -47,7 +47,9 @@ public class PostPreview {
 
     private Integer courseRating;
 
-    public static PostPreview fromPostSearchDocument(PostSearchDocument postSearchDocument, Set<Long> bookmarkedPostIds) {
+    private String content;
+
+    public static PostPreview fromPostSearchDocument(PostSearchDocument postSearchDocument, List<Long> bookmarkedPostIds) {
         return PostPreview.builder()
                 .id(postSearchDocument.getId())
                 .title(postSearchDocument.getTitle())
@@ -61,8 +63,8 @@ public class PostPreview {
                 .createdTime(postSearchDocument.getCreatedTime())
                 .bookmarked(bookmarkedPostIds.contains(postSearchDocument.getId()))
                 .courseRating(postSearchDocument.getCourseRating())
+                .content(postSearchDocument.getContent())
                 .build();
-
     }
 }
 

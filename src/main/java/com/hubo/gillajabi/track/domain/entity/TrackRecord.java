@@ -4,13 +4,11 @@ import com.hubo.gillajabi.crawl.domain.entity.Course;
 import com.hubo.gillajabi.global.BaseEntity;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @SQLRestriction(value = "status != 'DELETED'")
 public class TrackRecord extends BaseEntity {
 
@@ -35,7 +34,8 @@ public class TrackRecord extends BaseEntity {
     private TrackSpeedData speedData;
 
     @OneToMany(mappedBy = "trackRecord", fetch = FetchType.LAZY)
-    private List<PhotoPoint> photoPoints;
+    @Builder.Default
+    private List<PhotoPoint> photoPoints = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -52,7 +52,7 @@ public class TrackRecord extends BaseEntity {
     private Long calorie;
 
     public static TrackRecord createByMember(final Member member, final Course course) {
-        return new TrackRecord(null, null, null, null, null, member, course, 0L,BigDecimal.ZERO,0L);
+        return new TrackRecord(null, null, null, null, new ArrayList<>(), member, course, 0L,BigDecimal.ZERO,0L);
     }
 
     public void addDataEntity(TrackGpsData trackGpsData, TrackElevationData trackElevationData,
@@ -79,5 +79,9 @@ public class TrackRecord extends BaseEntity {
         if (!this.member.equals(member)) {
             throw new IllegalArgumentException("트랙의 소유자가 아닙니다.");
         }
+    }
+
+    public void addPhotoPoint(List<PhotoPoint> photoPoint) {
+        this.photoPoints.addAll(photoPoint);
     }
 }

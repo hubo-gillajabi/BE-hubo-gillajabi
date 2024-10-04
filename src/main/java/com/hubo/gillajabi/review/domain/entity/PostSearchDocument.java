@@ -65,6 +65,8 @@ public class PostSearchDocument {
     @Field(type = FieldType.Nested)
     private CityDocument city;
 
+    @Field(type = FieldType.Text, index = false)
+    private String content;
 
     public static PostSearchDocument fromPost(Post post) {
         PostSearchDocument postSearchDocument = new PostSearchDocument();
@@ -80,7 +82,15 @@ public class PostSearchDocument {
         postSearchDocument.setCreatedTime(post.getCreatedTime().toLocalDate());
         postSearchDocument.setCourse(CourseDocument.fromCourse(post.getTrackRecord().getCourse()));
         postSearchDocument.setCity(CityDocument.fromCity(post.getTrackRecord().getCourse().getCity()));
+        postSearchDocument.setContent(sliceContent(post.getContent()));
         return postSearchDocument;
+    }
+
+    private static String sliceContent(String content) {
+        if (content == null) {
+            return "";
+        }
+        return content.length() > 45 ? content.substring(0, 45) + "..." : content;
     }
 
 
@@ -91,7 +101,6 @@ public class PostSearchDocument {
     }
 
     public CoursePreview getCoursePreview() {
-        System.out.println("this.course.getId() = " + this.course.getId());
         return new CoursePreview(Long.parseLong(this.course.getId()), this.course.getName());
     }
 
@@ -100,7 +109,7 @@ public class PostSearchDocument {
     }
 
     public MemberPreview getMemberPreview() {
-        return new MemberPreview(this.member.getNickName(), this.member.getProfileImageUrl());
+        return new MemberPreview(this.member.getId(), this.member.getNickName(), this.member.getProfileImageUrl());
     }
 }
 
@@ -145,6 +154,9 @@ class CityDocument {
 @Getter
 @Setter
 class MemberDocument {
+    @Field(type = FieldType.Keyword)
+    private Long id;
+
     @Field(type = FieldType.Text, analyzer = "my_nori_analyzer")
     private String nickName;
 
@@ -153,6 +165,7 @@ class MemberDocument {
 
     public static MemberDocument fromMember(Member member) {
         MemberDocument memberDocument = new MemberDocument();
+        memberDocument.setId(member.getId());
         memberDocument.setNickName(member.getNickName());
         memberDocument.setProfileImageUrl(member.getProfileImageUrl());
         return memberDocument;

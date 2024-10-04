@@ -48,8 +48,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 보호 비활성화
-                .cors(cors -> {
-                })
+                .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(ALLOWED_PATHS).permitAll()
                         .requestMatchers("/admin/**", "/v3/api-docs/**").hasRole("ADMIN")

@@ -151,7 +151,7 @@ public class PostService {
         final Pageable pageable = PageRequest.of(page.intValue(), size.intValue());
 
         Page<PostSearchDocument> searchResults;
-        Set<Long> bookmarkedCourseIds = courseBookMarkRepository.findAllBookMarkedCourseIds(member);
+        List<Long> bookmarkedCourseIds = courseBookMarkRepository.findCourseIdsByMember(member);
 
         if (Boolean.TRUE.equals(bookmarked)) {
             List<String> bookmarkedCourseIdStrings = bookmarkedCourseIds.stream()

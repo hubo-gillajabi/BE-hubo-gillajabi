@@ -4,7 +4,6 @@ import com.hubo.gillajabi.image.domain.entity.ImageUploadUrl;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageExceptionCode;
 import com.hubo.gillajabi.image.infrastructure.presistence.ImageUploadUrlRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ class ImageValidationServiceTest {
     private ImageValidationService imageValidationService;
 
     @Test
-    @DisplayName("단일 이미지 URL 검증 및 삭제 - 성공")
+    @DisplayName("단일 이미지 URL 검증 - 성공")
     void 단일_이미지_url_검증_및_삭제_성공() {
         // given
         String imageUrl = "http://example.com/image.jpg";
@@ -37,10 +36,7 @@ class ImageValidationServiceTest {
         when(imageUploadUrlRepository.findById(imageUrl)).thenReturn(Optional.of(imageUploadUrl));
 
         // when
-        imageValidationService.validateAndDeleteImageUrl(imageUrl);
-
-        // then
-        verify(imageUploadUrlRepository, times(1)).delete(imageUploadUrl);
+        assertDoesNotThrow(() -> imageValidationService.validateImageUrl(imageUrl));
     }
 
     @Test
@@ -52,41 +48,38 @@ class ImageValidationServiceTest {
 
         // when & then
         ImageException exception = assertThrows(ImageException.class, () -> {
-            imageValidationService.validateAndDeleteImageUrl(imageUrl);
+            imageValidationService.validateImageUrl(imageUrl);
         });
         assertEquals(ImageExceptionCode.IMAGE_NOT_VALID.getErrorCode(), exception.getErrorCode());
     }
 
     @Test
     @DisplayName("여러 이미지 URL 검증 및 삭제 - 성공")
-    void 여러_이미지_URL_검증_및_삭제_성공() {
+    void 여러_이미지_URL_삭제_성공() {
         // given
         List<String> imageUrls = Arrays.asList("http://example.com/image1.jpg", "http://example.com/image2.jpg");
         ImageUploadUrl imageUploadUrl1 = new ImageUploadUrl(imageUrls.get(0), null);
         ImageUploadUrl imageUploadUrl2 = new ImageUploadUrl(imageUrls.get(1), null);
 
-        when(imageUploadUrlRepository.findById(imageUrls.get(0))).thenReturn(Optional.of(imageUploadUrl1));
-        when(imageUploadUrlRepository.findById(imageUrls.get(1))).thenReturn(Optional.of(imageUploadUrl2));
-
         // when
-        imageValidationService.validateAndDeleteImageUrls(imageUrls);
+        imageValidationService.deleteImageUrls(imageUrls);
 
         // then
-        verify(imageUploadUrlRepository, times(1)).delete(imageUploadUrl1);
-        verify(imageUploadUrlRepository, times(1)).delete(imageUploadUrl2);
+        verify(imageUploadUrlRepository, times(1)).deleteById(imageUploadUrl1.getImageUploadUrl());
+        verify(imageUploadUrlRepository, times(1)).deleteById(imageUploadUrl2.getImageUploadUrl());
     }
 
     @Test
-    @DisplayName("여러 이미지 URL 검증 및 삭제 - 실패")
-    void 여러_이미지_URL_검증_및_삭제_실패() {
+    @DisplayName("단일 이미지 URL 삭제")
+    void 여러_이미지_URL_삭제_실패(){
         // given
-        List<String> imageUrls = Arrays.asList("http://example.com/image1.jpg", "http://example.com/image2.jpg");
-        when(imageUploadUrlRepository.findById(imageUrls.get(0))).thenReturn(Optional.empty());
+        String imageUrl = "http://example.com/image1.jpg";
+        ImageUploadUrl imageUploadUrl1 = new ImageUploadUrl(imageUrl, null);
 
-        // when & then
-        ImageException exception = assertThrows(ImageException.class, () -> {
-            imageValidationService.validateAndDeleteImageUrls(imageUrls);
-        });
-        assertEquals(ImageExceptionCode.IMAGE_NOT_VALID.getErrorCode(), exception.getErrorCode());
+        // when
+        imageValidationService.deleteImageUrl(imageUrl);
+
+        // then
+        verify(imageUploadUrlRepository, times(1)).deleteById(imageUrl);
     }
 }

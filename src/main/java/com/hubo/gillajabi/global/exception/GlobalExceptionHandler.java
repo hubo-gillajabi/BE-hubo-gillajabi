@@ -1,10 +1,13 @@
 package com.hubo.gillajabi.global.exception;
 
+import com.hubo.gillajabi.course.infrastructure.exception.CourseBookMarkException;
 import com.hubo.gillajabi.course.infrastructure.exception.CourseException;
+import com.hubo.gillajabi.crawl.infrastructure.dto.response.AbstractApiResponse;
 import com.hubo.gillajabi.crawl.infrastructure.exception.CrawlException;
 import com.hubo.gillajabi.image.infrastructure.exception.ImageException;
 import com.hubo.gillajabi.login.infrastructure.exception.AuthException;
 import com.hubo.gillajabi.mail.infrastructure.exception.MailException;
+import com.hubo.gillajabi.point.infrastructure.exception.UserPointException;
 import com.hubo.gillajabi.review.infrastructure.exception.PostException;
 import com.hubo.gillajabi.track.infrastructure.exception.PhotoPointException;
 import com.hubo.gillajabi.track.infrastructure.exception.TrackException;
@@ -87,7 +90,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PhotoPointException.class)
     public ResponseEntity<ExceptionResponse> handlePhotoPointException(final PhotoPointException e) {
-        log.warn("포토 포인트 오류 : {} " , e.getMessage());
+        log.warn("포토 포인트 오류 : {} ", e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
@@ -95,7 +98,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TrackException.class)
     public ResponseEntity<ExceptionResponse> handleTrackException(final TrackException e) {
-        log.warn("트랙 오류 : {} " , e.getMessage());
+        log.warn("트랙 오류 : {} ", e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
@@ -103,7 +106,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CourseException.class)
     public ResponseEntity<ExceptionResponse> handleCourseException(final CourseException e) {
-        log.warn("코스 오류 : {} " , e.getMessage());
+        log.warn("코스 오류 : {} ", e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
@@ -111,7 +114,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PostException.class)
     public ResponseEntity<ExceptionResponse> handlePostException(final PostException e) {
-        log.warn("포스트 오류 : {} " , e.getMessage());
+        log.warn("포스트 오류 : {} ", e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(CourseBookMarkException.class)
+    public ResponseEntity<ExceptionResponse> handleCourseBookMarkException(final CourseBookMarkException e) {
+        log.warn("코스 북마크 오류 : {} ", e.getMessage());
+
+        return ResponseEntity.status(e.getHttpStatus())
+                .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(UserPointException.class)
+    public ResponseEntity<ExceptionResponse> handleUserPointException(final UserPointException e) {
+        log.warn("포인트 오류 : {} ", e.getMessage());
 
         return ResponseEntity.status(e.getHttpStatus())
                 .body(new ExceptionResponse(e.getErrorCode(), e.getMessage()));

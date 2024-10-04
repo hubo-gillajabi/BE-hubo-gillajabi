@@ -1,22 +1,19 @@
 package com.hubo.gillajabi.place.infrastructure.persistence;
 
 import com.hubo.gillajabi.place.domain.constant.PlaceType;
-import com.hubo.gillajabi.place.domain.entity.Place;
+import com.hubo.gillajabi.place.domain.entity.PlaceDocument;
 import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Point;
+
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-import java.awt.*;
+public interface PlaceRepository extends MongoRepository<PlaceDocument, String>{
 
-import java.util.List;
+    List<PlaceDocument> findByTypeAndCourseId(PlaceType type, Integer courseId);
 
-public interface PlaceRepository extends MongoRepository<Place, String>{
-
-    List<Place> findByTypeAndCourseId(PlaceType type, Integer courseId);
-
-    List<Place> findByTypeAndLocationNear(PlaceType type, Point location, Distance distance);
+    List<PlaceDocument> findByTypeAndLocationNear(PlaceType type, GeoJsonPoint location, Distance distance);
 }
 
 

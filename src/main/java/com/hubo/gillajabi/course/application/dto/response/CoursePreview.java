@@ -10,5 +10,7 @@ public class CoursePreview {
     private Long id;
     private String name;
 
-
+    public static CoursePreview of(Long courseId, String courseName) {
+        return new CoursePreview(courseId, courseName);
+    }
 }

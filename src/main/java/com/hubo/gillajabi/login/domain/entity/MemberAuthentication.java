@@ -6,10 +6,7 @@ import com.hubo.gillajabi.login.domain.constant.OauthProvider;
 import com.hubo.gillajabi.login.domain.constant.RoleStatus;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Entity
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Builder
 public class MemberAuthentication extends BaseEntity {
 
     @Id

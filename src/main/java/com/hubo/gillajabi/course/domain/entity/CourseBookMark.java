@@ -5,17 +5,22 @@ import com.hubo.gillajabi.global.BaseEntity;
 import com.hubo.gillajabi.member.domain.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @Entity
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLRestriction(value = "status != 'DELETED'")
+@Builder
 public class CourseBookMark extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

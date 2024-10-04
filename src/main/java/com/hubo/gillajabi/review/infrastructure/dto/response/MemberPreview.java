@@ -8,14 +8,21 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MemberPreview {
 
+    private Long id;
+
     private String nickname;
 
     private String profileImageUrl;
 
     public static MemberPreview createByEntity(Member member) {
         return new MemberPreview(
+                member.getId(),
                 member.getNickName(),
                 member.getProfileImageUrl()
         );
+    }
+
+    public static MemberPreview of(Long memberId, String nickname, String profileImageUrl) {
+        return new MemberPreview(memberId, nickname, profileImageUrl);
     }
 }
