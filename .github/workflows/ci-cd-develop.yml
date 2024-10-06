@@ -38,10 +38,8 @@ jobs:
       - name: Get current version and update
         id: get_version
         run: |
-          git fetch --tags --force
-          echo "All tags:"
-          git tag -l
-          current_version=$(git tag -l 'v*' | sort -V | tail -n1 || echo "v0.0.0")
+          git fetch --tags
+          current_version=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "Current version: $current_version"
           
           # Extract version components
