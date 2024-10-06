@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: checkout source code
         uses: actions/checkout@v3
@@ -25,11 +27,6 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
-      #      - name: copy application.yml files from submodule
-      #        run: |
-      #          mkdir -p src/main/resources
-      #          cp -r BE-hubo-gillajabi-resources/resources/application*.yml src/main/resources/
-
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
@@ -38,30 +35,41 @@ jobs:
           ./gradlew copyResources copyTestResources
           ./gradlew bootJar
 
+      - name: Get current version and update
+        id: get_version
+        run: |
+          git fetch --tags
+          current_version=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Current version: $current_version"
+          
+          # Extract version components
+          IFS='.' read -r major minor patch <<< "${current_version#v}"
+          
+          # Determine new version based on branch and commit message
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            new_version="v$((major + 1)).0.0"
+          elif [[ "${{ github.ref }}" == "refs/heads/develop" ]] && [[ "${{ github.event.head_commit.message }}" == *"feat:"* ]]; then
+            new_version="v$major.$((minor + 1)).0"
+          else
+            new_version="v$major.$minor.$((patch + 1))"
+          fi
+          
+          echo "New version: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+
       - name: update release
         uses: release-drafter/release-drafter@v6
         with:
           config-name: release-drafter.yml
+          version: ${{ steps.get_version.outputs.new_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.ACTION_SECRETS }}
-          prerelease-identifier: 'dev'
 
       - name: set docker tag
         id: docker_tag
         run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            TAG=$(curl -sH "Authorization: token ${{ secrets.ACTION_SECRETS }}" \
-              https://api.github.com/repos/${{ github.repository }}/releases?per_page=1 | jq -r 'map(select(.draft == true)) | .[0].tag_name')
-            if [ "$TAG" == "null" ]; then
-              TAG="${{ github.sha }}"
-            fi
-          elif [ "${{ github.event_name }}" == "release" ]; then
-            TAG="${{ github.event.release.tag_name }}"
-          else
-            TAG="latest"
-          fi
+          TAG=${{ steps.get_version.outputs.new_version }}
           echo "TAG=$TAG" >> $GITHUB_ENV
-
 
       - name: docker login
         uses: docker/login-action@v3.1.0
@@ -74,34 +82,34 @@ jobs:
           docker build -f Dockerfile-dev --platform linux/amd64 -t ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.PROJECT_NAME }}:$TAG
 
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    env:
-#      TAG: ${{ env.TAG }}
-#    steps:
-#      - name: checkout source code
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.BE_HOST }}
-#          username: ${{ secrets.BE_USER }}
-#          port: ${{ secrets.BE_PORT }}
-#          password: ${{ secrets.BE_PW }}
-#
-#      - name: dev deploy
-#        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-#        run: |
-#          cd hubo
-#          sudo docker pull backend
-#          sudo docker-compose up -d --no-deps backend
-#
-#      - name : prod deploy
-#        if: github.event_name == 'release'
-#
-#        ## TODO: 수정 필요
-#        run: |
-#          cd hubo
-#
+      #  deploy:
+      #    needs: build
+      #    runs-on: ubuntu-latest
+      #    env:
+      #      TAG: ${{ env.TAG }}
+      #    steps:
+      #      - name: checkout source code
+      #        uses: appleboy/ssh-action@master
+      #        with:
+      #          host: ${{ secrets.BE_HOST }}
+      #          username: ${{ secrets.BE_USER }}
+      #          port: ${{ secrets.BE_PORT }}
+      #          password: ${{ secrets.BE_PW }}
+      #
+      #      - name: dev deploy
+      #        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+      #        run: |
+      #          cd hubo
+      #          sudo docker pull backend
+      #          sudo docker-compose up -d --no-deps backend
+      #
+      #      - name : prod deploy
+      #        if: github.event_name == 'release'
+      #
+      #        ## TODO: 수정 필요
+      #        run: |
+      #          cd hubo
+      #
 
 
 

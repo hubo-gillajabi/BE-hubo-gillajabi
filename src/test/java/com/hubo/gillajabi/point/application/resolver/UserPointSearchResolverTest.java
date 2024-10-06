@@ -552,6 +552,4 @@ class UserPointSearchResolverTest {
         assertThat(errorsNode.size()).isEqualTo(1);
         assertThat(errorsNode.get(0).path("message").asText()).isEqualTo("접근이 거부되었습니다.");
     }
-
-
 }
