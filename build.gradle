@@ -114,7 +114,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
     implementation 'org.springframework.security:spring-security-test:6.1.9'
 
-
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+    implementation 'com.google.firebase:firebase-admin:9.3.0'
 }
 
 tasks.register('copyResources', Copy) {
