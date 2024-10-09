@@ -54,6 +54,8 @@ class RoadGpxInfoDuruServiceTest {
         ApiDuruGpxResponse apiDuruGpxResponse = fixtureMonkey.giveMeBuilder(ApiDuruGpxResponse.class)
                 .size("trk.trkseg", 1)     // trkseg 리스트의 크기를 1로 제한
                 .size("trk.trkseg[*].trkpt", 2) // trkpt 리스트의 크기를 2로 제한
+                .set("trk.trkseg[*].trkpt[*].lon", "126.9999") // lon의 값을 126.9999로 제한
+                .set("trk.trkseg[*].trkpt[*].lat", "37.9999") // lat의 값을 37.9999로 제한
                 .sample();
 
 
