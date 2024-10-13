@@ -35,11 +35,7 @@ public abstract class FixtureBase {
     @Autowired
     private TokenProvider tokenProvider;
 
-    protected <T extends JpaRepository<?, ?>> T getRepository(Class<T> repositoryClass) {
-        return context.getBean(repositoryClass);
-    }
-
-    protected <T extends CrudRepository<?, ?>> T getCrudRepository(Class<T> repositoryClass) {
+    protected <T extends CrudRepository<?, ?>> T getRepository(Class<T> repositoryClass) {
         return context.getBean(repositoryClass);
     }
 
