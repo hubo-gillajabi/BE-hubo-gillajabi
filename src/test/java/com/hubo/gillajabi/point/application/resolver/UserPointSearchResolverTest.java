@@ -95,12 +95,6 @@ class UserPointSearchResolverTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserPointSearchResolver userPointSearchResolver;
-
-    @Autowired
-    private UserPointSearchService userPointSearchService;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -111,9 +105,6 @@ class UserPointSearchResolverTest {
 
     @Autowired
     private UserPointFixture userPointFixture;
-
-    @Autowired
-    protected ApplicationContext context;
 
     @BeforeEach
     void setUp() {

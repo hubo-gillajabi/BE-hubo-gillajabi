@@ -42,22 +42,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @Transactional
 @ActiveProfiles("test")
-public class UserPointControllerTest {
+class UserPointControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private UserPointController userPointController;
-
-    @Autowired
-    private UserPointService userPointService;
-
-    @Autowired
     private UserPointFixture userPointFixture;
-
-    @Autowired
-    private UserPointDocumentRepository userPointDocumentRepository;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -109,7 +100,7 @@ public class UserPointControllerTest {
                 .andExpect(status().isCreated());
 
         // then
-        List<UserPointDocument> userPointDocuments = userPointDocumentRepository.findAll();
+        List<UserPointDocument> userPointDocuments = userPointFixture.getRepository(UserPointDocumentRepository.class).findAll();
         assertThat(userPointDocuments).hasSize(1);
         assertThat(userPointDocuments.get(0).getContent()).isEqualTo("여기는 좋은 장소입니다.");
     }
@@ -196,7 +187,7 @@ public class UserPointControllerTest {
                 .andExpect(status().isNoContent());
 
         // then
-        List<UserPointDocument> userPointDocuments = userPointDocumentRepository.findAll();
+        List<UserPointDocument> userPointDocuments = userPointFixture.getRepository(UserPointDocumentRepository.class).findAll();
         assertThat(userPointDocuments).isEmpty();
     }
 

@@ -54,17 +54,7 @@ import java.util.UUID;
 public class UserPointFixture extends FixtureBase {
 
     @Autowired
-    private UserPointDocumentRepository userPointDocumentRepository;
-
-    @Autowired
-    private UserPointService userPointService;
-
-    @Autowired
     private TrackStatusTimer trackStatusTimer;
-
-    @Autowired
-    private TrackService trackService;
-
 
     public Course createAndLoadCourse() {
         CourseRepository courseRepository = getRepository(CourseRepository.class);
@@ -88,7 +78,7 @@ public class UserPointFixture extends FixtureBase {
         return timestampStr.substring(Math.max(0, timestampStr.length() - 10));
     }
 
-    public City createAndLoadCity(){
+    public City createAndLoadCity() {
         CityRepository cityRepository = getRepository(CityRepository.class);
 
         String randomName = UUID.randomUUID().toString().substring(0, 10);
@@ -117,7 +107,7 @@ public class UserPointFixture extends FixtureBase {
         return userPointRepository.save(userPoint);
     }
 
-    public UserPoint createUserPoint(Member member, Course course){
+    public UserPoint createUserPoint(Member member, Course course) {
         UserPointRepository userPointRepository = getRepository(UserPointRepository.class);
         PhotoPoint photoPoint = createAndSavePhotoPoint();
 
@@ -146,13 +136,13 @@ public class UserPointFixture extends FixtureBase {
     public UserPointDocument createUserPointDocument(Member member) {
         UserPoint userPoint = createUserPoint(member);
         UserPointDocument userPointDocument = UserPointDocument.createByUserPoint(userPoint);
-        return userPointDocumentRepository.save(userPointDocument);
+        return getRepository(UserPointDocumentRepository.class).save(userPointDocument);
     }
 
-    public UserPointDocument createUserPointDocument(Member member, Course course){
+    public UserPointDocument createUserPointDocument(Member member, Course course) {
         UserPoint userPoint = createUserPoint(member, course);
         UserPointDocument userPointDocument = UserPointDocument.createByUserPoint(userPoint);
-        return userPointDocumentRepository.save(userPointDocument);
+        return getRepository(UserPointDocumentRepository.class).save(userPointDocument);
     }
 
     public CourseBookMark createCourseBookMark(Member member) {
@@ -187,18 +177,18 @@ public class UserPointFixture extends FixtureBase {
         return userPointRepository.save(userPoint);
     }
 
-    public ImageUploadUrl createImageUploadUrl(String url){
-        ImageUploadUrlRepository imageUploadUrlRepository = getCrudRepository(ImageUploadUrlRepository.class);
+    public ImageUploadUrl createImageUploadUrl(String url) {
+        ImageUploadUrlRepository imageUploadUrlRepository = getRepository(ImageUploadUrlRepository.class);
 
         ImageUploadUrl imageUploadUrl = ImageUploadUrl.createByUrl(url);
         return imageUploadUrlRepository.save(imageUploadUrl);
     }
 
     //startTrack
-    public void startTrack(Member member, Course course, ImageUploadUrl imageUploadUrl){
+    public void startTrack(Member member, Course course, ImageUploadUrl imageUploadUrl) {
         String userName = member.getNickName();
         TrackRecordRepository trackRecordRepository = getRepository(TrackRecordRepository.class);
-        TrackStatusRepository trackStatusRepository = getCrudRepository(TrackStatusRepository.class);
+        TrackStatusRepository trackStatusRepository = getRepository(TrackStatusRepository.class);
 
         final TrackRecord trackRecord = TrackRecord.createByMember(member, course);
         trackRecordRepository.save(trackRecord);
@@ -229,6 +219,6 @@ public class UserPointFixture extends FixtureBase {
         userPointRepository.save(userPoint);
 
         UserPointDocument userPointDocument = UserPointDocument.createByUserPoint(userPoint);
-        return userPointDocumentRepository.save(userPointDocument);
+        return getRepository(UserPointDocumentRepository.class).save(userPointDocument);
     }
 }
