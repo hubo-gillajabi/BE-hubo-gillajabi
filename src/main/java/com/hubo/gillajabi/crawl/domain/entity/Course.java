@@ -2,6 +2,7 @@ package com.hubo.gillajabi.crawl.domain.entity;
 
 
 import com.hubo.gillajabi.city.domain.entity.City;
+import com.hubo.gillajabi.course.domain.entity.CourseImage;
 import com.hubo.gillajabi.course.domain.entity.CourseTag;
 import com.hubo.gillajabi.crawl.domain.constant.CourseLevel;
 import com.hubo.gillajabi.crawl.infrastructure.dto.request.CourseRequest;
@@ -75,6 +76,10 @@ public class Course extends BaseEntity {
     @OneToMany(mappedBy = "course")
     @Builder.Default
     private Set<CourseTag> courseTags = new HashSet<>();
+
+    @OneToMany(mappedBy = "course")
+    @Builder.Default
+    private Set<CourseImage> courseImages = new HashSet<>();
 
     @Builder
     public Course(String originName, Integer distance, Integer totalTimeRequired, CourseLevel level,
@@ -196,6 +201,19 @@ public class Course extends BaseEntity {
 
     public void addCourseTag(CourseTag courseTag) {
         this.courseTags.add(courseTag);
+    }
+
+
+    // TODO
+    public void addImages(List<String> imageUrls) {
+        imageUrls.forEach(url -> {
+            CourseImage courseImage = CourseImage.createForCourse(url, this);
+            this.courseImages.add(courseImage);
+        });
+    }
+
+    public void removeImage(CourseImage courseImage) {
+        this.courseImages.remove(courseImage);
     }
 }
 
