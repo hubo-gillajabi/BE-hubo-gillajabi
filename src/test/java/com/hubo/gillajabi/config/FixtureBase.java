@@ -35,7 +35,7 @@ public abstract class FixtureBase {
     @Autowired
     private TokenProvider tokenProvider;
 
-    protected <T extends CrudRepository<?, ?>> T getRepository(Class<T> repositoryClass) {
+    public <T extends CrudRepository<?, ?>> T getRepository(Class<T> repositoryClass) {
         return context.getBean(repositoryClass);
     }
 
