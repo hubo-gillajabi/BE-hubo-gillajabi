@@ -99,14 +99,12 @@ public class CourseParseJobConfig {
             int count = 0;
             for (JsonNode point : trkpts) {
                 count++;
-                if (count % 5 == 0) {
-                    BigDecimal lat = BigDecimal.valueOf(point.path("lat").asDouble()).setScale(6, RoundingMode.HALF_UP);
-                    BigDecimal lon = BigDecimal.valueOf(point.path("lon").asDouble()).setScale(6, RoundingMode.HALF_UP);
-                    BigDecimal ele = BigDecimal.valueOf(point.path("ele").asDouble()).setScale(6, RoundingMode.HALF_UP);
+                BigDecimal lat = BigDecimal.valueOf(point.path("lat").asDouble()).setScale(6, RoundingMode.HALF_UP);
+                BigDecimal lon = BigDecimal.valueOf(point.path("lon").asDouble()).setScale(6, RoundingMode.HALF_UP);
+                BigDecimal ele = BigDecimal.valueOf(point.path("ele").asDouble()).setScale(6, RoundingMode.HALF_UP);
 
-                    gpsPoints.add(String.format("[%s,%s]", lat, lon));
-                    elevations.add(ele.toString());
-                }
+                gpsPoints.add(String.format("[%s,%s]", lat, lon));
+                elevations.add(ele.toString());
             }
 
             CourseDetail courseDetail = courseDetailRepository.getEntityById(gpxInfo.getCourseDetailId());

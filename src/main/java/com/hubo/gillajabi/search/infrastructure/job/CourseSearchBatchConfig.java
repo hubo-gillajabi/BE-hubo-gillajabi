@@ -30,6 +30,8 @@ import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
+import com.hubo.gillajabi.course.domain.entity.CourseImage;
+import com.hubo.gillajabi.city.domain.entity.CityImage;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -41,14 +43,14 @@ import java.util.stream.Collectors;
 @EnableBatchProcessing
 @RequiredArgsConstructor
 public class CourseSearchBatchConfig {
-
+    
     private final JobRepository jobRepository;
 
     private final PlatformTransactionManager transactionManager;
 
     private final CityRepository cityRepository;
 
-    private final  ElasticsearchOperations elasticsearchOperations;
+    private final ElasticsearchOperations elasticsearchOperations;
 
     private final CourseRepository courseRepository;
 
@@ -110,10 +112,9 @@ public class CourseSearchBatchConfig {
     public ItemProcessor<? super City, ? extends CourseSearchDocument> cityProcessor() {
         return city -> {
             String cityName = null;
-            if(city.getProvince().isBigCity()){
+            if (city.getProvince().isBigCity()) {
                 cityName = city.getProvince().getValue();
-            }
-            else{
+            } else {
                 cityName = city.getName();
             }
 
@@ -162,10 +163,9 @@ public class CourseSearchBatchConfig {
             City city = course.getCity();
 
             String cityName = null;
-            if(city.getProvince().isBigCity()){
+            if (city.getProvince().isBigCity()) {
                 cityName = city.getProvince().getValue();
-            }
-            else{
+            } else {
                 cityName = city.getName();
             }
 
@@ -181,7 +181,7 @@ public class CourseSearchBatchConfig {
             document.setId(combinationKey);
             document.setCity(mapCity(city));
             document.setTheme(mapTheme(theme));
-            document.setImages(getImagesForTheme(theme, course));
+            document.setImages(getImagesForCourse(course));
             document.setWeather(getWeatherForCity(city));
             document.setTags(getTagsForTheme(theme));
 
@@ -241,15 +241,24 @@ public class CourseSearchBatchConfig {
                 .build();
     }
 
-    // TODO: 이미지
     private List<String> getImagesForCity(City city) {
-        // TODO : 도시 이미지 조회 로직
-        return new ArrayList<>();
+        if(city.getCityImages().isEmpty()){
+            return Collections.singletonList("https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg");
+        } else {
+            return city.getCityImages().stream()
+                    .map(CityImage::getImageUrl)
+                    .collect(Collectors.toList());
+        }
     }
 
-    private List<String> getImagesForTheme(CourseTheme theme, Course course) {
-        //TODO: 테마와 도시에 대한 이미지 조회 로직
-        return new ArrayList<>();
+    private List<String> getImagesForCourse(Course course) {
+        if (course == null || course.getCourseImages().isEmpty()) {
+            return Collections.singletonList("https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg");
+        } else {
+            return course.getCourseImages().stream()
+                    .map(CourseImage::getImageUrl)
+                    .collect(Collectors.toList());
+        }
     }
 
     private CourseSearchDocument.WeatherInfo getWeatherForCity(City city) {
@@ -257,7 +266,7 @@ public class CourseSearchBatchConfig {
         String temperatureKey = WeatherRedisConstants.makeWeatherKey(city, LocalDate.now());
         Object temperatureObject = redisTemplate.opsForValue().get(temperatureKey);
 
-        if (temperatureObject != null ) {
+        if (temperatureObject != null) {
             WeatherCurrentDto temperatureDto = objectMapper.convertValue(temperatureObject, WeatherCurrentDto.class);
 
             return CourseSearchDocument.WeatherInfo.builder()
